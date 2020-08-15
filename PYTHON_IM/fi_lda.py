@@ -78,10 +78,9 @@ def lda_analysis(features,LDA_Features,filter_ori,metadata):
     plt.plot(noFoG_av*np.ones(np.size(X_train)),'r-')
     plt.plot(FoG_av*np.ones(np.size(X_train)),'bo')
     plt.plot(dtth*np.ones(np.size(X_train)),'y.')
-    
-    
+      
     plt.show()
-    
+        
     
 
 

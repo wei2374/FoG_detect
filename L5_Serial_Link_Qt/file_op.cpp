@@ -3,11 +3,15 @@
  file_op::file_op()
  {
      memset(lda_features, 0.0, sizeof(float)*18);
-     lda_features[1][2]=1;
+     lda_features[1][0]=1;
      lda_features[1][5]=1;
      lda_features[1][6]=1;
 
+     thresholds_params[0]=1.0;
+     thresholds_params[7]=5.0;
 
+
+     feature_names <<"step interval"<<"step depth"<<"sumLoco"<<"sumFreeze"<<"sumHP"<<"freeingIndex"<<"Dominant frequency"<<"smoothness"<<"portion";
      thresholds[0]=1;
      thresholds[7]=1;
 

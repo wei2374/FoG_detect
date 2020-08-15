@@ -137,6 +137,25 @@ private slots:
 
         void on_training_data_clicked();
 
+
+        void on_T2s_valueChanged(int value);
+
+        void on_T0s_valueChanged(int value);
+
+        void on_T1s_valueChanged(int value);
+
+        void on_T3s_valueChanged(int value);
+
+        void on_T4s_valueChanged(int value);
+
+        void on_T5s_valueChanged(int value);
+
+        void on_T6s_valueChanged(int value);
+
+        void on_T7s_valueChanged(int value);
+
+        void on_T8s_valueChanged(int value);
+
 private:
     Ui::MainWindow *ui;
     QextSerialPort port;            // Creates a serial port instance.

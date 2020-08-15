@@ -15,6 +15,8 @@ public:
      unsigned char signal_p = '<';
      unsigned char signal_b = ':';
      unsigned char signal_para = '!';
+     QStringList feature_names;
+
 
      int SR = 64;
      int stepsize = 32;
@@ -23,6 +25,8 @@ public:
      long int file_ptr;
      int Tn=9;
      int thresholds[9]={0};
+     float thresholds_params[9]={0};
+
      float lda_features[2][9];
      float thresholds_data[9][9];
      float lda_data[9][9];

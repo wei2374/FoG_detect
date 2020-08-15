@@ -28,6 +28,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->parameterButton_send_2->setEnabled(true);
     ui->dataButton->setEnabled(true);
     ui->training_data->setEnabled(true);
+    myfile.lda_features[0][3] = 6;
+    ui->ankle_button->setStyleSheet("background-color:green;");
+    ui->knee_button->setStyleSheet("background-color:green;");
 }
 
 // Destructor of the MainWindow object.
@@ -248,15 +251,78 @@ void MainWindow::on_training_data_clicked()
 {
     QProcess p;
     QStringList params;
-    params<<"/home/wei/Documents/Forschung/PYTHON_IM/PYTHON_IM/main_loop.py";
+    QString p_stdout;
+    params.append("/home/wei/Documents/Forschung/FoG_detect/PYTHON_IM/main_loop.py");
+
+    int indexP;
+    // Decide which patient
+    indexP = ui->combobox_p->currentIndex()+1;
+    QString patient=QString::number(indexP);
+    params.append(patient);
+
+    int indexC;
+    // Decide which classifier
+    indexC = ui->combobox_c->currentIndex()+1;
+    QString c=QString::number(indexC);
+
+    //Print out which patient is selected
+    p_stdout = "\r\n Patient"+patient+"is selected";
+    ui->textEdit_Status->insertPlainText(p_stdout);
+
+    //Print out How many sensors are used
+    p_stdout = "\r\n Sensor number is"+QString::number(sensorN);
+    ui->textEdit_Status->insertPlainText(p_stdout);
+    params.append(QString::number(sensorN));
+
+    // Print out threhold features selected
+     ui->textEdit_Status->insertPlainText("\r\n Threhold features\r\n");
+    for(int i=0;i<9;i++){
+        if(myfile.thresholds[i]==1){
+                    p_stdout = "\r\n"+myfile.feature_names.at(i)+"is selected as one threshold feature"+" parameter is "+QString::number(float(myfile.thresholds_params[i]));
+                    ui->textEdit_Status->insertPlainText(p_stdout);
+                    params.append("1");
+                    params.append(QString::number(myfile.thresholds_params[i]));
+        }
+        else {
+            params.append("0");
+            params.append("0");
+        }
+
+    }
+
+
+
+    // Print out lda features selected
+    ui->textEdit_Status->insertPlainText("\r\n LDA features\r\n");
+    for(int i=0;i<9;i++){
+        if(myfile.lda_features[1][i]==1.0){
+            p_stdout = "\r\n"+myfile.feature_names.at(i)+"is selected as one lda feature";
+            ui->textEdit_Status->insertPlainText(p_stdout);
+            params.append("1");
+        }
+        else
+            params.append("0");
+    }
+
+
+
+    // Print out which classifier selected
+    p_stdout = "\r\n"+c+"is selected as classifier";
+    ui->textEdit_Status->insertPlainText(p_stdout);
+    params.append(c);
+    QStringList params1;
+   // params1<<("/home/wei/Documents/Forschung/FoG_detect/PYTHON_IM/main_loop.py");
+    //for(int i=0 ; i < params.length() ; i++)
+      // ui->textEdit_Status->append(params.at(i));
     qDebug() << "\r\n start train data";
     p.start("python2", params);
     p.waitForFinished(-1);
     qDebug() << "\r\n finished train data";
-    QString p_stdout = p.readAll();
+    p_stdout = p.readAll();
     ui->textEdit_Status->insertPlainText(p_stdout);
 
 }
+
 void MainWindow::on_T0_stateChanged(int arg1)
 {
     myfile.thresholds[0] = arg1/2;
@@ -428,3 +494,58 @@ void MainWindow::on_T8_3_stateChanged(int arg1)
     qDebug() << " portion lda: " << myfile.lda_features[8];
 }
 
+
+
+void MainWindow::on_T0s_valueChanged(int value)
+{
+    myfile.thresholds_params[0] = float(value)/10;
+    ui->lcdNumber->display(value*10);
+}
+
+void MainWindow::on_T1s_valueChanged(int value)
+{
+    myfile.thresholds_params[1] = float(value)/10;
+    ui->lcdNumber_2->display(value*10);
+}
+
+void MainWindow::on_T2s_valueChanged(int value)
+{
+    myfile.thresholds_params[2] = float(value)/10;
+    ui->lcdNumber_3->display(value*10);
+}
+
+void MainWindow::on_T3s_valueChanged(int value)
+{
+    myfile.thresholds_params[3] = float(value)/10;
+    ui->lcdNumber_4->display(value*10);
+}
+
+void MainWindow::on_T4s_valueChanged(int value)
+{
+    myfile.thresholds_params[4] = float(value)/10;
+    ui->lcdNumber_5->display(value*10);
+}
+
+void MainWindow::on_T5s_valueChanged(int value)
+{
+    myfile.thresholds_params[5] = float(value)/10;
+    ui->lcdNumber_6->display(value*10);
+}
+
+void MainWindow::on_T6s_valueChanged(int value)
+{
+    myfile.thresholds_params[6] = float(value)/10;
+    ui->lcdNumber_7->display(value*10);
+}
+
+void MainWindow::on_T7s_valueChanged(int value)
+{
+    myfile.thresholds_params[7] = float(value)/10;
+    ui->lcdNumber_8->display(value*10);
+}
+
+void MainWindow::on_T8s_valueChanged(int value)
+{
+    myfile.thresholds_params[8] = float(value)/10;
+    ui->lcdNumber_9->display(value*10);
+}
