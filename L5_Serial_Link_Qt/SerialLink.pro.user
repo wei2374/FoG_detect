@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.9.2, 2020-08-12T09:48:01. -->
+<!-- Written by QtCreator 4.9.2, 2020-08-17T00:42:29. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -248,8 +248,8 @@
     <value type="int" key="PE.EnvironmentAspect.Base">2</value>
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">SerialLink</value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/home/wei/Documents/Forschung/qt/group1/5-Lesson/L5_Serial_Link_Qt/SerialLink.pro</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">SerialLink2</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/home/wei/Documents/Forschung/FoG_detect/L5_Serial_Link_Qt/SerialLink.pro</value>
     <value type="QString" key="RunConfiguration.Arguments"></value>
     <value type="uint" key="RunConfiguration.QmlDebugServerPort">3768</value>
     <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>

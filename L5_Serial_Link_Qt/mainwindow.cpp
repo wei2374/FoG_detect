@@ -158,6 +158,11 @@ void MainWindow::on_parameterButton_send_2_clicked()
     indexC = ui->combobox_c->currentIndex()+1;
     QString c=QString::number(indexC);
 
+    int indexM;
+    // Decide which classifier
+    indexC = ui->combobox_m->currentIndex()+1;
+    QString m=QString::number(indexM);
+
 
     qDebug() << "Patient: " << p<< "\r\n SensorsN: " << sensorN<< "Classifier"<<indexC;
     //choose which parameter file to open
@@ -265,6 +270,11 @@ void MainWindow::on_training_data_clicked()
     indexC = ui->combobox_c->currentIndex()+1;
     QString c=QString::number(indexC);
 
+    int indexM;
+    // Decide which classifier
+    indexM = ui->combobox_c->currentIndex()+1;
+    QString m=QString::number(indexM);
+
     //Print out which patient is selected
     p_stdout = "\r\n Patient"+patient+"is selected";
     ui->textEdit_Status->insertPlainText(p_stdout);
@@ -310,7 +320,13 @@ void MainWindow::on_training_data_clicked()
     p_stdout = "\r\n"+c+"is selected as classifier";
     ui->textEdit_Status->insertPlainText(p_stdout);
     params.append(c);
-    QStringList params1;
+
+    // Print out which configuration mode is selected
+    p_stdout = "\r\n"+m+"is selected as configuration mode";
+    ui->textEdit_Status->insertPlainText(p_stdout);
+    params.append(m);
+
+    //QStringList params1;
    // params1<<("/home/wei/Documents/Forschung/FoG_detect/PYTHON_IM/main_loop.py");
     //for(int i=0 ; i < params.length() ; i++)
       // ui->textEdit_Status->append(params.at(i));
