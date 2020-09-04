@@ -124,16 +124,15 @@ void MainWindow::on_dataButton_clicked()
         exit(EXIT_FAILURE);
 
     int counter=0;
-    while(counter<5)
+    while(counter<1)
     {
         myfile.read_next_window(archivo);
         myfile.send_next_window(&port);
         qDebug() << "WAITING FOR ACK THE BATCH"<<(counter+1);
 
 
-        while(!rec_code)
-        {
-            //qDebug() << "WAITING FOR ACK THE BATCH"<<(counter+1);
+        while(!rec_code){
+            qDebug() << "WAITING FOR ACK THE BATCH"<<(counter+1);
             rec_data = port.readAll();
             ui->textEdit_Status->insertPlainText(rec_data);
             rec_code =  rec_data.contains(myfile.signal_b);
@@ -166,7 +165,7 @@ void MainWindow::on_parameterButton_send_2_clicked()
 
     qDebug() << "Patient: " << p<< "\r\n SensorsN: " << sensorN<< "Classifier"<<indexC;
     //choose which parameter file to open
-    QString name1 = "/home/wei/Documents/Forschung/DAPHNET/dataset_fog_release/scripts/Parameters/P"+p+"T"+".txt";
+    QString name1 = "/home/wei/Documents/Forschung/FoG_detect/PYTHON_IM/Parameters/P"+p+"T"+".txt";
     QString name2 = "/home/wei/Documents/Forschung/DAPHNET/dataset_fog_release/scripts/Parameters/P"+p+"C"+c+".txt";
     QString info;
     myfile.read_parameters(&name1,&name2,&info);
@@ -247,7 +246,7 @@ void MainWindow::on_parameterButton_send_2_clicked()
 
     }*/
     qDebug()<<"return with SUC";
-    ui->textEdit_Status->insertPlainText(info);
+   // ui->textEdit_Status->insertPlainText(info);
     ui->parameterButton_send->setEnabled(true);
 
 }

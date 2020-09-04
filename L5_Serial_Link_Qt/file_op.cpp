@@ -45,109 +45,43 @@ void::file_op::read_next_window(FILE* archivo)
 
 void::file_op::send_parameters(QextSerialPort* port)
 {
-    unsigned char data[4]={0};
-
     QByteArray mysignal;
     mysignal.append(signal_para);
     mysignal.append('\r');
     qDebug()<<"\r\nsending\r\n"<<mysignal;
     port->write(mysignal);
     mysignal.clear();
-    int data_buffer = 0;
+    //int data_buffer = 0;
 
-    //send threholds info
+    //send threholds depth
     for(int j=0;j<9;j++)
     {
-
-        data_buffer = thresholds[j];
-        data[3] = 0xFF&data_buffer;
-        data[2] = (data_buffer>>8)&0xFF;
-        data[1] = (data_buffer>>16)&0xFF;
-        data[0] = (data_buffer>>24)&0xFF;
-
-        for(int k=0;k<4;k++)
-        {
-            mysignal.push_back(data[k]);
-        }
-
-        mysignal.append('\r');
-        qDebug()<<j<<" reading threholds data "<<thresholds[j];
-        //qDebug()<<"\r\n"<<j<<" reading "<<data[0]<<data[1]<<data[2]<<data[3];
-        port->write(mysignal);
-        mysignal.clear();
+        sending_info(&step_depth[j],port);
     }
 
+    qDebug()<<"\r\nsending threshold data ";
     //send threholds data
     for(int j=0;j<9*9;j++)
     {
-
-        data_buffer = *((int*)(&thresholds_data[(j/9)][j%9]));
-        data[3] = 0xFF&data_buffer;
-        data[2] = (data_buffer>>8)&0xFF;
-        data[1] = (data_buffer>>16)&0xFF;
-        data[0] = (data_buffer>>24)&0xFF;
-
-        for(int k=0;k<4;k++)
-        {
-            mysignal.push_back(data[k]);
-        }
-
-        mysignal.append('\r');
-        qDebug()<<j<<" reading "<<thresholds_data[(j/9)][j%9];
-        //qDebug()<<"\r\n"<<j<<" reading "<<data[0]<<data[1]<<data[2]<<data[3];
-        port->write(mysignal);
-        mysignal.clear();
-
+        sending_info(&THS[(j/9)][j%9],port);
     }
 
-    qDebug()<<"\r\nsending lda info ";
-    //send lda info
-    for(int j=0;j<18;j++)
-    {
-
-        data_buffer =  *((int*)(&lda_features[(j/9)][j%9]));
-        data[3] = 0xFF&data_buffer;
-        data[2] = (data_buffer>>8)&0xFF;
-        data[1] = (data_buffer>>16)&0xFF;
-        data[0] = (data_buffer>>24)&0xFF;
-
-        for(int k=0;k<4;k++)
-        {
-            mysignal.append(data[k]);
-        }
-
-        mysignal.append('\r');
-        qDebug()<<j<<" reading lda info "<<lda_features[j/9][j%9];
-        //qDebug()<<"\r\n"<<j<<" reading "<<data[0]<<data[1]<<data[2]<<data[3];
-        port->write(mysignal);
-        mysignal.clear();
-    }
-
-    qDebug()<<"\r\nsending lda data ";
+    qDebug()<<"\r\nsending lda mask ";
     //send lda info
     for(int j=0;j<81;j++)
     {
-
-        data_buffer =  *((int*)(&lda_data[(j/9)][j%9]));
-        data[3] = 0xFF&data_buffer;
-        data[2] = (data_buffer>>8)&0xFF;
-        data[1] = (data_buffer>>16)&0xFF;
-        data[0] = (data_buffer>>24)&0xFF;
-
-        for(int k=0;k<4;k++)
-        {
-            mysignal.append(data[k]);
-        }
-
-        mysignal.append('\r');
-        qDebug()<<j<<" reading lda data "<<lda_data[j/9][j%9];
-        //qDebug()<<"\r\n"<<j<<" reading "<<data[0]<<data[1]<<data[2]<<data[3];
-        port->write(mysignal);
-        mysignal.clear();
+         sending_info(&mask[(j/9)][j%9],port);
     }
 
+    qDebug()<<"\r\nsending lda paras ";
+    //send lda info
+    for(int j=0;j<81;j++)
+    {
+         sending_info(&W[(j/9)][j%9],port);
+    }
 
-
+    sending_info(&dtth,port);
+    sending_info(&TG,port);
 
 }
 
@@ -170,13 +104,7 @@ void::file_op::send_next_window(QextSerialPort* port)
     {
 
         qDebug()<<"start to send new row\r\n";
-        /*
-        mysignal.append(signal_b);
-        mysignal.append('\r');
-        qDebug()<<"\r\nsending\r\n"<<mysignal;
-        port->write(mysignal);
 
-        mysignal.clear();*/
 
         for(int j=0;j<9*128;j++)
         {
@@ -211,9 +139,7 @@ void::file_op::read_parameters(QString* name1,QString* name2,QString* info)
 {
     QFile file(*name1);
     QByteArray byteArray;
-    int th=0;
-    int sensor=0;
-   // QString info;
+
 
     if(!file.open(QIODevice::ReadOnly))
     {
@@ -225,66 +151,68 @@ void::file_op::read_parameters(QString* name1,QString* name2,QString* info)
 
 
     //read out thresholds
+    int counter=0;
     foreach (QString i,QString(file.readAll()).split(QRegExp("[\r\n]"),QString::SkipEmptyParts)){
 
-        while(thresholds[th]!=1){
-            th++;
-        }
-        *info = *info + "\r\nTH number is: " + QString::number(th);
+        //*info = *info + "\r\nTH number is: " + QString::number(th);
 
         foreach (QString n,i.split(QRegExp(" "),QString::SkipEmptyParts)){
-                    thresholds_data[th][sensor] = n.toFloat();
-                    *info = *info+"\r\nGET PARAMETER: " + QString::number(thresholds_data[th][sensor]);
-                    sensor++;
+            if(counter<=8){
+                step_depth[counter] = n.toFloat();
+                 *info = *info+"\r\nGET step_depth: " + QString::number(step_depth[counter] );
+            }
+            if(counter>8 &&counter<=89  ){
+                THS[(counter-9)%9][(counter-9)] = n.toFloat();
+                 *info = *info+"\r\nGET thresholds: " + QString::number(THS[(counter-9)%9][(counter-9)] );
+            }
+            if(counter>89 &&counter<=89+81  ){
+                mask[(counter-89)%9][(counter-89)] = n.toFloat();
+                 *info = *info+"\r\nGET mask: " + QString::number(mask[(counter-89)%9][(counter-89)] );
+            }
+            if(counter>89+81 &&counter<=89+81*2  ){
+                W[(counter-170)%9][(counter-170)] = n.toFloat();
+                 *info = *info+"\r\nGET W: " + QString::number(W[(counter-170)%9][(counter-170)] );
+            }
+            if(counter==89+81*2+1){
+                dtth=n.toFloat();
+                 *info = *info+"\r\nGET dtth: " + QString::number(dtth);
+            }
+
+            if(counter==89+81*2+2){
+                TG=n.toFloat();
+                 *info = *info+"\r\nGET TG: " + QString::number(TG);
+            }
+
+            counter++;
         }
-        sensor=0;
-        th++;
     }
+
+
     qDebug() << "finish reading TH\r\n";
 
-    //choose which parameter file to open
-    QFile file2(*name2);
 
-    if(!file2.open(QIODevice::ReadOnly))
+}
+
+void::file_op::sending_info(float* Data,QextSerialPort* port){
+    QByteArray mysignal;
+    unsigned char data[4]={0};
+    int data_buffer = 0;
+    data_buffer = *((int*)(Data));
+    data[3] = 0xFF&data_buffer;
+    data[2] = (data_buffer>>8)&0xFF;
+    data[1] = (data_buffer>>16)&0xFF;
+    data[0] = (data_buffer>>24)&0xFF;
+
+    for(int k=0;k<4;k++)
     {
-       qDebug() << "error opening file: " << file.error();
-       *info = *info+ "error opening thresholds file: ";
-       return;
+        mysignal.push_back(data[k]);
     }
-    memset(lda_data, 0.0, sizeof(float)*81);
-    //read out thresholds
-    int flag=1;
-    int info_counter=0;
-    th=0;
-    foreach (QString i,QString(file2.readAll()).split(QRegExp("[\r\n]"),QString::SkipEmptyParts)){
-        if(flag==1)
-        {
-            foreach (QString n,i.split(QRegExp(" "),QString::SkipEmptyParts)){
-                lda_features[0][info_counter] = n.toFloat();
-                *info = *info + "\r\nGET INFO: " + QString::number(lda_features[0][info_counter]);
-                info_counter++;
-            }
-            flag=0;
-            qDebug() << "finish reading info\r\n";
-        }
-        else {
-            while(lda_features[1][th]!=1){
-                th++;
-                //qDebug() << "finish reading lda\r\n"<<QString::number(th);
-            }
-            qDebug() << "GET lda\r\n"<<QString::number(th);
-            *info = *info + "\r\n LDA number is: " + QString::number(th);
-            foreach (QString n,i.split(QRegExp(" "),QString::SkipEmptyParts)){
-                        lda_data[th][sensor] = n.toFloat();
-                        *info = *info+ "\r\nGET PARAMETER: " + QString::number(lda_data[th][sensor]);
-                        sensor++;
-            }
-            sensor=0;
-            th++;
-        }
 
-    }
-    qDebug() << "finish reading LDA\r\n";
-   // return &info;
+    mysignal.append('\r');
+    qDebug()<<" reading data "<<*Data;
+    //qDebug()<<"\r\n"<<j<<" reading "<<data[0]<<data[1]<<data[2]<<data[3];
+    port->write(mysignal);
+    mysignal.clear();
+
 
 }

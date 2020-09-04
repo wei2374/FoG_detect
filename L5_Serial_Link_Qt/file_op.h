@@ -27,6 +27,16 @@ public:
      int thresholds[9]={0};
      float thresholds_params[9]={0};
 
+     float step_depth[9]={0};
+     float THS[9][9];
+     float mask[9][9];
+     float W[9][9];
+     float dtth=0;
+     float TG=0;
+
+
+
+
      float lda_features[2][9];
      float thresholds_data[9][9];
      float lda_data[9][9];
@@ -35,4 +45,6 @@ public:
     void send_next_window(QextSerialPort* port);
     void send_parameters(QextSerialPort* port);
     void read_parameters(QString* name1,QString* name2,QString* info);
+    void sending_info(float* Data,QextSerialPort* port);
+
 };

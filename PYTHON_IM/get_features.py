@@ -258,8 +258,9 @@ def func3(Train_data,metadata,sumLoco,I,freezeIndex,sumAll):
         
         sumLoco[index]  = (np.sum(Pyy[f_nr_LBs:f_nr_LBe+1])-(Pyy[f_nr_LBs]+Pyy[f_nr_LBe])/2)/metadata["samplingrate"]
         sumAll[index]  = (np.sum(Pyy[f_nr_LBe:f_nr_FBs+1])-(Pyy[f_nr_LBe]+Pyy[f_nr_FBs])/2)/metadata["samplingrate"]
+        freezeIndex[index] = sumAll[index]/sumLoco[index]
         sumAll[index] = sumAll[index]+sumLoco[index]
-        freezeIndex[index] = sumLoco[index]/sumAll[index]
+        
         I[index] = np.argmax(Pyy)+1
         jStart = jStart+metadata["stepsize"]
         index = index+1

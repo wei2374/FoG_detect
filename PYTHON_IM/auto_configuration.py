@@ -82,3 +82,5 @@ def auto_configuration(features_all,Features,filter_ori,sensors,mask):
         for sensor in range(sensors):
             if(result_corr[f,sensor]<0.05):
                 mask[f,sensor]=1
+            if(f==8):
+                mask[f,sensor]=0

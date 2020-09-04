@@ -13,20 +13,32 @@ def threshold_selection(TH_Features,means,features,sensor):
             mask= features["depth"]<shift_mask
             filter_result = filter_result & mask
         elif(TH_Features[ths]==2):
-            shift_mask = means["sumLoco"]*np.ones(np.size(features["shift"]))
-            mask = features["sumLoco"]<shift_mask
+            shift_mask = means["counts"]*np.ones(np.size(features["counts"]))
+            mask = features["counts"]<shift_mask
             filter_result = filter_result & mask
+        elif(TH_Features[ths]==3):
+            shift_mask = means["entropy"]*np.ones(np.size(features["entropy"]))
+            mask = features["entropy"]<shift_mask
+            filter_result = filter_result & mask 
+        elif(TH_Features[ths]==4):
+            shift_mask = means["sumLoco"]*np.ones(np.size(features["sumLoco"]))
+            mask = features["sumLoco"]>shift_mask
+            filter_result = filter_result & mask                    
         elif(TH_Features[ths]==5):
-            shift_mask = means["freezeIndex"]*np.ones(np.size(features["shift"]))
-            mask = features["freezeIndex"]<shift_mask
+            shift_mask = means["I"]*np.ones(np.size(features["I"]))
+            mask = features["I"]>shift_mask
             filter_result = filter_result & mask
         elif(TH_Features[ths]==6):
-            shift_mask = means["I"]*np.ones(np.size(features["shift"]))
-            mask = features["I"]<shift_mask
+            shift_mask = means["freezeIndex"]*np.ones(np.size(features["freezeIndex"]))
+            mask = features["freezeIndex"]>shift_mask
             filter_result = filter_result & mask
         elif(TH_Features[ths]==7):
-            shift_mask = means["smooth"]*np.ones(np.size(features["shift"]))
-            mask = features["smooth"]<shift_mask
+            shift_mask = means["sumAll"]*np.ones(np.size(features["sumAll"]))
+            mask = features["sumAll"]>shift_mask
+            filter_result = filter_result & mask
+        elif(TH_Features[ths]==8):
+            shift_mask = means["portion"]*np.ones(np.size(features["portion"]))
+            mask = features["portion"]>shift_mask
             filter_result = filter_result & mask
 
     return filter_result

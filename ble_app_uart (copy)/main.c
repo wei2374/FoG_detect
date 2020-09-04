@@ -562,25 +562,19 @@ void uart_event_handle(app_uart_evt_t * p_event)
             {
                 if (index > 3)
                 {
-                    if(data_flag!=1){
+                    if(data_flag!=0){
                        read_data(data_array,&counter1);
-                   
-                     }
-          
-                   
-                   else if(parameter_flag==1){
+                     }                   
+
+                    if(parameter_flag!=0){
                       read_parameters(data_array,&counter1);
-                      //printf("READY to Receive data from PC UART\n\r");
                     }
 
-                   else{
-                   
-                        printf("NOT READY to Receive parameters from PC UART\n\r");                                         
+                   if(data_flag==0 && parameter_flag==0){                   
+                        printf("NOT READY to Receive from PC UART\n\r");                                         
                     }               
-                    // NRF_LOG_HEXDUMP_DEBUG(data_array, index);
-                    //strcpy(status_array, "GET PARAMETERS");
-                    //printf("Ready to send status %s over BLE NUS\n\r",status_array);
-                    
+
+
                     do
                     {
                         uint16_t length = (uint16_t)index;

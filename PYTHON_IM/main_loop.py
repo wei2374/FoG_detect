@@ -20,10 +20,10 @@ print "INTO PYTHON CODE"
 patient="1"
 sensors=2
 classifer=3
-TH_Features=[8]
+TH_Features=[7]
 TH_params=[5]
 LDA_Features=[1]
-Features=[0,1,2,3,4,5,6,7]
+Features=[0,1,2,3,4,5,6,7,8]
 
 Auto=2
 
@@ -73,10 +73,54 @@ Pos =np.array([[[780,3140],[1500,2200],[31000,32000]],
 pos = Pos[int(patient)-1,:,:]
 
 #%%
-sa.self_adaptive(data,pos,metadata,Features,TH_Features,TH_params,LDA_Features,Auto)
+W,dtth,TG,mask,step_depth,thresholds = sa.self_adaptive(data,pos,metadata,Features,TH_Features,TH_params,LDA_Features,Auto)
+
+# fill data
+
+Step_depth = np.zeros((9,),dtype=float)
+Thresholds = np.zeros((9,9),dtype=float)
+Paras = np.zeros((9*9,),dtype=float)
+
+lens = len(step_depth)
+for i in range(lens):
+    Step_depth[i] = step_depth[i] 
+
+print thresholds.shape
+x,lens = thresholds.shape
+for i in range(lens):
+    for j in range(9):
+        Thresholds[j][i] = thresholds[j][i]     
+
+print W.shape
+lens = len(W)
+
+counter=0
+for i in range(9):
+    sensor=0
+    while(sensor<int(sensors)):
+        Paras[i*9+sensor] = W[counter]
+        counter=counter+1 
+        sensor=sensor+1
+
+## save into file
+with open('Parameters/P1T.txt', 'w') as f:
+    for item in Step_depth:
+        f.write("%s\n" % item)
+    for row in Thresholds:
+        np.savetxt(f, row)
+    for row in mask:
+        np.savetxt(f, row)
+    for item in Paras:
+        f.write("%s\n" % item)        
+   
+    f.write("%s\n" % dtth)
+    f.write("%s\n" % TG)
+
+    
+    
 
 
-
+f.close()
 # %%
 '''
 if __name__ == '__main__':
