@@ -1,10 +1,11 @@
 import numpy as np
 from get_features import get_features
 from threshold_selection import threshold_selection
+from auto_configuration import auto_configuration
 from fi_lda import lda_analysis
 import matplotlib.pyplot as plt
 #%%
-def self_adaptive(data,pos,metadata,Features,TH_Features,TH_params,LDA_Features):   
+def self_adaptive(data,pos,metadata,Features,TH_Features,TH_params,LDA_Features,Auto):   
     # get the training window
     stepsize = metadata["stepsize"]
     pos_all = [1000*pos[0,0],1000*pos[0,1]]
@@ -18,9 +19,12 @@ def self_adaptive(data,pos,metadata,Features,TH_Features,TH_params,LDA_Features)
     features_all={}
     means={}
     Train_data = data[index3,:]
+    step_depth = np.zeros(metadata["sensors"])
+    # get features
     for sensor in range(metadata["sensors"]):
         # Feature extraction for one feature
-        features = get_features(Features,Train_data[:,sensor+1],Train_data[:,10],metadata,pos_walk,sensor)
+        
+        step_depth[sensor], features = get_features(Features,Train_data[:,sensor+1],Train_data[:,10],metadata,pos_walk,sensor)
         
         # Calculates the threhold of features for one sensor
         for ths in range(len(TH_Features)):
@@ -35,7 +39,7 @@ def self_adaptive(data,pos,metadata,Features,TH_Features,TH_params,LDA_Features)
             elif(TH_Features[ths]==6):
                 means["I"] = np.mean((features["I"])[pos_walk[0]:pos_walk[1]])*TH_params[ths]
             elif(TH_Features[ths]==7):
-                means["smooth"] = np.mean((features["smooth"])[pos_stop[0]:pos_stop[1]])*TH_params[ths]
+                means["sumAll"] = np.mean((features["sumAll"])[pos_stop[0]:pos_stop[1]])*TH_params[ths]
         
         features_all[sensor] = features
         # Threshold selection for one sensor
@@ -48,13 +52,23 @@ def self_adaptive(data,pos,metadata,Features,TH_Features,TH_params,LDA_Features)
     # Filter out data which is not within the thresholds
     for sensor in range(metadata["sensors"]):
         filter_ori = filter_result[float(sensor)]&filter_ori
+
+    mask = np.zeros([9,9])
+
+    print "start feature selection"
+    # Auto configuration will select features that to be processed in LDA
+    if(Auto==2):
+        auto_configuration(features_all,Features,filter_ori,metadata["sensors"],mask)
+    
+        
+        
     
     #plt.plot(filter_ori)
     #plt.show()
     #plt.plot(features["labels"])
     #plt.show()
     print "start LDA"
-    lda_analysis(features_all,LDA_Features,filter_ori,metadata)
-    
+    W,dtth,TG = lda_analysis(features_all,LDA_Features,Features,filter_ori,metadata,mask,Auto)
+    return W,dtth,TG,thresholds,step_depth
 
     

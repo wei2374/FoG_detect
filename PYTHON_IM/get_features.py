@@ -1,40 +1,52 @@
 import numpy as np
+from sampen import sampen
 from scipy.signal import butter, lfilter, freqz
 from scipy import signal
 import scipy 
 import pyfftw
 import matplotlib.pyplot as plt
+
 #%%
 def get_features(Features,Train_data,Labels,metadata,pos_walk,sensor): 
+    print "Getting features"
     features={
         "shift": np.ones(np.size(Train_data)/32),
         "depth": np.zeros(np.size(Train_data)/32),
-        "smooth": np.zeros(np.size(Train_data)/32),
+        "counts": np.zeros(np.size(Train_data)/32),
         "sumLoco" : np.zeros(np.size(Train_data)/32),
-        "sumFreeze" : np.zeros(np.size(Train_data)/32),
-        "sumHP" : np.zeros(np.size(Train_data)/32),
+        "sumAll" : np.zeros(np.size(Train_data)/32),
+        "entropy" : np.zeros(np.size(Train_data)/32),
         "I" : np.zeros(np.size(Train_data)/32),
         "freezeIndex" : np.zeros(np.size(Train_data)/32),
         "labels" : np.zeros(np.size(Train_data)/32),
         "portion" : np.zeros(np.size(Train_data)/32)
     }
+    step_depth=0
 
     for i in range(len(Features)):
-        if((Features[i]==1 or Features[i]==0)and sensor==1):
-            func0(Train_data,metadata,features["shift"] ,features["depth"] ,pos_walk)
-        elif(Features[i]==7):
+        if(Features[i]==1 or Features[i]==0 or Features[i]==2):
+            print "Getting shift and depth and counts"
+            step_depth = func0(Train_data,metadata,features["shift"] ,features["depth"] ,features["counts"] ,pos_walk)
+        elif(Features[i]==3):
+            print "Getting sample entropy"
+            func1(Train_data,metadata,features["entropy"] )
+
+        elif(Features[i]>=4 and Features[i]<=7):
+            print "Getting Frequency components"
+            func3(Train_data,metadata,features["sumLoco"] ,features["I"] ,features["freezeIndex"] ,features["sumAll"])
+    
+
+        elif(Features[i]==9):
             func7(Train_data,metadata,features["smooth"] )
         elif(Features[i]==8):
             func8(Train_data,metadata,features["portion"] )
-        elif(Features[i]>=2 and Features[i]<=6):
-            func3(Train_data,metadata,features["sumLoco"] ,features["sumFreeze"] ,features["sumHP"] ,features["freezeIndex"],features["I"])
-    
+        
     get_label(Train_data,metadata,Labels,features["labels"])
     # label pre-fog as fog
     features["labels"] = prelabel(features["labels"])
     #plt.figure()
     #plt.plot(features["labels"][0:500]) 
-    return features
+    return step_depth,features
     
 def prelabel(label_t):
     buffer = label_t
@@ -68,13 +80,14 @@ def get_label(Train_data,metadata,Labels,labels):
         j_start = j_start+metadata["stepsize"]
 
 #%%
-def func0(Train_data,metadata,shift,depth,pos_walk):
-    #print "get interval"
+def func0(Train_data,metadata,shift,depth,counts,pos_walk):
+    
     jStart=0
     low_pass_data = butter_lowpass_filter(Train_data, 8,metadata["samplingrate"], order=5)
     index=0
     windowsize = metadata["windowsize"]
 
+    # Find the threshold
     while(jStart<len(low_pass_data)-windowsize):
         train_w = low_pass_data[jStart:jStart+windowsize]
         max_value = np.max(train_w)
@@ -84,9 +97,11 @@ def func0(Train_data,metadata,shift,depth,pos_walk):
         jStart = jStart + metadata["stepsize"]
     
     threshold = np.mean(depth[pos_walk[0]:pos_walk[1]])*0.5
+    step_depth = threshold
     jStart=0
     index=0
 
+    # find interval
     while(jStart<len(low_pass_data)-windowsize):
         train_w = low_pass_data[jStart:jStart+windowsize]
         buffer = train_w
@@ -138,11 +153,45 @@ def func0(Train_data,metadata,shift,depth,pos_walk):
             interval=abs(I2-I1)
         
         shift[index] = interval
-        index = index+1
-        jStart = jStart + metadata["stepsize"]
+
+        #find counts
+        b_counts=0
+        p1=1
+        p2=1
+        for n in range(len(buffer)-1):
+            if(buffer[n+1]>buffer[n]):
+                p1=n+1
+                p2=n+1
+            else:           
+                if(n==len(buffer)-1):
+                    I1=1
+                elif(buffer[p1]-buffer[p2]>threshold):
+                    I1=p2
+                    b_counts=b_counts+1
+                    p1=n+1
+                    p2=n+1
+                else:
+                    p2=n+1
         
-    
-    
+        counts[index] = b_counts
+        index = index+1
+        jStart = jStart + metadata["stepsize"]  
+    return step_depth
+
+#%%
+def func1(Train_data,metadata,entropy):
+    m=2
+    jStart=0
+    index=0
+    windowsize = metadata["windowsize"]
+    while(jStart<len(Train_data)-jStart):
+        train_w = Train_data[jStart:jStart+windowsize]
+        r = 0.2*np.std(train_w)
+        entropy[index] = sampen(train_w, m, r)
+
+        jStart = jStart+metadata["stepsize"]
+        index = index+1
+
 #%%
 def func7(Train_data,metadata,smoothness):
     #print "get smoothness"
@@ -183,7 +232,7 @@ def func8(Train_data,metadata,portion):
 
 
 # This function is used to get frequency information 
-def func3(Train_data,metadata,sumLoco,sumFreeze,sumHP,freezeIndex,I):
+def func3(Train_data,metadata,sumLoco,I,freezeIndex,sumAll):
     jStart=0
     index=0
     windowsize = metadata["windowsize"]
@@ -208,9 +257,9 @@ def func3(Train_data,metadata,sumLoco,sumFreeze,sumHP,freezeIndex,I):
         Pyy = b*np.conjugate(b) / NFFT
         
         sumLoco[index]  = (np.sum(Pyy[f_nr_LBs:f_nr_LBe+1])-(Pyy[f_nr_LBs]+Pyy[f_nr_LBe])/2)/metadata["samplingrate"]
-        sumFreeze[index]  = (np.sum(Pyy[f_nr_LBe:f_nr_FBs+1])-(Pyy[f_nr_LBe]+Pyy[f_nr_FBs])/2)/metadata["samplingrate"]
-        sumHP[index]  = (np.sum(Pyy[f_hp_LBe:f_hp_FBs+1])-(Pyy[f_hp_LBe]+Pyy[f_hp_FBs])/2)/metadata["samplingrate"]
-        freezeIndex[index] = sumFreeze[index]/sumLoco[index]
+        sumAll[index]  = (np.sum(Pyy[f_nr_LBe:f_nr_FBs+1])-(Pyy[f_nr_LBe]+Pyy[f_nr_FBs])/2)/metadata["samplingrate"]
+        sumAll[index] = sumAll[index]+sumLoco[index]
+        freezeIndex[index] = sumLoco[index]/sumAll[index]
         I[index] = np.argmax(Pyy)+1
         jStart = jStart+metadata["stepsize"]
         index = index+1

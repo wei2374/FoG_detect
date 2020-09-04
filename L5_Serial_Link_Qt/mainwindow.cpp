@@ -272,7 +272,7 @@ void MainWindow::on_training_data_clicked()
 
     int indexM;
     // Decide which classifier
-    indexM = ui->combobox_c->currentIndex()+1;
+    indexM = ui->combobox_m->currentIndex()+1;
     QString m=QString::number(indexM);
 
     //Print out which patient is selected

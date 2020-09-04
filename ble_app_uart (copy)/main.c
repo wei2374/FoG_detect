@@ -567,7 +567,7 @@ void uart_event_handle(app_uart_evt_t * p_event)
                    
                      }
           
-                    
+                   
                    else if(parameter_flag==1){
                       read_parameters(data_array,&counter1);
                       //printf("READY to Receive data from PC UART\n\r");
