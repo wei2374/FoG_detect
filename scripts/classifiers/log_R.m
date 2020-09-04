@@ -1,3 +1,0 @@
-function out = log_R(mu0, mu1, C0, C1, x)
-out = 1/2*diag(log(det(C0)/det(C1)) + (x - mu0)/C0*(x - mu0).'...
-    - (x - mu1)/C1*(x - mu1).');
