@@ -1,0 +1,49 @@
+%% -----------------------------------------------------------------------------
+%% biblatex-ldv --- A port of the LDV natbib modifications to biblatex
+%%
+%% Copyright 2018 Martin Knopp
+%%
+%% This file may be distributed and/or modified under the conditions of the
+%% General Public License (GPL), either version 3 of this license or
+%% (at your option) any later version.
+%%
+%% See also http://www.ldv.ei.tum.de/
+
+\ProvidesFile{ldv.bbx}[2018/08/16 v1.0 biblatex bibliography style]
+
+% We import a default style we like and just add a few modifications, in this
+% way we also benefit from future changes to the original style
+\RequireBibliographyStyle{numeric-comp}
+
+% Change some defaults
+\ExecuteBibliographyOptions{
+	% Given names are printed as initials
+	giveninits,
+	% Do not convert multiple authors to et al.
+	maxnames = 999,
+}
+
+% Reduce the spacing between initials from a normal ~ to \,
+\renewcommand*{\bibinitdelim}{\addnbthinspace}
+
+% (Re)Define a few strings as they have been in our old natbib style
+\DefineBibliographyStrings{english}{%
+	bathesis	= {Bachelor's thesis},
+	mathesis	= {Master's thesis},
+	phdthesis	= {Ph\adddot{}D\adddotspace thesis},
+}
+
+\DefineBibliographyStrings{german}{%
+	bathesis	= {Bachelorarbeit},
+	mathesis	= {Masterarbeit},
+}
+
+% Print series and number as n(m) instead of n.m
+\DeclareFieldFormat*{number}{\mkbibparens{#1}}
+\renewbibmacro*{volume+number+eid}{%
+	\printfield{volume}%
+	\setunit*{}%
+	\printfield{number}%
+	\setunit{\addcomma\space}%
+	\printfield{eid}%
+	\newunit}
