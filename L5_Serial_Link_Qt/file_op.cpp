@@ -63,21 +63,21 @@ void::file_op::send_parameters(QextSerialPort* port)
     //send threholds data
     for(int j=0;j<9*9;j++)
     {
-        sending_info(&THS[(j/9)][j%9],port);
+        sending_info(&THS[(j%9)][j/9],port);
     }
 
     qDebug()<<"\r\nsending lda mask ";
     //send lda info
     for(int j=0;j<81;j++)
     {
-         sending_info(&mask[(j/9)][j%9],port);
+         sending_info(&mask[(j%9)][j/9],port);
     }
 
     qDebug()<<"\r\nsending lda paras ";
     //send lda info
     for(int j=0;j<81;j++)
     {
-         sending_info(&W[(j/9)][j%9],port);
+         sending_info(&W[(j%9)][j/9],port);
     }
 
     sending_info(&dtth,port);
@@ -135,7 +135,7 @@ void::file_op::send_next_window(QextSerialPort* port)
 
 }
 
-void::file_op::read_parameters(QString* name1,QString* name2,QString* info)
+void::file_op::read_parameters(QString* name1,QString* info)
 {
     QFile file(*name1);
     QByteArray byteArray;
@@ -162,16 +162,16 @@ void::file_op::read_parameters(QString* name1,QString* name2,QString* info)
                  *info = *info+"\r\nGET step_depth: " + QString::number(step_depth[counter] );
             }
             if(counter>8 &&counter<=89  ){
-                THS[(counter-9)%9][(counter-9)] = n.toFloat();
-                 *info = *info+"\r\nGET thresholds: " + QString::number(THS[(counter-9)%9][(counter-9)] );
+                THS[(counter-9)%9][(counter-9)/9] = n.toFloat();
+                 *info = *info+"\r\nGET thresholds: " + QString::number(THS[(counter-9)%9][(counter-9)/9] );
             }
             if(counter>89 &&counter<=89+81  ){
-                mask[(counter-89)%9][(counter-89)] = n.toFloat();
-                 *info = *info+"\r\nGET mask: " + QString::number(mask[(counter-89)%9][(counter-89)] );
+                mask[(counter-90)%9][(counter-90)/9] = n.toFloat();
+                 *info = *info+"\r\nGET mask: " + QString::number(mask[(counter-90)%9][(counter-90)/9] );
             }
             if(counter>89+81 &&counter<=89+81*2  ){
-                W[(counter-170)%9][(counter-170)] = n.toFloat();
-                 *info = *info+"\r\nGET W: " + QString::number(W[(counter-170)%9][(counter-170)] );
+                W[(counter-171)%9][(counter-171)/9] = n.toFloat();
+                 *info = *info+"\r\nGET W: " + QString::number(W[(counter-171)%9][(counter-171)/9] );
             }
             if(counter==89+81*2+1){
                 dtth=n.toFloat();

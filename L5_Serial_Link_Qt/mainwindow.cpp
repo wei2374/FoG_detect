@@ -1,7 +1,8 @@
 #include <QProcess>
+
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-
+#include <QTime>
 
 // Constructor of the MainWindow object.
 MainWindow::MainWindow(QWidget *parent) :
@@ -112,6 +113,12 @@ void MainWindow::on_parameterButton_send_clicked()
     myfile.send_parameters(&port);
 }
 
+void delay()
+{
+    QTime dieTime= QTime::currentTime().addSecs(1);
+    while (QTime::currentTime() < dieTime)
+        QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+}
 void MainWindow::on_dataButton_clicked()
 {
     qDebug() << "IN HANDLER ";
@@ -120,11 +127,19 @@ void MainWindow::on_dataButton_clicked()
     bool rec_code=false;
 
     FILE* archivo = fopen("/home/wei/Documents/Forschung/DAPHNET/dataset_fog_release/dataset/S01R01.txt","r");
+    int indexP;
+    // Decide which patient
+    indexP = ui->combobox_p->currentIndex()+1;
+    QString p=QString::number(indexP);
+
+    if(indexP==2)
+        archivo = fopen("/home/wei/Documents/Forschung/DAPHNET/dataset_fog_release/dataset/S02R02.txt","r");
+
     if(archivo==NULL)
         exit(EXIT_FAILURE);
 
     int counter=0;
-    while(counter<1)
+    while(counter<2)
     {
         myfile.read_next_window(archivo);
         myfile.send_next_window(&port);
@@ -137,6 +152,7 @@ void MainWindow::on_dataButton_clicked()
             ui->textEdit_Status->insertPlainText(rec_data);
             rec_code =  rec_data.contains(myfile.signal_b);
         }
+        delay();
         rec_code=false;
 
         counter++;
@@ -165,10 +181,10 @@ void MainWindow::on_parameterButton_send_2_clicked()
 
     qDebug() << "Patient: " << p<< "\r\n SensorsN: " << sensorN<< "Classifier"<<indexC;
     //choose which parameter file to open
+
     QString name1 = "/home/wei/Documents/Forschung/FoG_detect/PYTHON_IM/Parameters/P"+p+"T"+".txt";
-    QString name2 = "/home/wei/Documents/Forschung/DAPHNET/dataset_fog_release/scripts/Parameters/P"+p+"C"+c+".txt";
     QString info;
-    myfile.read_parameters(&name1,&name2,&info);
+    myfile.read_parameters(&name1,&info);
 
     /*
     QByteArray byteArray;
@@ -564,3 +580,4 @@ void MainWindow::on_T8s_valueChanged(int value)
     myfile.thresholds_params[8] = float(value)/10;
     ui->lcdNumber_9->display(value*10);
 }
+

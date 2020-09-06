@@ -39,7 +39,7 @@ def get_features(Features,Train_data,Labels,metadata,pos_walk,sensor):
         elif(Features[i]==9):
             func7(Train_data,metadata,features["smooth"] )
         elif(Features[i]==8):
-            func8(Train_data,metadata,features["portion"] )
+            func7(Train_data,metadata,features["portion"] )
         
     get_label(Train_data,metadata,Labels,features["labels"])
     # label pre-fog as fog

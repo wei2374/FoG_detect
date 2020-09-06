@@ -52,7 +52,7 @@ public:
     file_op myfile;
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-    int sensorN=0;
+    int sensorN=6;
 /* In GUI programming, when a widget is changed, we often want another widget
  * to be notified.
  *

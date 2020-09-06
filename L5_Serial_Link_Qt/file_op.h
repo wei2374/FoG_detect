@@ -44,7 +44,7 @@ public:
     void read_next_window(FILE* archivo);
     void send_next_window(QextSerialPort* port);
     void send_parameters(QextSerialPort* port);
-    void read_parameters(QString* name1,QString* name2,QString* info);
+    void read_parameters(QString* name1,QString* info);
     void sending_info(float* Data,QextSerialPort* port);
 
 };

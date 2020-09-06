@@ -75,7 +75,10 @@ def self_adaptive(data,pos,metadata,Features,TH_Features,TH_params,LDA_Features,
     # Auto configuration will select features that to be processed in LDA
     if(Auto==2):
         auto_configuration(features_all,Features,filter_ori,metadata["sensors"],mask)
-    
+    else:
+        for fea in (LDA_Features):
+            for sensor in range(metadata["sensors"]):
+                mask[fea,sensor]=1
         
         
     
@@ -84,7 +87,7 @@ def self_adaptive(data,pos,metadata,Features,TH_Features,TH_params,LDA_Features,
     #plt.plot(features["labels"])
     #plt.show()
     print "start LDA"
-    W,dtth,TG = lda_analysis(features_all,LDA_Features,Features,filter_ori,metadata,mask,Auto)
+    W,dtth,TG = lda_analysis(features_all,Features,filter_ori,metadata,mask)
 
     return W,dtth,TG,mask,step_depth,thresholds
 

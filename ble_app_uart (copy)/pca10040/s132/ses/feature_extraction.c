@@ -11,10 +11,12 @@ void read_data(uint8_t* data_array,uint8_t* counter1)
        //receive an integer number                      
         (*counter1) = 0;
         column++;
+        
         //receive a row
         if(column>8)
         {
-          printf("\r\n%d,%d:%dGNR\r\n",row,column,data[row][0]); 
+        // printf("\r\nGET NEW ROW\r\n");    
+          //printf("\r\n%d,%d:%dGNR\r\n",row,column,data[row][0]); 
           column = 0;
           row++;
           //receive 2 seconds
@@ -29,7 +31,7 @@ void read_data(uint8_t* data_array,uint8_t* counter1)
    
            printf(":\r>\n"); 
            row=0;
-           //nrf_delay_ms(500);
+           nrf_delay_ms(500);
           }
         }
 }
@@ -43,10 +45,11 @@ void read_parameters(uint8_t* data_array,uint8_t* counter1){
      }
         if(row==0){
           step_depth[column] = *((float*)(&data_buffer)); 
-          //printf("\n:%f",step_depth[column]);
         }
         else if(row>=1 && row<=9){   
+        
              thresholds[row-1][column] = *((float*)(&data_buffer));
+        
              //if(row-1==7){printf("\n%d:%f",row-1,thresholds[row-1][column]);}       
         }
         else if(row>=10 && row<=18){   
@@ -55,12 +58,18 @@ void read_parameters(uint8_t* data_array,uint8_t* counter1){
         }
         else if(row>=19 && row<=27){   
              lda_info[row-19][column] = *((float*)(&data_buffer));
+             // printf("\n%d,%d:%f",row-19,column,lda_info[row-19][column]);
+
              //if(row-12==2 ||row-12==5 ||row-12==6){printf("\n%d:%f",row-12,ldas[row-12][column]);}       
         }
-        else if (row==28 && column==0)
+        else if (row==28 && column==0){
           dtth =  *((float*)(&data_buffer));
+           column=9;
+          
+        }
         else if (row==28 && column==1){
           TG = *((float*)(&data_buffer));
+         
           column=9;
           }
 
@@ -73,22 +82,28 @@ void read_parameters(uint8_t* data_array,uint8_t* counter1){
           row++;
           //printf("\r\nGET 9\r\n");       
           if(row==1){
-           printf("\r\nGET STEP DEPTH\r\n");   
+           printf("\r\nGET DEPTH\r\n");   
           }    
           else if(row==10){
-           printf("GET ALL THS \r\n");
+           printf("GET THS \r\n");
           
           }    
           else if(row==19){
-           printf("GET ALL LDA INFO\r\n");
+           printf("GET MASK\r\n");
            
           }
           else if(row==28){
-           printf("GET ALL LDA W\r\n");
+          printf("GET T %f\r\n",thresholds[7][0]);
+          printf("GET T %f\r\n",thresholds[7][1]);
+          
+          printf("GET W %f\r\n",lda_info[0][0]);
+          printf("GET W %f\r\n",lda_info[0][1]);
           }
           else if(row==29){
-            printf("GET dtth %f\r\n",dtth);
-          
+          printf("DEPTH 1 %f\r\n",step_depth[0]);
+          printf("DEPTH 2 %f\r\n",step_depth[1]);
+           printf("dtth %f\r\n",dtth);
+           printf("TG %f\r\n",TG);
             parameter_flag=0;
             data_flag=1;
             (*counter1) = 0;
@@ -109,6 +124,7 @@ void feature_extract()
 
   struct freq_info my_freq[sensors];
   float32_t means[sensors] = {0};
+  float32_t smoothness[sensors] = {0};
   float32_t shift[sensors] = {0};
   float32_t counts[sensors] = {0};
   float32_t depth[sensors] = {0};
@@ -133,29 +149,44 @@ void feature_extract()
   printf("C2 is %d\r\n",counter);
 
   printf("dominant frequency is %d\r\n",my_freq[1].dominant_freq);
-  //printf("sumLoco is %f\r\n",my_freq[1].sumLoco);
-  //printf("sumFreeze is %f\r\n",my_freq[1].sumFreeze);
+  printf("sumLoco is %f\r\n",my_freq[1].sumLoco);
+  printf("sumFreeze is %f\r\n",my_freq[1].sumFreeze);
   printf("FI is %f\r\n",my_freq[1].freezingIndex);
   nrf_gpio_pin_toggle(LED_3);
   
-  get_portion(means,portion);
+  get_smoothness(smoothness);
+  counter = app_timer_cnt_get();
+  counter = counter-now;
+  printf("C3 is %d\r\n",counter);
   batch_counter++;
 
   for(int sensor=0;sensor<sensors;sensor++){
-     result = result+lda_info[0][sensor]*shift[sensor];
-     result = result+lda_info[1][sensor]*depth[sensor];
-     result = result+lda_info[2][sensor]*counts[sensor];
-     result = result+lda_info[3][sensor]*entropy[sensor];
-     result = result+lda_info[4][sensor]*my_freq[sensor].sumLoco;
-     result = result+lda_info[5][sensor]*my_freq[sensor].dominant_freq;
-     result = result+lda_info[6][sensor]*my_freq[sensor].freezingIndex;
-     result = result+lda_info[7][sensor]*my_freq[sensor].sumFreeze;
-     result = result+lda_info[7][sensor]*portion[sensor];     
-  } 
-  if(TG==0){
-    FoG = result<=dtth ? 1:0;
-  }else{
-    FoG = result>=dtth ? 1:0;
+    if(my_freq[sensor].sumFreeze>thresholds[7][sensor]){
+      thresholds_Flag=1;
+    }
+  }
+
+  if(thresholds_Flag==1){
+    FoG=1;
+  }
+  else{
+    for(int sensor=0;sensor<sensors;sensor++){
+       result = result+lda_info[0][sensor]*shift[sensor];
+       result = result+lda_info[1][sensor]*depth[sensor];
+       result = result+lda_info[2][sensor]*counts[sensor];
+       result = result+lda_info[3][sensor]*entropy[sensor];
+       result = result+lda_info[4][sensor]*my_freq[sensor].sumLoco;
+       result = result+lda_info[5][sensor]*my_freq[sensor].dominant_freq;
+       result = result+lda_info[6][sensor]*my_freq[sensor].freezingIndex;
+       result = result+lda_info[7][sensor]*my_freq[sensor].sumFreeze;
+       result = result+lda_info[7][sensor]*smoothness[sensor];     
+    } 
+
+    if(TG==0){
+      FoG = result<=dtth ? 1:0;
+    }else{
+      FoG = result>=dtth ? 1:0;
+    }
   }
 
   nrf_delay_ms(500);
@@ -171,7 +202,7 @@ void get_mean(float32_t* means)
 {
 	for(uint8_t i=0;i<sensors;i++)
 	{
-		for(uint8_t j=0;j<128;j++)
+		for(uint8_t j=0;j<windowsize;j++)
 		{
 			 means[i]+=data[j][i];
 		}
@@ -180,6 +211,21 @@ void get_mean(float32_t* means)
 
 }
 
+/**
+This function is used to get the smoothness of test data
+*/
+void get_smoothness(float32_t* smoothness)
+{
+	for(uint8_t i=0;i<sensors;i++)
+	{
+		for(uint8_t j=1;j<windowsize;j++)
+		{
+			 smoothness[i]+=(data[j][i]-data[j-1][i])*(data[j][i]-data[j-1][i]);
+		}
+               smoothness[i] = smoothness[i]/windowsize;
+	}
+
+}
 /**
 This function is used to get the portion of test data
 */
@@ -190,7 +236,7 @@ void get_portion(float32_t* means,float32_t* portion)
 	{
                 if(mask[8][i]==1)
                 {
-                  for(uint8_t j=0;j<128;j++)
+                  for(uint8_t j=0;j<windowsize;j++)
                   {
                            if(data[j][i]>means[sensors]){
                            counter++;

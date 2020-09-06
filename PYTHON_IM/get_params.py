@@ -68,4 +68,4 @@ def get_params(params):
         features = temp
         Features = np.asarray(features)
 
-    return patient,sensors,classifer,TH_Features,TH_params,LDA_Features,Features
+    return Auto,patient,sensors,classifer,TH_Features,TH_params,LDA_Features,Features

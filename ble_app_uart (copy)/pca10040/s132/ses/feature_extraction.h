@@ -20,13 +20,15 @@
 
 int parameter_flag = 1;
 int data_flag = 0;
+int thresholds_Flag=0;
+
 uint8_t thresholds_counter = 0;
 float32_t thresholds[9][9];
 float32_t step_depth[9];
 float32_t TG;
 float32_t dtth;
 
-int thresholds_info[9]={0};
+
 float32_t lda_info[9][9]={0};
 float32_t mask[9][9]={0};
 int data[128][9] = {0};
@@ -56,6 +58,7 @@ void read_data(uint8_t* data_array,uint8_t* counter1);
 void read_parameters(uint8_t* data_array,uint8_t* counter1);
 void get_freq(struct freq_info* my_freq,float32_t* means);
 void get_mean(float32_t* means);
+void get_smoothness(float32_t* mean);
 void get_interval(float32_t* shift,float32_t* counts,float32_t* depth);
 void get_portion(float32_t* means,float32_t* portion);
 void get_entropy(float32_t* entropy);
