@@ -1,7 +1,68 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
 
-\bibitem{Keshav}
-S.~Keshav, ``How to read a paper,'' {\em SIGCOMM Comput. Commun. Rev.},
-  vol.~37, pp.~83--84, July 2007.
+\bibitem{RAS}
+I.~Lim, E.~van Wegen, C.~Goede, M.~Deutekom, A.~Nieuwboer, A.-M. Willems,
+  D.~Jones, L.~Rochester, and G.~Kwakkel, ``Effects of external rhythmical
+  cueing on gait in patients with parkinson's disease: A systematic review,''
+  {\em Clinical rehabilitation}, vol.~19, pp.~695--713, 11 2005.
+
+\bibitem{PD}
+A.~E. Lang and A.~M. Lozano, ``Parkinson's disease,'' {\em New England Journal
+  of Medicine}, vol.~339, no.~16, pp.~1130--1143, 1998.
+\newblock PMID: 9770561.
+
+\bibitem{PD1}
+S.~Fahn, ``Description of parkinson's disease as a clinical syndrome,'' {\em
+  Annals of the New York Academy of Sciences}, vol.~991, pp.~1--14, 07 2003.
+
+\bibitem{medicin}
+R.~Iansek and M.~Danoudis, ``Freezing of gait in parkinson's disease: Its
+  pathophysiology and pragmatic approaches to management,'' {\em Movement
+  Disorders Clinical Practice}, vol.~4, no.~3, p.~290—297, 2017.
+
+\bibitem{RAS1}
+J.~Hausdorff, J.~Lowenthal, T.~Herman, L.~Gruendlinger, C.~Peretz, and
+  N.~Giladi, ``Rhythmic auditory stimulation modulates gait variability in
+  parkinson's disease,'' {\em The European journal of neuroscience}, vol.~26,
+  pp.~2369--75, 10 2007.
+
+\bibitem{FI}
+S.~T. Moore, H.~G. MacDougall, and W.~G. Ondo, ``Ambulatory monitoring of
+  freezing of gait in parkinson's disease,'' {\em Journal of neuroscience
+  methods}, vol.~167, p.~340—348, January 2008.
+
+\bibitem{FI1}
+M.~{Bachlin}, M.~{Plotnik}, D.~{Roggen}, I.~{Maidan}, J.~M. {Hausdorff},
+  N.~{Giladi}, and G.~{Troster}, ``Wearable assistant for parkinson’s disease
+  patients with the freezing of gait symptom,'' {\em IEEE Transactions on
+  Information Technology in Biomedicine}, vol.~14, no.~2, pp.~436--446, 2010.
+
+\bibitem{Flo}
+F.~Demrozi, R.~Bacchin, S.~Tamburin, M.~Cristani, and G.~Pravadelli, ``Towards
+  a wearable system for predicting the freezing of gait in people affected by
+  parkinson's disease,'' {\em IEEE Journal of Biomedical and Health
+  Informatics}, vol.~PP, pp.~1--1, 11 2019.
+
+\bibitem{ML}
+N.~K. {Orphanidou}, A.~{Hussain}, R.~{Keight}, P.~{Lishoa}, J.~{Hind}, and
+  H.~{Al-Askar}, ``Predicting freezing of gait in parkinsons disease patients
+  using machine learning,'' in {\em 2018 IEEE Congress on Evolutionary
+  Computation (CEC)}, pp.~1--8, 2018.
+
+\bibitem{symptoms}
+P.~{Tahafchi} and J.~W. {Judy}, ``Freezing-of-gait detection using
+  wearable-sensor technology and neural-network classifier,'' in {\em 2019 IEEE
+  SENSORS}, pp.~1--4, 2019.
+
+\bibitem{sammpleE}
+J.~Richman and J.~Moorman, ``Physiological time-series analysis using
+  approximate entropy and sample entropy,'' {\em American journal of
+  physiology. Heart and circulatory physiology}, vol.~278, pp.~H2039--49, 07
+  2000.
+
+\bibitem{WM}
+S.~Rezvanian and T.~Lockhart, ``Towards real-time detection of freezing of gait
+  using wavelet transform on wireless accelerometer data,'' {\em Sensors},
+  vol.~16, p.~475, 04 2016.
 
 \end{thebibliography}

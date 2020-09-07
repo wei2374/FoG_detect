@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2020.8.24)  6 SEP 2020 22:38
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2020.8.24)  7 SEP 2020 18:29
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -750,21 +750,6 @@ LaTeX Warning: Unused global option(s):
 LaTeX Warning: Label `fig:y equals x' multiply defined.
 
 
-LaTeX Warning: Label `fig:y equals x' multiply defined.
-
-
-LaTeX Warning: Label `sub@fig:y equals x' multiply defined.
-
-
-LaTeX Warning: Label `fig:three graphs' multiply defined.
-
-
-LaTeX Warning: Label `fig:y equals x' multiply defined.
-
-
-LaTeX Warning: Label `fig:y equals x' multiply defined.
-
-
 LaTeX Warning: Label `sub@fig:y equals x' multiply defined.
 
 
@@ -778,48 +763,24 @@ LaTeX Warning: Label `fig:y equals x' multiply defined.
 
 
 LaTeX Warning: Label `sub@fig:y equals x' multiply defined.
-
-
-LaTeX Warning: Label `fig:y equals x' multiply defined.
-
-
-LaTeX Warning: Label `sub@fig:y equals x' multiply defined.
-
-
-LaTeX Warning: Label `fig:three graphs' multiply defined.
-
-
-LaTeX Warning: Label `fig:y equals x' multiply defined.
-
-
-LaTeX Warning: Label `sub@fig:y equals x' multiply defined.
-
-
-LaTeX Warning: Label `fig:y equals x' multiply defined.
-
-
-LaTeX Warning: Label `sub@fig:y equals x' multiply defined.
-
-
-LaTeX Warning: Label `fig:three graphs' multiply defined.
 
 )
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 68.
-LaTeX Font Info:    ... okay on input line 68.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 68.
-LaTeX Font Info:    ... okay on input line 68.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 68.
-LaTeX Font Info:    ... okay on input line 68.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 68.
-LaTeX Font Info:    ... okay on input line 68.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 68.
-LaTeX Font Info:    ... okay on input line 68.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 68.
-LaTeX Font Info:    ... okay on input line 68.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 68.
-LaTeX Font Info:    ... okay on input line 68.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 67.
+LaTeX Font Info:    ... okay on input line 67.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 67.
+LaTeX Font Info:    ... okay on input line 67.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 67.
+LaTeX Font Info:    ... okay on input line 67.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 67.
+LaTeX Font Info:    ... okay on input line 67.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 67.
+LaTeX Font Info:    ... okay on input line 67.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 67.
+LaTeX Font Info:    ... okay on input line 67.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 67.
+LaTeX Font Info:    ... okay on input line 67.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -884,7 +845,7 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
 \AtBeginShipoutBox=\box42
-Package hyperref Info: Link coloring ON on input line 68.
+Package hyperref Info: Link coloring ON on input line 67.
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
@@ -894,9 +855,9 @@ Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
 \c@section@level=\count137
 )
-LaTeX Info: Redefining \ref on input line 68.
-LaTeX Info: Redefining \pageref on input line 68.
-LaTeX Info: Redefining \nameref on input line 68.
+LaTeX Info: Redefining \ref on input line 67.
+LaTeX Info: Redefining \pageref on input line 67.
+LaTeX Info: Redefining \nameref on input line 67.
 
 (./main.out) (./main.out)
 \@outlinefile=\write3
@@ -905,176 +866,164 @@ LaTeX Info: Redefining \nameref on input line 68.
 \c@lstlisting=\count138
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
- <./img/tum.pdf, id=48, 80.3pt x 43.16125pt>
-File: ./img/tum.pdf Graphic file (type pdf)
-
-<use ./img/tum.pdf>
-Package pdftex.def Info: ./img/tum.pdf used on input line 115.
-(pdftex.def)             Requested size: 40.14989pt x 21.58057pt.
- <./img/ldv.pdf, id=49, 170.7168pt x 93.89409pt>
-File: ./img/ldv.pdf Graphic file (type pdf)
-
-<use ./img/ldv.pdf>
-Package pdftex.def Info: ./img/ldv.pdf used on input line 115.
-(pdftex.def)             Requested size: 42.6791pt x 23.47345pt.
  [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
 
 
 
- <./img/tum.pdf> <./img/ldv.pdf>]
-<./img/procedures.png, id=67, 827.09pt x 582.175pt>
+] <./img/procedures.png, id=77, 827.09pt x 582.175pt>
 File: ./img/procedures.png Graphic file (type png)
- <use ./img/procedures.png>
-Package pdftex.def Info: ./img/procedures.png used on input line 127.
+
+<use ./img/procedures.png>
+Package pdftex.def Info: ./img/procedures.png used on input line 122.
 (pdftex.def)             Requested size: 240.71094pt x 169.43048pt.
-
-[2 <./img/procedures.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 236--236
-[]\OT1/cmss/m/n/10 sample en-
- []
-
-
-Underfull \hbox (badness 3098) in paragraph at lines 240--240
-[]\OT1/cmss/m/n/10 max cor-re-la-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 259--259
-[]\OT1/cmss/m/n/10 loco-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 259--259
-\OT1/cmss/m/n/10 band+freeze-
- []
-
-
-Overfull \hbox (2.54721pt too wide) in paragraph at lines 230--269
-[][] 
- []
-
-<./img/training_data_s2_p2.png, id=83, 383.9946pt x 302.5704pt>
+ [2 <./img/procedures.png>]
+<./img/training_data_s2_p2.png, id=92, 383.9946pt x 302.5704pt>
 File: ./img/training_data_s2_p2.png Graphic file (type png)
 
 <use ./img/training_data_s2_p2.png>
-Package pdftex.def Info: ./img/training_data_s2_p2.png used on input line 278.
+Package pdftex.def Info: ./img/training_data_s2_p2.png used on input line 192.
 (pdftex.def)             Requested size: 240.71094pt x 189.6739pt.
 
-<./img/acc_step_s1_p2.png, id=84, 381.1038pt x 301.6068pt>
+<./img/acc_step_s1_p2.png, id=93, 381.1038pt x 301.6068pt>
 File: ./img/acc_step_s1_p2.png Graphic file (type png)
 
 <use ./img/acc_step_s1_p2.png>
-Package pdftex.def Info: ./img/acc_step_s1_p2.png used on input line 285.
+Package pdftex.def Info: ./img/acc_step_s1_p2.png used on input line 199.
 (pdftex.def)             Requested size: 240.71094pt x 190.5011pt.
 
-<./img/step_interval_fast_s2_p2.png, id=85, 1128.3756pt x 162.8484pt>
+<./img/step_interval_fast_s2_p2.png, id=94, 1128.3756pt x 162.8484pt>
 File: ./img/step_interval_fast_s2_p2.png Graphic file (type png)
 
 <use ./img/step_interval_fast_s2_p2.png>
 Package pdftex.def Info: ./img/step_interval_fast_s2_p2.png used on input line 
-294.
+208.
 (pdftex.def)             Requested size: 512.14963pt x 73.91722pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 311--311
-[][]\OT1/cmss/bx/n/12 FeatureSelection|
+
+Package caption Warning: \label without proper reference on input line 281.
+See the caption package documentation for explanation.
+
+
+LaTeX Warning: Reference `ft' on page 3 undefined on input line 238.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 247--247
+[]\OT1/cmss/m/n/10 sample en-
  []
 
-[3]
-Underfull \hbox (badness 10000) in paragraph at lines 331--331
-[][]\OT1/cmss/bx/n/12 Thresholds and fea-ture re-duc-tion|
+
+Underfull \hbox (badness 3098) in paragraph at lines 251--251
+[]\OT1/cmss/m/n/10 max cor-re-la-
  []
 
-[4 <./img/training_data_s2_p2.png (PNG copy)> <./img/acc_step_s1_p2.png (PNG co
-py)> <./img/step_interval_fast_s2_p2.png (PNG copy)>]
-<./img/classifier.png, id=106, 379.1766pt x 292.4526pt>
+
+Underfull \hbox (badness 10000) in paragraph at lines 270--270
+[]\OT1/cmss/m/n/10 loco-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 270--270
+\OT1/cmss/m/n/10 band+freeze-
+ []
+
+
+Overfull \hbox (2.54721pt too wide) in paragraph at lines 241--281
+[][]
+ []
+
+[3] [4 <./img/training_data_s2_p2.png (PNG copy)> <./img/acc_step_s1_p2.png (PN
+G copy)> <./img/step_interval_fast_s2_p2.png (PNG copy)>]
+<./img/classifier.png, id=132, 379.1766pt x 292.4526pt>
 File: ./img/classifier.png Graphic file (type png)
 
 <use ./img/classifier.png>
-Package pdftex.def Info: ./img/classifier.png used on input line 391.
+Package pdftex.def Info: ./img/classifier.png used on input line 369.
 (pdftex.def)             Requested size: 230.46576pt x 177.75323pt.
 
-<./img/evaluation.png, id=107, 739.76375pt x 274.02374pt>
+<./img/evaluation.png, id=133, 739.76375pt x 274.02374pt>
 File: ./img/evaluation.png Graphic file (type png)
 
 <use ./img/evaluation.png>
-Package pdftex.def Info: ./img/evaluation.png used on input line 400.
+Package pdftex.def Info: ./img/evaluation.png used on input line 376.
 (pdftex.def)             Requested size: 230.46576pt x 85.36879pt.
-
-<./img/MutualA.png, id=108, 1107.6582pt x 298.2342pt>
+ [5 <./img/classifier.png (PNG copy)> <./img/evaluation.png>] <./img/MutualA.pn
+g, id=146, 1107.6582pt x 298.2342pt>
 File: ./img/MutualA.png Graphic file (type png)
- <use ./img/MutualA.png>
-Package pdftex.def Info: ./img/MutualA.png used on input line 425.
+
+<use ./img/MutualA.png>
+Package pdftex.def Info: ./img/MutualA.png used on input line 401.
 (pdftex.def)             Requested size: 240.71094pt x 64.8108pt.
 
-<./img/spearmannA.png, id=109, 1107.6582pt x 302.5704pt>
+<./img/spearmannA.png, id=147, 1107.6582pt x 302.5704pt>
 File: ./img/spearmannA.png Graphic file (type png)
 
 <use ./img/spearmannA.png>
-Package pdftex.def Info: ./img/spearmannA.png used on input line 432.
+Package pdftex.def Info: ./img/spearmannA.png used on input line 408.
 (pdftex.def)             Requested size: 240.71094pt x 65.75313pt.
 
-<./img/MutualF.png, id=110, 1107.6582pt x 286.1892pt>
+<./img/MutualF.png, id=148, 1107.6582pt x 286.1892pt>
 File: ./img/MutualF.png Graphic file (type png)
  <use ./img/MutualF.png>
-Package pdftex.def Info: ./img/MutualF.png used on input line 439.
+Package pdftex.def Info: ./img/MutualF.png used on input line 415.
 (pdftex.def)             Requested size: 240.71094pt x 62.19324pt.
 
-<./img/spearmannF.png, id=111, 1107.6582pt x 294.3798pt>
+<./img/spearmannF.png, id=149, 1107.6582pt x 294.3798pt>
 File: ./img/spearmannF.png Graphic file (type png)
 
 <use ./img/spearmannF.png>
-Package pdftex.def Info: ./img/spearmannF.png used on input line 446.
+Package pdftex.def Info: ./img/spearmannF.png used on input line 422.
 (pdftex.def)             Requested size: 240.71094pt x 63.97318pt.
- [5 <./img/classifier.png (PNG copy)> <./img/evaluation.png>] <./img/method1.pn
-g, id=125, 1522.68875pt x 910.40125pt>
+
+<./img/method1.png, id=151, 1522.68875pt x 910.40125pt>
 File: ./img/method1.png Graphic file (type png)
 
 <use ./img/method1.png>
-Package pdftex.def Info: ./img/method1.png used on input line 500.
+Package pdftex.def Info: ./img/method1.png used on input line 474.
 (pdftex.def)             Requested size: 230.46576pt x 137.79063pt.
- <./img/method2.png, id=126, 1589.94pt x 937.5025pt>
+ <./img/method2.png, id=152, 1589.94pt x 937.5025pt>
 File: ./img/method2.png Graphic file (type png)
 
 <use ./img/method2.png>
-Package pdftex.def Info: ./img/method2.png used on input line 507.
+Package pdftex.def Info: ./img/method2.png used on input line 481.
 (pdftex.def)             Requested size: 230.46576pt x 135.88431pt.
 
-Underfull \hbox (badness 1270) in paragraph at lines 526--527
+Underfull \hbox (badness 1270) in paragraph at lines 496--497
 \OT1/cmss/m/n/10 The im-ple-men-ta-tion is mainly di-vided into three part:
  []
 
-[6 <./img/MutualA.png (PNG copy)> <./img/spearmannA.png (PNG copy)> <./img/Mutu
-alF.png (PNG copy)> <./img/spearmannF.png (PNG copy)> <./img/method1.png> <./im
-g/method2.png>] (./main.bbl
+(./main.bbl
 
 LaTeX Font Warning: Font shape `OT1/cmss/m/it' in size <10> not available
-(Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 4.
+(Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 7.
 
-)
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 548.
- [7
-
-]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 548.
+[6])
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 522.
+ [7 <./img/MutualA.png (PNG copy)> <./img/spearmannA.png (PNG copy)> <./img/Mut
+ualF.png (PNG copy)> <./img/spearmannF.png (PNG copy)> <./img/method1.png> <./i
+mg/method2.png>]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 522.
  (./main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 548.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 548.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 522.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 522.
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: B2B7299331DADCE986DD67EF8A8B0CD6;645.
+(rerunfilecheck)             Checksum: 4BC307273DD623B49C1A4D0BB4E89802;664.
+
+
+LaTeX Warning: There were undefined references.
 
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 548.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 522.
  ) 
 Here is how much of TeX's memory you used:
- 11315 strings out of 494901
- 165125 string characters out of 6178617
- 418780 words of memory out of 5000000
- 14414 multiletter control sequences out of 15000+600000
+ 11338 strings out of 494901
+ 165187 string characters out of 6178617
+ 421892 words of memory out of 5000000
+ 14429 multiletter control sequences out of 15000+600000
  11500 words of font info for 41 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 36i,13n,58p,733b,536s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 36i,10n,58p,886b,536s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/shar
 e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texl
@@ -1088,10 +1037,10 @@ ts/cm/cmss8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/c
 mss9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10
 .pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi10.pfb>
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on main.pdf (7 pages, 761880 bytes).
+Output written on main.pdf (7 pages, 769530 bytes).
 PDF statistics:
- 200 PDF objects out of 1000 (max. 8388607)
- 159 compressed objects within 2 object streams
- 43 named destinations out of 1000 (max. 500000)
- 159 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 226 PDF objects out of 1000 (max. 8388607)
+ 187 compressed objects within 2 object streams
+ 53 named destinations out of 1000 (max. 500000)
+ 149 words of extra memory for PDF output out of 10000 (max. 10000000)
 
