@@ -1,4 +1,5 @@
 import numpy as np
+import sys
 from get_features import get_features
 from threshold_selection import threshold_selection
 from auto_configuration import auto_configuration
@@ -22,6 +23,9 @@ def self_adaptive(data,pos,metadata,Features,TH_Features,TH_params,LDA_Features,
     Train_data = data[index3,:]
     step_depth = np.zeros(metadata["sensors"])
     # get features
+    print "\r\n"
+    print "Feature extraction starts..."
+    sys.stdout.flush()
     for sensor in range(metadata["sensors"]):
         # Feature extraction for one feature
         
@@ -61,34 +65,53 @@ def self_adaptive(data,pos,metadata,Features,TH_Features,TH_params,LDA_Features,
         # Threshold selection for one sensor
         filter_result[sensor] = threshold_selection(TH_Features,means,features,sensor)
 
-    print "finish threshold selection"
+    print "\r\n"
+    print "Feature extraction finishes"
+    sys.stdout.flush()
+
     # Filter out data which is not part of experiment
     filter_ori = np.asarray(features["labels"]!=0).flatten()
-    
+    #plt.plot(filter_ori)
+    #plt.show()
     # Filter out data which is not within the thresholds
     for sensor in range(metadata["sensors"]):
         filter_ori = filter_result[float(sensor)]&filter_ori
-
+    #plt.plot(filter_ori)
+    #plt.show()
+    
+    #plt.plot(features["labels"])
+    #plt.show()
+    
+    
     mask = np.zeros([9,9])
 
-    print "start feature selection"
+    print "\r\n"
+    print "Feature selection starts"
+    sys.stdout.flush()
+
     # Auto configuration will select features that to be processed in LDA
-    if(Auto==2):
+    if(int(Auto)==2):
         auto_configuration(features_all,Features,filter_ori,metadata["sensors"],mask)
     else:
         for fea in (LDA_Features):
             for sensor in range(metadata["sensors"]):
                 mask[fea,sensor]=1
-        
-        
     
-    #plt.plot(filter_ori)
-    #plt.show()
-    #plt.plot(features["labels"])
-    #plt.show()
-    print "start LDA"
-    W,dtth,TG = lda_analysis(features_all,Features,filter_ori,metadata,mask)
+    print mask
+    print "\r\n"
+    print "Feature selection finishes"
+    sys.stdout.flush()
 
+    print "\r\n"
+    print "LDA starts"
+    sys.stdout.flush()
+
+    if(int(Auto)==2):
+        W,dtth,TG = lda_analysis(features_all,Features,filter_ori,metadata,mask)
+    else:
+        W,dtth,TG = lda_analysis(features_all,LDA_Features,filter_ori,metadata,mask)
+
+    
     return W,dtth,TG,mask,step_depth,thresholds
 
     

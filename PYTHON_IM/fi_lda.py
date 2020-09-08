@@ -2,7 +2,8 @@ from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
 import numpy as np
 import matplotlib.pyplot as plt
 import classifier
-
+import sys
+import os
 def lda_analysis(features,Features,filter_ori,metadata,mask):
     training_X = np.zeros(np.size(features[0]["shift"]))
     sensors = metadata["sensors"]
@@ -73,24 +74,30 @@ def lda_analysis(features,Features,filter_ori,metadata,mask):
 
     X_train = lda.fit_transform(training_x.transpose(), training_y)
     W_old = lda.coef_
-    
+    print "\r\n"
+    print "LDA finishes"
+    sys.stdout.flush()
+
     # refill W
    
     cl=0
     W = np.zeros(len(Features)*sensors)
-    print W
+    #print W
 
     for i in range(len(Features)):    
         for sensor in range(sensors):
-            if(mask[i,sensor]==0):
+            if(mask[Features[i],sensor]==0):
                 W[sensors*(i)+sensor] = 0
             else:
-                print W_old.shape
+                #print W
+                #print i
+                #print sensor
+                
                 W[sensors*(i)+sensor] = W_old[0,cl]
                 cl=cl+1
-    
+    #print W
 
-    print "finish lda"
+    #print "finish lda"
 
     ## Prepare classifier
     FoGs = []
@@ -107,9 +114,50 @@ def lda_analysis(features,Features,filter_ori,metadata,mask):
     FoGn = len(np.array(FoGs))
     
 
-    dtth,TG = classifier.classifier1(noFoG_av,FoG_av,X_train,training_y,FoGn,noFoGn)
-    print "finish classify"
-    return W,dtth,TG
+
+    if(metadata["classifier"]==1):
+        dtth,TG = classifier.classifier1(noFoG_av,FoG_av,X_train,training_y,FoGn,noFoGn)
+    else:
+        dtth,TG = classifier.classifier2(noFoG_av,FoG_av,X_train,training_y,FoGn,noFoGn)
+
+    print "\r\n"
+    print "Classification finishes"
+    sys.stdout.flush()
+    
+    dirname = os.path.dirname(__file__)
+    name = os.path.join(dirname,"DATA/P1.txt")
+
+    #print X_train.shape()
+    with open(name, 'w') as f:
+        for item in range(len(X_train)):
+            f.write("%s\n" % X_train[item])
+    f.close()
+    
+    name = os.path.join(dirname,"DATA/L1.txt")
+
+    with open(name, 'w') as f:
+        for item in range(len(training_y)):
+             f.write("%s\n" % training_y[item])
+    f.close()
+   
+    result = X_train>dtth
+    name = os.path.join(dirname,"DATA/R1.txt")
+    with open(name, 'w') as f:
+        for item in range(len(result)):
+            f.write("%s\n" % result[item])
+    f.close()
+
+    print "Saving result finishes"
+    sys.stdout.flush()
+    '''
+    plt.figure()
+    result = X_train>dtth
+    plt.plot(result)
+    plt.show()
+    
+    plt.figure()
+    plt.plot(training_y)
+    plt.show()
     
     plt.figure()
     for points in range(len(training_y)):
@@ -123,9 +171,11 @@ def lda_analysis(features,Features,filter_ori,metadata,mask):
     plt.plot(dtth*np.ones(np.size(X_train)),'y.')
       
     plt.show()
-        
+     '''
     
 
+    
+    return W,dtth,TG
 
                 
                 

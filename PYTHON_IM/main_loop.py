@@ -9,6 +9,7 @@ from scipy import fft
 import pyfftw
 import sys
 from get_params import get_params
+import os
 
 def main_loop(argv):
     print "INTO PYTHON CODE"
@@ -17,24 +18,44 @@ def main_loop(argv):
     Auto,patient,sensors,classifer,TH_Features,TH_params,LDA_Features,Features = get_params(sys.argv)
 
     # DEBUG::
+    Auto=2
     '''
     patient="1"
-    sensors=2
-    classifer=3
+    sensors=6
+    classifer=2
 
-    LDA_Features=[1,2]
-    Features=[0,1,2,3,4,5,6,7,8]
+    LDA_Features=[0,5,6]
+    Features=[0,5,6,7]
 
-    Auto=1
-      
-    print Features
-    print LDA_Features
-    print TH_Features
-    print TH_params
-    print sensors
-'''
 
-  
+    Auto=2
+    
+    print Auto
+   '''
+    if(int(Auto)==2):
+        sensors = 3
+        classifer = 2
+        LDA_Features=[]
+        Features = np.asarray([0,1,2,4,5,6,7,8])
+        print "Auto configuration is enabled"
+        print "The following features will be use for lda"
+        print Features
+        sys.stdout.flush()
+    else:
+        print "Manual mode is enabled"
+        print "The following features will be use for lda"
+        print LDA_Features
+        sys.stdout.flush()
+    #print Features
+    #print LDA_Features
+    #print TH_Features
+    #print TH_params
+    #print sensors
+    #print Auto
+    
+    TH_Features = [7]
+    TH_params = [5]
+
 
     #creat metadata for the training
     metadata = {
@@ -44,22 +65,25 @@ def main_loop(argv):
         "sensors":int(sensors),
         "classifier":int(classifer)   
     }
-
-
-
-    #print Features
         
 
     #load data from DAPHNET dataset
+    dirname = os.path.dirname(__file__)
     if(int(patient)==2):
-        name = ("/home/wei/Documents/Forschung/DAPHNET/dataset_fog_release/dataset/S02R02.txt")
+        name = os.path.join(dirname,"../dataset/S02R02.txt")
     else:
-        name = ("/home/wei/Documents/Forschung/DAPHNET/dataset_fog_release/dataset/S0"+patient+"R01.txt")
+        name1 = ("../dataset/S0"+patient+"R01.txt")
+        name = os.path.join(dirname,name1)
 
+    print "Reading data from dataset..."
+    sys.stdout.flush()
+    
     data = np.loadtxt(name, usecols=range(0,11))
 
     #%%
     # Relabel the data according to its window
+    print "Labeling data..."
+    sys.stdout.flush()
     labels = labeling.relabel(data[:,10],metadata)
     data[:,10] = labels
 
@@ -80,10 +104,13 @@ def main_loop(argv):
     pos = Pos[int(patient)-1,:,:]
 
     #%%
+    print "Start training..."
+    sys.stdout.flush()
     W,dtth,TG,mask,step_depth,thresholds = sa.self_adaptive(data,pos,metadata,Features,TH_Features,TH_params,LDA_Features,Auto)
 
     # fill data
-
+    print "writing parameters into file..."
+    sys.stdout.flush()
     Step_depth = np.zeros((9,),dtype=float)
     Thresholds = np.zeros((9,9),dtype=float)
     Paras = np.zeros((9*9,),dtype=float)
@@ -92,25 +119,30 @@ def main_loop(argv):
     for i in range(lens):
         Step_depth[i] = step_depth[i] 
 
-    print thresholds.shape
+    #print thresholds.shape
     x,lens = thresholds.shape
     for i in range(lens):
         for j in range(9):
             Thresholds[j][i] = thresholds[j][i]     
 
-    print W.shape
-    lens = len(W)
-
+    #print W.shape
+    
     counter=0
     for i in range(9):
-        sensor=0
-        while(sensor<int(sensors)):
-            Paras[i*9+sensor] = W[counter]
-            counter=counter+1 
-            sensor=sensor+1
+        for sensor in range(9):
+            if(mask[i,sensor]==1):
+                Paras[i*9+sensor] = W[counter]
+                counter=counter+1 
+    
+            
+    #print "finishing filling W..."    
 
     ## save into file
-    with open('Parameters/P1T.txt', 'w') as f:
+    dirname = os.path.dirname(__file__)
+    name = os.path.join(dirname,"Parameters/P1T.txt")
+
+    #print name
+    with open(name, 'w') as f:
         for item in Step_depth:
             f.write("%s\n" % item)
         for row in Thresholds:
@@ -119,15 +151,16 @@ def main_loop(argv):
             np.savetxt(f, row)
         for item in Paras:
             f.write("%s\n" % item)        
-    
+
         f.write("%s\n" % dtth)
         f.write("%s\n" % TG)
 
-        
-        
+    print "finishing training..."    
+    sys.stdout.flush()    
 
 
     f.close()
+    return
 # %%
 
 if __name__ == '__main__':

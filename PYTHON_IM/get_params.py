@@ -38,7 +38,7 @@ def get_params(params):
     Auto = params[31]
     if(Auto==2):
         sensors = 9
-        classifer = 3
+        classifer = 2
         LDA_Features=[]
         Features = np.asarray([0,1,2,3,4,5,6,7,8])
 

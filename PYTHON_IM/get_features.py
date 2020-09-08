@@ -1,4 +1,5 @@
 import numpy as np
+import sys
 from sampen import sampen
 from scipy.signal import butter, lfilter, freqz
 from scipy import signal
@@ -8,7 +9,7 @@ import matplotlib.pyplot as plt
 
 #%%
 def get_features(Features,Train_data,Labels,metadata,pos_walk,sensor): 
-    print "Getting features"
+   
     features={
         "shift": np.ones(np.size(Train_data)/32),
         "depth": np.zeros(np.size(Train_data)/32),
@@ -22,25 +23,34 @@ def get_features(Features,Train_data,Labels,metadata,pos_walk,sensor):
         "portion" : np.zeros(np.size(Train_data)/32)
     }
     step_depth=0
-
+    flag_step=0
+    flag_freq=0
+    
     for i in range(len(Features)):
-        if(Features[i]==1 or Features[i]==0 or Features[i]==2):
-            print "Getting shift and depth and counts"
+        if(flag_step==0 and (Features[i]==1 or Features[i]==0 or Features[i]==2)):
+            print "Getting shift and depth and counts for sensor",(int(sensor)/3)," on axis ",(int(sensor)%3),"..."
+            sys.stdout.flush()
+            flag_step=1
             step_depth = func0(Train_data,metadata,features["shift"] ,features["depth"] ,features["counts"] ,pos_walk)
         elif(Features[i]==3):
-            print "Getting sample entropy"
+            print "Getting sample entropy for sensor ",(int(sensor)/3) ," on axis " ,(int(sensor)%3),"..."
+            sys.stdout.flush()
             func1(Train_data,metadata,features["entropy"] )
 
-        elif(Features[i]>=4 and Features[i]<=7):
-            print "Getting Frequency components"
+        elif(flag_freq==0 and Features[i]>=4 and Features[i]<=7):
+            print "Getting Frequency components ",(int(sensor)/3) ," on axis ", (int(sensor)%3),"..."
+            sys.stdout.flush()
+            flag_freq = 1
             func3(Train_data,metadata,features["sumLoco"] ,features["I"] ,features["freezeIndex"] ,features["sumAll"])
     
 
-        elif(Features[i]==9):
-            func7(Train_data,metadata,features["smooth"] )
+        #elif(Features[i]==9):
+        #    func7(Train_data,metadata,features["smooth"] )
         elif(Features[i]==8):
             func7(Train_data,metadata,features["portion"] )
-        
+    
+    print "pre-labeling data..."
+    sys.stdout.flush()
     get_label(Train_data,metadata,Labels,features["labels"])
     # label pre-fog as fog
     features["labels"] = prelabel(features["labels"])
@@ -96,7 +106,7 @@ def func0(Train_data,metadata,shift,depth,counts,pos_walk):
         index=index+1
         jStart = jStart + metadata["stepsize"]
     
-    threshold = np.mean(depth[pos_walk[0]:pos_walk[1]])*0.5
+    threshold = np.mean(depth[pos_walk[0]:pos_walk[1]])*0.55
     step_depth = threshold
     jStart=0
     index=0
@@ -184,7 +194,7 @@ def func1(Train_data,metadata,entropy):
     jStart=0
     index=0
     windowsize = metadata["windowsize"]
-    while(jStart<len(Train_data)-jStart):
+    while(jStart<len(Train_data)-windowsize):
         train_w = Train_data[jStart:jStart+windowsize]
         r = 0.2*np.std(train_w)
         entropy[index] = sampen(train_w, m, r)
@@ -198,7 +208,7 @@ def func7(Train_data,metadata,smoothness):
     jStart=0
     index=0
     windowsize = metadata["windowsize"]
-    while(jStart<len(Train_data)-jStart):
+    while(jStart<len(Train_data)-windowsize):
         train_w = Train_data[jStart:jStart+windowsize]
         smoothness[index] = 0
         for j in range(1,len(train_w)):
@@ -215,7 +225,7 @@ def func8(Train_data,metadata,portion):
     jStart=0
     index=0
     windowsize = metadata["windowsize"]
-    while(jStart<len(Train_data)-jStart):
+    while(jStart<len(Train_data)-windowsize):
         train_w = Train_data[jStart:jStart+windowsize]
 
         for j in range(1,len(train_w)):
@@ -246,7 +256,7 @@ def func3(Train_data,metadata,sumLoco,I,freezeIndex,sumAll):
     f_hp_FBs  = 31
 
     windowsize = metadata["windowsize"]
-    while(jStart<len(Train_data)-jStart):
+    while(jStart<len(Train_data)-windowsize):
         train_w = Train_data[jStart:jStart+windowsize]
         train_w = train_w - np.mean(train_w)
         ar = train_w
@@ -261,7 +271,7 @@ def func3(Train_data,metadata,sumLoco,I,freezeIndex,sumAll):
         freezeIndex[index] = sumAll[index]/sumLoco[index]
         sumAll[index] = sumAll[index]+sumLoco[index]
         
-        I[index] = np.argmax(Pyy)+1
+        I[index] = np.argmax(Pyy[0:64])+1
         jStart = jStart+metadata["stepsize"]
         index = index+1
 
