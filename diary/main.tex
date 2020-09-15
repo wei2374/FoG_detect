@@ -23,6 +23,7 @@
 \usepackage{algorithm2e}        % PseudoCode
 \usepackage{caption}
 \usepackage{subcaption}
+\usepackage{xcolor,colortbl}
 \captionsetup[figure]{font=footnotesize}
 
 \renewcommand*\familydefault{\sfdefault}
@@ -69,7 +70,7 @@
 
 % ABSTRACT
 \begin{abstract}
-    Freezing of gait (FoG) is an abnormal gait pattern that accompany Parkinson's disease(PD). During such short, temporary episodes, the patient is not able to move the feet forward despite the intention of walk. According to research \cite{RAS}, a sequence of rhythmic stimuli is able to help patient to walk again during FoG. Therefore, it is important to detect FoG pattern at the very beginning or even before it comes.
+    Freezing of gait (FoG) is an abnormal gait pattern that accompany Parkinson's disease(PD). During such short, temporary episodes, the patient is not able to move the feet forward despite the intention of walk. According to  \cite{RAS}, a sequence of rhythmic stimuli is able to help patient to walk again during FoG. Therefore, it is important to detect FoG pattern at the very beginning or even before it comes.
     
     In this paper, we tried to extract and select gait features using DAPHNET dataset. A fisher discrimination analysis and feature thresholding is applied to further reduce its dimension. Besides, we proposed a new evaluation standard that focus on improving the user experience and tune relevant parameters based on it. In the end, the algorithm is implemented in a source-constrained device.
     
@@ -101,20 +102,20 @@
 % Approaches tries
 \section{Approaches Pursued}
 
-	In this research, I tried several methods mentioned before, for some paper I cannot get the desired result because of insufficient understanding of background. In the end, I find a method which yields the best result and I'm going to focus more on talking about it.
+	In this research, I tried several methods mentioned before \cite{FI1} \cite{Flo} \cite{ML}, for some paper I cannot get the desired result because of insufficient understanding of background. In the end, I find a method which yields the best result and I'm going to focus more on talking about it.
 	
- 	The DAPHNET Freezing of Gait dataset is used for this research. This dataset consists of sensor data extracted from individuals with PD. Three tri-axial accelerometers were placed at the shank (just above the ankle), thigh (just above knee) and lower back to collect acceleration in three axes with a sample rate of 64Hz.
+ 	The DAPHNET Freezing of Gait dataset is used for this research \cite{FI1}. This dataset consists of sensor data extracted from individuals with PD. Three tri-axial accelerometers were placed at the shank (just above the ankle), thigh (just above knee) and lower back to collect acceleration in three axes with a sample rate of 64Hz.
 
-	The dataset include data from 10 patients, they are asked to perform walking in straight line, walking with numerous turns and some daily living tasks. The label is done by two physiotherapists using video recording. During the test, two patient did not show any symptoms of FoG, so they are excluded in this research. In total this dataset collected five hundred minutes of data and 237 FoG events happened within this time, half of the FoG episodes lasted less than 5s and most part lasted less than 20s (93.2\%). Therefore, this is an unbalanced dataset who has much more non-FoG periods than FoG episodes. 
+	The dataset include data from 10 patients, they are asked to perform walking in straight line, walking with numerous turns and some daily living tasks. The label is done by two physiotherapists using video recording. During the test, two patient did not show any symptoms of FoG, so they are excluded in this research. In total this dataset collected five hundred minutes of data and 237 FoG events happened within this time, half of the FoG episodes lasted less than 5s and most part lasted less than 20s (93.2\%). Therefore, this is an unbalanced dataset that consists much more non-FoG periods than FoG episodes. 
 
 
-    In the first part of this research internship, I tried to implement the algorithm of Florenc. However, I failed to separate classes in the test set by using kernel-lda. Also, the author informs that his work does not perform well when it comes to larger data set. So I stopped on working with this algorithms.
+    In the beginning, I tried to implement the approach of Florenc \cite{Flo}. First, all windows preceding FoG windows are labeled as pre-FoG window, this gives us a third class. Then kernel LDA is applied to the raw data to reduce dimension and k-NN is used as a classifier.  However, I failed to separate classes in the test set by using kernel-lda. Also, the author informs that his work does not perform well when it comes to larger data set. So I stopped on working with this algorithms.
     
     Another machine learning algorithm I tried is Neural Network(NN), however, with limited number of weights and layers allowed, it's hard to do the classification correctly.
     
-    According to my observation, the reason for the failure of employing  machine learning methods could be the followings. First of all, the data set is not quite balanced, the FoG labeled data is far less than non-FoG data set. Second, there might be some miss-labeled data. Since the data set is labeled with eye observation, it is possible the detection of FoG is slower than it should have been for second. Considering that machine learning methods are purely data-driven, such problems with the dataset could have huge impact on the result.
-    
-    After a conversation with my advisor, I change the research target to gait cycle analysis. This is a study that is used to assess and treat individuals with conditions affecting their ability to walk. From the data set, it is possible to extract features like walking speed and cadence. After some gait features are extracted, thresholds and machine learning techniques are applied. The general procedure of this method is shown in figure 1. More detail information can be found in next section.
+    According to my observation, the reason for the failure of employing  machine learning methods could be the followings. First of all, the data set is not quite balanced, the FoG labeled data is far less than non-FoG data set.  Second, there might be some miss-labeled data. Since the data set is labeled with eye observation, it is possible the detection of FoG is slower than it should have been. Considering that machine learning methods are purely data-driven, such problems with the dataset could have huge impact on the result.
+
+    After a conversation with my advisor, I change the research target to gait cycle analysis. This is a study that is used to assess and treat individuals with conditions affecting their ability to walk. From the data set, it is possible to extract features like walking speed and cadence. The gait analysis construct the basis of new method. The general procedure is shown in figure \ref{fig:procedure}. More detail information can be found in next section.
     
     
     \begin{figure}
@@ -124,61 +125,87 @@
     	 \label{fig:procedure}
     	
     \end{figure}
+
+
 % Method
 \section{Method}
 
-As mentioned before, some methods focusing on finding a good feature and used thresholds to detect FoG episodes, while the others applied machine learning methods to extract features and do classification.
+As mentioned before, some methods focusing on finding a good feature and used thresholds to detect FoG episodes \cite{FI}\cite{FI1}\cite{WM} , while the others applied machine learning methods to extract features and do classification \cite{Flo}\cite{ML}.
+
 In the proposed method, we combine these two method together.
 
 According to previous experience, it is hard to use LDA or PCA directly on raw data or low-pass filtered data to extract features with generality because of the unbalanced dataset and noises within.
-However, the result with test set improves a little when LDA is performed with extracted features. Therefore, as figure \ref{fig:procedure} shows, after a window pre-processing step, several features are extracted from it.
+However, the result with test set improves a little when LDA is performed with extracted features. 
 
-Another thing need to be done is data cleaning, just like the method proposed by Bachelin et al.\cite{FI1}, we use total energy in frequency band [0-8Hz] to detect standing period and filter it away. This makes the dataset less unbalanced and reduce computation load at the same time.
+The workflow of method is as figure \ref{fig:procedure} illustrates.
+ after a window pre-processing step, several features are extracted from it.
+\begin{enumerate}
+\item Windowing approach to segment raw acceleration data into windows of equal length
+\item For each window, several features are extracted
+\item Thresholds are applied to clean dataset
+\item Using mutual information and spearman's rank correlation to do feature selection		
+\item Using LDA for feature extraction
+\item Using Decision tree for classification with new quality metrics
+ 		
+\end{enumerate}
 
-In the next step,  we use feature selection methods to filter away features on different channels that are not efficient. Since the FoG feature do not express itself equally on all axis. Also, different patient has different symptoms during FoG.  
+More detail in going to be introduced in the following subsections.
 
-After the feature dimension is reduced, LDA is applied to remained good features to reduce the dimension, followed by a decision tree for classification. It is also possible to apply SVM, random forest and other machine learning classification methods. 
 
-\subsection{Data Pre-processing}
+\subsection{Windowing}
+    \begin{figure}
+	\centering
+	\includegraphics[width=0.47\textwidth]{windowing}
+	\caption{Windowing approach to segment raw data into windows }
+	\label{fig:windowing}
+	
+	\end{figure}
+In order to extract features from raw acceleration data, we used sliding rectangular window function to get segments from dataset as figure \ref{fig:windowing} shows. The length of window and step length are variables in several researches \cite{Flo}\cite{ML}, it is possible to do a grid search for a best fit. There exists a trade off between window size and reaction time. We do not put too much effort in these parameters and set them as fixed which performs well for several other methods.
 
-The length of window and step length are variables in several researches, it is possible to do a grid search for a best fit. There's also a trade off between window size and reaction time. We do not put too much effort in these parameters and set them as fixed which performs well for several other methods.
-
-The sliding window is chosen as 2 seconds with 256 * 9 floats per window. The step length is chosen as 0.5 seconds. They are going to be the basis for feature extraction in next step.
-
-Another task in this step is labeling, as mentioned before, there is a huge unbalance between FoG labeled and non-FoG labeled data. Since we would like to detect the beginning and impending FoG episodes, as long as one sampling point is labeled as FoG, the whole window will be labeled as FoG. Besides, for each non-FoG labeled window before a FoG labeled window, we also label it as FoG window, this reduce the number of non-FoG window and increases FoG windows.     
+The size of sliding window is chosen as 2 seconds. The sampling frequency of dataset is 64 Hz, so each sensor contains 128 integer data in each axis, in total we have 128*9 integer data in the window. The step length is the shift between two windows, we set it as 0.5 seconds in out case. They are going to be the basis for feature extraction in next step.  
 
 % Features Extraction
 
 \subsection{Feature Extraction}
 
-There are lots of researches focus on features of FoG episodes, the feature extraction can be performed in both time domain and frequency domain. 
-	
-From the observation of acceleration data in time domain, we can visualize clear some periodic pattern during the non-FoG phase, However, such characteristic is less obvious or not existing in FoG phase.The following three methods can be applied to exploit this characteristic.
+There are lots of researches focus on features of FoG episodes and some of them are used in the method \cite{FI}\cite{FI1}\cite{WM}\cite{sammpleE}, here I also used one feature found by muself.
+
+the feature extraction can be performed in both time domain and frequency domain. 
+
+\begin{figure}
+\centering
+\includegraphics[width=0.47\textwidth]{periodic}
+\caption{The green area(non-FoG) area has more periodicity than read area(FoG) in time domain}
+\label{fig:periodic}
+\end{figure}	
+From the observation of acceleration data in time domain\ref{fig:periodic}, we can visualize clear some periodic pattern during the normal walking phase, However, such characteristic is less obvious or not existing in FoG phase. Since the window length is chosen as 2 seconds in our setup, generally at least two steps can be observed for most patient. The following three methods can be applied to exploit this periodicity.
 
 	\begin{enumerate}
-		\item Sample Entropy: A measure of complexity, Often used to analyze the physiological variability in human gait and it is derived from approaches developed by Richman and Moorman\cite{sammpleE}. A feature which shows the repeatability and predictability within one window. The formula used to calculate it is:
+		\item Sample Entropy: A measure of complexity, Often used to analyze the physiological variability in human gait and it is derived from approaches developed by Richman and Moorman\cite{sammpleE}. A feature which shows the repeatability and predictability within one window. Suppose in one axis of one sensor, we have time-series of data of length N with constant time interval $\mathbf{X={[x_1,x_2,...x_N]}}$. Then we define another array with size m $\mathbf{X_m(i)={[x_i,x_{i+1},...x_{i+m-1}]}}$ and distance function $\mathbf{d =[ X_m(i)-X_m(j)]}$, the sample entropy is defined as:
     
 		    \begin{equation}
-		        \mathbf{SampEn(m,r,N)} = -log(A^m(r)/B^m(r))
+		        \mathbf{SampEn(m,r,N)} = -log(\frac{A^m(r)}{B^m(r)})
 		    \end{equation}
    
-		   In this study the dimension m is selected as 2, r as 0.2*$\mathbf{\delta}$, where $\mathbf{\delta}$ is standard deviation. 
+   		where A is equal to the number of template vector pairing  having $\mathbf{d[ X_{m+1}(i)-X_{m+1}(j)]<r}$
+
+		B is equal to the number of template vector pairing  having $\mathbf{d[ X_{m}(i)-X_{m}(j)]<r}$
+		
+		   		
+		In this study the dimension m is selected as 2, r as 0.2*$\mathbf{\delta}$, where $\mathbf{\delta}$ is standard deviation as previous papar did\cite{sammpleE}. 
   
 		
-	\item Cross Correlation :Another method to exploit the periodicity is to use cross correlation. This shows the similarity between a signal and its shifted version. The window size in our case is selected as 2 seconds, so generally 2 to 3 steps can be observed in it. In this way,a shift with highest value can be considered as a step interval.
+	\item Cross Correlation : Another method to exploit the periodicity is to use cross correlation. This shows the similarity between a signal and its shifted version. The window size in our case is selected as 2 seconds, so generally 2 to 3 steps can be observed in it. In this way,a shift with highest value can be considered as a step interval. The window length is n, f(n) is the raw data set.
 		
 		\begin{equation}
-		\mathbf{CrossCorrelation} = \sum_{n=0}^{n=len} f[n]g[n+\delta]
+		\mathbf{CrossCorrelation} = \sum_{n=0}^{n=len} f[n]f[n+\delta]
 		\end{equation}
 		
 		Besides, the highest correlation value also shows the possibility of existing a periodic pattern in this window, which can be used as another feature.
-		
-		
-
 
 	\item Fast step detection: Both methods mentioned before is quite expensive in terms of time, and when it is implemented on hardware the realtime capability might not be guaranteed. 
 		
-		Therefore, we invented a more light-weight method based on the observation from data. A step usually comes with a large drop and rise in the acceleration data as figure \ref{step} shows, such U shape can be used as a feature to detect one step. As the figure shows, we can search for continuous decrease in the value and find potential step points. With such information we can find the step interval, step frequency. The threshold to get classified as a U shape is different individually and need to be calculated using normal walking gait data, such as the blue part in figure \ref{ori}.
+		Therefore, we invented a more light weight method based on the observation from data. As figure \ref{step} shows, A step usually comes with a large drop and rise in the acceleration data, such U shape can be used as a feature to detect one step. As the figure shows, we can search for continuous decrease in the value and find potential step points. With such information we can find the step interval, step frequency. The threshold to get classified as a U shape is different individually and need to be calculated using normal walking gait data, such as the blue part in figure \ref{ori}.
 		
 		The result is as the figure \ref{interval} shows, between 50 and 250 we can clearly see the patient is walking normally, so the step interval most of time stays at 60ms. Whenever the patient turns, we can clearly observe some gap. When the patient experience FoG, the step interval can decrease to 0 for patient 2.	
 
@@ -224,18 +251,18 @@ From the observation of acceleration data in time domain, we can visualize clear
 		\item Freezing Index and energy thresholds: Moore et al. discovers that more energy components appears
 			in [3-8Hz] band during FoG \cite{FI}. They introduced a freeze Index(FI) as a strong indicator of FoG.
 			
-			To calculate FI, we apply a method proposed by Baechelin et al., they used a NFFT-point FFT to get power spectral density \cite{FI1}, where NFFT = window length * sampling frequency. The locomotion energy is calculated as the integral in [0-3Hz], and freeze energy is integrated in [3-8Hz]. The freeze Index is calculated as :
+			To calculate FI, we apply a method proposed by Baechelin et al., they used a fast Fourier transform(FFT) to get power spectral density \cite{FI1}. The locomotion energy is calculated as the integral in [0-3Hz], and freeze energy is integrated in [3-8Hz]. The freeze Index is calculated as :
 			\begin{equation}
-			\mathbf{FI} = loco/(loco+freeze)
+			\mathbf{FI} = \frac{freezeband\,energy}{locoband\,energy}
 			\end{equation}			
 
 
 	
-		\item Wavelet mean: Wavelet transform is a standard tool that shows how the power amplitude of a specific frequency in a signal change over time. In the paper of Rezvanian and Lockhart et al. \cite{WM}, they used the ratio of sum of wavelet coefficient in freeze and locomotion bands to discriminate FoG and non-FoG events. Here we used the mean of absolutes values of Discrete Wavelet Transform(DWT) from level three which includes freeze band. Daubechies wavelet of order four is chosen as mother wavelet. 
+		\item Wavelet mean: Wavelet transform is a standard tool that shows how the power amplitude of a specific frequency in a signal change over time. In the paper of Rezvanian and Lockhart et al. \cite{WM}, they used the ratio of sum of wavelet coefficient in freeze and locomotion bands to discriminate FoG and non-FoG events. Here we used the mean of absolutes values of Discrete Wavelet Transform(DWT) from level three which includes freeze band. 
 	
 	\end{enumerate}
 
- There are also some other features, a summary is found in table \ref{ft}.
+ Besides, some other features are included in the analysis, a summary is found in table 1.
 \begin{center}
 	\begin{table}
 	\begin{tabular}{ |p{2cm}||p{6cm}|  }
@@ -277,29 +304,59 @@ From the observation of acceleration data in time domain, we can visualize clear
 		
 		\hline
 	\end{tabular}
-\label{ft}
-\caption{Features}
+\label{ft1}
+\caption{Features extracted from windows}
 \end{table}
 \end{center}
 
 
 	
+\subsection{Thresholds and data cleaning}
+This part is added into the process in order to clean the data and relabel some windows. As mentioned before, the original labeling performed by experts may have the problem of delay and not precise. Here I would like to give an example. 
+
+The figure\ref{fig:thresholding1} shows original labels and acceleration data for patient 8, the red area below shows FoG labels and green area shows non-FoG labels. We can see something interesting happens in the beginning part of FoG data, however, we cannot see significant difference between the later 2/3 part of FoG and stop status of patient as the non-FoG part follows. This similarity may cause some confusion to feature selection, LDA and classification. 
+
+Therefore, it is reasonable to clean this data before continue. In this method, we use thresholds for some features to do the cleaning. For example, in the case of patient 8, we can use sum of energy in freeze band and locomotion band to detect the stop-like period and delete them from training set. 
+
+Another advantage of introducing thresholds is that we can filter some windows away that are alike to non-FoG based on previous knowledge and typical characteristic. It reduces the workload of procedures after it and helps them concentrate more on discriminating and classifying true FoG winodws and FoG-alike non-FoG windows. It also makes the training data less unbalanced.
+
+It worth mentioning that some other features and thresholds can be applied for the same purpose. For example, as figure\ref{fig:thresholding2} illustrates, the non-FOG part shows obvious more periodic pattern in compare with FoG area, we can also use it as a thresholds to filter away periodic parts. 
+
+To make sure the final result is comparable with other methods available, we must make sure all non-FoG windows and FoG windows filtered away by the threshold method are present in the final validation step. We use the following setup as figure\ref{fig:validation} shows to prepare training data and validation data. After the classification is finished, the result is filled with windows that were filtered, they are labeled as non-FoG, the validation is performed between original label and extended result.
+
+\begin{figure}
+	\begin{subfigure}[b]{0.43\textwidth}
+	\includegraphics[width=\textwidth]{patient8_ori_lda_label}
+	\caption{raw acceleration data of patient 8 with labels}
+	\label{fig:thresholding1}
+	\end{subfigure}
+
+	\begin{subfigure}[b]{0.43\textwidth}
+		\includegraphics[width=\textwidth]{p6_lda_ori}
+		\caption{raw acceleration data of patient 6 with labels}
+		\label{fig:thresholding2}
+	\end{subfigure}
+	\caption{raw acceleration data of patient with labels}
+\end{figure}
+
+\begin{center}
+	\begin{figure}
+		\includegraphics[width=0.5\textwidth]{VALIDATION}
+		\caption{Validation under the threshold method}
+		\label{fig:validation}
+\end{figure}
+\end{center}
 
 
-% Feature selection
-% Features Extraction
+\subsection{Feature Selection}
 
-\subsection{ Thresholds and Feature Selection}
+After the features are extracted, and non-FoG alike windows are filtered away. Generally we can just feed them into a dimension reduction tool like LDA. However, the result of using features directly does not generate good results.
 
-To solve the unbalanced data problem, it is necessary to do cleaning to dataset before processing it. According to the measurement of Baechlin et al, when the patient is standing still, its energy between [0-8Hz] frequency band is significantly lower than other status. Therefore, we can first exploit such characteristic and filter out windows when patient is standing and only make classification between FoG and walking or turning. It is also possible to try other features as thresholds, however, we need to make sure that the filtered region is not broken into small pieces so that the time continuity around FoG is still valid, this guarantees an evaluation standard that we are going to talk about in the next part.
-
-After the features are extracted, and standing windows are filtered away. generally we can just feed them into a dimension reduction tool like LDA. However, the result of using features directly does not generate good results.
-
-According to the observation, different features have different dependencies with labeling. Also, different patients have different gait features during the FoG, therefore, it is important to find out which features are more efficient for each patient. This can be explained with the fact that different patients have different symptoms during the FoG, according to the research of Parisa Tahafchi et al.\cite{symptoms} FoG can be shown as festination, akinesia and trembling.
+According to the observation, different features have different dependencies with labeling. Also, different patients have different gait features during the FoG, therefore, it is important to find out which features are more efficient for each patient. This can be explained with the fact that different patients have different symptoms during the FoG, according to the research of Parisa Tahafchi et al.\cite{symptoms} FoG can be shown as festination, akinesia and trembling, and such different symptoms have different dependencies with features. 
 
 Although LDA is capable of selecting not meaningful features out by giving them very small weights, but this ability is fully depend on the quality of data set.
 
-We selected filter method to do feature selection, because it selects features independently for any machine learning algorithm. It can help us remove features that contains little information.
+We selected filter method to do feature selection, because it selects features independently from any classification algorithm. It helps us remove features that contain little information .
 
 Correlation filter method such as Spearman's rank correlation can be used to measure the degree of association between two set of variables with a monotonic function. It is capable of handling non-linear functions in compare with Pearson correlation.
 
@@ -323,22 +380,26 @@ The simplest version of classifier is dealing with one dimensional features. In 
 
 
 
-	Most papers regarding the FoG detection uses classical classification quality metrics,such as precision, specificity Recall and F1-Score.
+	All papers regarding the FoG detection uses classical classification quality metrics,such as precision, specificity Recall and F1-Score.
 	
-	However, such classification standard does not consider the user experience and application characteristic. From our observation, there are some phases during FoG where the result can be different. The beginning of a FoG phase has different characteristic than the other part and special detector can be made to detect these part. Since we don't know how long this part is, we can only try to modify our detector to exploit such feature.
+	However, such classification standard does not consider the user experience and application characteristic. From our observation, there are some phases during FoG where the features can be different. Some part of FoG episodes are more different from normal gait than the others. For example ,the beginning of a FoG phase is more likely to get classified as a FoG window in compare with others and some part inside a FoG episodes do not differ much from a normal stop or normal walk. As figure \ref{lda1} shows, the last part of first and second FoG  mixed together with normal gaits. 
+	
+	Another observation is with the third FoG episodes, some windows before the FoG windows are also classified as FoG window. This may be due to that there is a delay before the start of disease and observation or it is invisible. However, such miss classification actually helps us to detect the FoG before it actually happens.
+
+	In summary, a traditional way of evaluation may not be the best option in this case, it is reasonable to make some changes for a better performance and result.
 	
 	From one side, since the objective is to detect FoG in a realtime way, it is desired that the time window before the actual FoG is also classified as a FoG.
 	
-	From the other side, the detector may label several window that are found inside a FoG labeled sequence as non-FoG, however, such false detected points does not have a high cost in real life, since the patient can recover from the FoG as long as he get an alarm for a certain time in the beginning part. It is more important not to make false alarm when the patient is walking normally. 
+	From the other side, the detector may label several windows that are found inside a FoG labeled sequence as non-FoG, however, such false detected points does not have a high cost in real life, since the patient can recover from the FoG as long as he get an alarm for a certain time in the beginning part. It is more important not to make false alarm when the patient is walking normally. 
 	
     Besides, considering that a false alarm happens just after the FoG is not so annoying as a false alarm during a normal walk, we also consider it as a correct label.
     
     In conclusion, the following situations need to be reconsidered, as shown in figure \ref{eva}:
 
     \begin{enumerate}
-    	\item The FoG rising edge: If one continuous window sequence before the rising edge is classified as a FoG period, then the whole window sequence is considered as correct labeled even part of them are not labeled as FoG in the dataset.
+    	\item The FoG rising edge: If one continuous window sequence before the rising edge is classified as a FoG period, then the whole window sequence is considered as correct labeled even part of them are not labeled as FoG in the dataset. In figure \ref{eva}, the first Detected FoG Signal is one of such case, and it is a correct detection.
     	
-		\item During the FoG period: If the edge is detected and solved with one filter window, we consider that the patient would have stop experiencing the FoG period, therefore, the whole continuous FoG period is considered as solved. Otherwise, if the FoG is detected after the coming edge, only part of the FoG period is considered as solved
+		\item During the FoG period: If the edge is detected and solved with one filter window, the whole continuous FoG period is considered as solved.  In figure \ref{eva} the first FoG window is considered as solved, even the Detected FoG Signal does not cover all of it. Otherwise, if the FoG is detected after the coming edge, only part of the FoG period is considered as solved, like in the second Labeled FoG Signal situation, only part of it happens after a detection.
 		
 		\item Whenever one FoG period ends, if one continuous window sequence is correct labeled at this point, then all filter window continuously followed are considered as correct.		
     \end{enumerate}
@@ -366,8 +427,8 @@ The simplest version of classifier is dealing with one dimensional features. In 
 		 \begin{center}	
 	\begin{subfigure}[b]{0.45\textwidth}
 		\centering
-		\includegraphics[width=\textwidth]{classifier}
-		\caption{lda feature reduced to one dimension}
+		\includegraphics[width=\textwidth]{p8_lda}
+		\caption{lda result and test label}
 		\label{lda1}
 	\end{subfigure}
 
@@ -387,11 +448,42 @@ The simplest version of classifier is dealing with one dimensional features. In 
 	
 % Classifier design
 \section{Result}
+ \begin{table*}
+	\begin{center}
+		\begin{tabular}{  |p{0.5cm}||p{1.3cm}|p{1.3cm}|p{1.3cm}|p{1.3cm}|p{1.3cm}|p{1.3cm}|p{1.3cm}|p{1.3cm}|p{1.3cm}| }
+			\hline
+			\multicolumn{4}{|c|}{Result without thresholds} &\multicolumn{3}{|c|}{Energy threshold}&\multicolumn{3}{|c|}{Energy+Dominant frequency threshold}  \\
+			\hline
+			ID &  precision &  recall &  F1-score &  precision &  recall &  F1-score &  precision &  recall &  F1-score\\
+			\hline
+			1 & 0.7358 &0.8390 & 0.7840 & 0.7222 &0.8764 & 0.7919 & 0.6905 &0.8764 & 0.7724\\
+			2 &0.6588 & 0.7982  & 0.8277 &0.8009 & 0.9286 & 0.8141 &  0.8552 &0.8555 & 0.8553\\ 
+			
+			3 & 0.7545 &0.8873 & 0.8155 & 0.7541 &0.8802 & 0.8123 &  0.7859 &0.8730 & 0.8272 \\   
+			
+			5   & 0.7288 &0.8986 & 0.8048  & 0.7903 &0.8923 & 0.8382 & 0.7753 &0.9333 & 0.8470\\
+			
+			6  & 0.4685 &0.8581 & \cellcolor{blue!25} 0.6061 & 0.5415 &0.6990 & 0.6102 & 0.6713 &0.8651 & \cellcolor{blue!25} 0.7560\\
+			
+			7& 0.6084 &0.8130 & 0.6960&  0.6667 &0.7609 & 0.7107  & 0.6787 &0.7957 & 0.7325 \\
+			
+			8  & 0.7380 &0.8288 & \cellcolor{blue!25} 0.7808 & 0.8317 &0.8927 & \cellcolor{blue!25} 0.8611 & 0.8170 &0.9292 & 0.8695  \\	
+			
+			9  & 0.7896 &0.7071 & \cellcolor{blue!25} 0.7460 & 0.8439 &0.9135 & \cellcolor{blue!25} 0.8774 & 0.8534 &0.9250 & 0.8877\\
+			\hline
+		\end{tabular}
+		\caption{Comparison with feature threshold as an additional step}
+		\label{thresholds}
+	\end{center}
+\end{table*}
+	The validation is conducted using 10-fold cross validation with all patient except patient 4 and patient 10, each training process is conducted with individual data separately. 
+
+	Table \ref{thresholds} shows the effect of applying thresholds. We first used total energy in locomotion and freeze band as an indicator of stop status, it helps patient 8 and patient 9 improve its F1-score for 8\% and 13\% separately. Adding dominant frequency as another threshold, the F1-score of patient 6 improves by 15\% while it does not effect others too much if not helps. This proves our assumption that data cleaning can help improve the performance of classifier.
     
-	The first result worth mentioned is feature selection. Using statistical tools we can figure out which features on which channel is really closely correlated with FoG symptoms.
+	The second result worth mentioned is feature selection. Using statistical tools we can figure out which features on which channel is really closely correlated with FoG symptoms.
     We calculate mean value Spearman rank correlation and mutual information of each feature value and labels for all patients, the result is shown in the Figure \ref{fs}. 
     
-    When it comes to different patient, the efficient features will also be different. Generally speaking for all patient, the result of two methods coincide with each other. The three sensors placed in different locations and three axes can been seen as nine channels. From picture a and b, it is clear that channel1 (Horizontal forward acceleration on ankle), channel 2 (Vertical acceleration on ankle) and channel 5 (Vertical acceleration above knee) have the highest dependency with FoG symptoms. On the other hand, picture c and d shows the dominant frequency, locomotion energy and freezing index has the closest relationship with FoG among all features. According to the observation, since cross correlation and wavelet mean have quite low score and at the same time  they are quite expensive in terms of computation, we decide to throw them from the list of features.
+    When it comes to different patient, the efficient features will also be different. Generally speaking for all patient, the result of two methods coincide with each other. The three sensors placed in different locations and three axes can been seen as nine channels. From picture a and b, it is clear that channel1 (Horizontal forward acceleration on ankle), channel 2 (Vertical acceleration on ankle) and channel 5 (Vertical acceleration above knee) have the highest dependency with FoG symptoms. On the other hand, picture c and d shows the dominant frequency, locomotion energy and freezing index has the closest relationship with FoG among all features. According to the observation, since cross correlation, sample entropy and wavelet mean have quite low score and at the same time  they are quite expensive in terms of computation, we decide to throw them from the list of features.
     
     
    	\begin{figure*}
@@ -430,39 +522,71 @@ The simplest version of classifier is dealing with one dimensional features. In 
     	\label{fs}
     \end{figure*}
     
-We use the threshold method to filter away features that have low score in terms of Spearman's rank correlation and mutual information separately and do classification. The classification result using new evaluation standard as quality metrics is shown in Table 2. 
-
-It is easy to find that our method performs better than the method proposed by Bachelin in all cases except patient with ID 5. 
+We use the threshold method to filter away features that have low score in terms of Spearman's rank correlation and mutual information separately and do classification. The classification result using new evaluation standard as quality metrics is shown in Table \ref{feature_s}.
 
  \begin{table*}
+	\begin{center}
+		\begin{tabular}{  |p{0.5cm}||p{1.3cm}|p{1.3cm}|p{1.3cm}|p{1.3cm}|p{1.3cm}|p{1.3cm}|p{1.3cm}|p{1.3cm}|p{1.3cm}| }
+			\hline
+			\multicolumn{4}{|c|}{Without feature selection} &\multicolumn{3}{|c|}{With Mutual information}&\multicolumn{3}{|c|}{With Spearman's rank correlation}  \\
+			
+			\hline
+			ID &  precision &  recall &  F1-score &  precision &  recall &  F1-score &  precision &  recall &  F1-score\\
+			\hline
+			1 & 0.7222 &0.8764 & 0.7919 & 0.6905 &0.8764 & 0.7724 & 0.7000 &0.8090 & 0.7506 \\
+			2 & 0.8333 &0.8412 & 0.8373  &  0.8552 &0.8555 & 0.8553 &  0.8469 &0.8768 & 0.8616\\ 
+			
+			3 & 0.7603 &0.8402 & 0.7983&  0.7859 &0.8730 & 0.8272 & 0.7988 &0.8588 & 0.8277 \\   
+			
+			5 & 0.8002 &0.9270 & 0.8589 & 0.7753 &0.9333 & 0.8470 & 0.7976 &0.9101 & 0.8502 \\
+			
+			6 & 0.5347 &0.8270 & 0.6495 & 0.6713 &0.8651 &  0.7560 & 0.6230 &0.8339 & 0.7132 \\
+			
+			7 & 0.6489 &0.7304 & 0.6873  & 0.6787 &0.7957 & 0.7325  &  0.7318 &0.8217 & 0.7742\\
+			
+			8 & 0.7928 &0.8105 & 0.8015  & 0.8170 &0.9292 & 0.8695   & 0.8080 &0.9178 & 0.8594   \\	
+			
+			9 & 0.8676 &0.9054 & 0.8861  & 0.8534 &0.9250 & 0.8877 & 0.8568 &0.9070 & 0.8812\\
+			\hline
+		\end{tabular}
+		\caption{Comparison between different feature selection methods}
+		\label{feature_s}
+	\end{center}
+\end{table*}
+
+
+
+
+ \begin{table}
     \begin{center}
-   		\begin{tabular}{  |p{0.5cm}||p{1.3cm}|p{1.3cm}|p{1.3cm}|p{1.3cm}|p{1.3cm}|p{1.3cm}|p{1.3cm}|p{1.3cm}|p{1.3cm}| }
+   		\begin{tabular}{  |p{0.5cm}||p{1.5cm}|p{1.5cm}| }
 		\hline
-		\multicolumn{4}{|c|}{Result with Spearman's correlation} &\multicolumn{3}{|c|}{Result with Mutual information}&\multicolumn{3}{|c|}{Result with Bachelin's method}  \\
+		\multicolumn{1}{|c|}{Method}
+		&\multicolumn{1}{|c|}{Proposed method}  &\multicolumn{1}{|c|}{Method\cite{FI1}}  \\
 	
 		\hline
-		 ID &  precision &  recall &  F1-score &  precision &  recall &  F1-score &  precision &  recall &  F1-score\\
+		 ID &   F1-score  &  F1-score \\
 		\hline
-		1 & 0.8606 &0.8419 & 0.8511 & 0.7808 &0.8972 & 0.8350 & 0.6685 &0.7470 & 0.7056 \\
-		2 & 0.8854 &0.9315 & 0.9079 & 0.9286 &0.8191 & 0.8704  & 0.7228 &0.8142 & 0.7658\\ 
+		1  & 0.7724 & 0.7056 \\
+		2 & 0.8553   & 0.7658\\ 
 		
-		3 & 0.8478 &0.9733 & 0.9062 & 0.8357 &0.9793 & 0.9018 & 0.8050 &0.9111 & 0.8548 \\   
+		3 & 0.8272 & 0.8548 \\   
 		
-		5 & 0.7524 &0.7750 & 0.7635  & 0.7372 &0.8091 & 0.7682  & 0.8161 &0.8269 & 0.8214 \\
+		5& 0.8470  & 0.8214 \\
 		
-		6 & 0.7338 &0.9152 & 0.8145 & 0.8232 &0.8799 & 0.8506 & 0.5471 &0.8763 & 0.6736 \\
+		6 &  0.7560 & 0.6736 \\
 		
-		7 & 0.7704 &0.7773 & 0.7738 & 0.7260 &0.8389 & 0.7783&  0.7184 &0.6066 & 0.6578\\
+		7  & 0.7325  & 0.6578\\
 		
-		8 & 0.8591 &0.8861 & 0.8772 & 0.8286 &0.8545 & 0.8413 & 0.7738 &0.8176 & 0.7951   \\	
+		8   & 0.8695  & 0.7951   \\	
 		
-		9 & 0.7302 &0.8916 & 0.8028 & 0.9013 &0.6054 & 0.7243 & 0.7294 &0.7504 & 0.7398\\
+		9  & 0.8877   & 0.7398\\
 		\hline
 		\end{tabular}
 	\caption{detection result}
 \end{center}
-     \end{table*}
-   Then we can look closer to the result of detection in figure \ref{result}. The left figure shows the original method, and the right figure shows the result with new detector, it is clear than the number of false alarm decreases while most FoG windows are correctly detected. This makes sense, because under new evaluation standard, only false detection far away from real FoG period leads to a cost.
+     \end{table}
+   Then we can look closer to the result of detection in figure \ref{result}. The a figure shows the original method, and the b figure shows the result with new detector, it is clear than the number of false alarm decreases while most FoG windows are correctly detected. This makes sense, because under new evaluation standard, only false detection far away from real FoG period leads to a cost.
    
  
     
@@ -496,20 +620,19 @@ It is easy to find that our method performs better than the method proposed by B
    The implementation is mainly divided into three part: Graphic user interface implemented with Qt, data training written in python and C code that running on the hardware. Since we don't have sensors that does the measurement, UART is applied to send data in window form (128*9 integer) to the hardware. The hardware we used here is the nRF52 Development kit which has 512 kB flash and 64 kB RAM memory space.  
         
    
-   In the graphic user interface, we can choose the auto mode which uses the method mentioned before to select features, or we can manually configure the sensors numbers and lda features. The manual configuration mode is available since expert can select features that meaningful for each person individually, it may outperform the auto method which is based on data. Besides, for both mode we can also select classifiers and thresholds and relevant parameters. 
+   In the graphic user interface, we can choose the auto mode which uses the method mentioned before to select features, or we can manually configure the sensors numbers and lda features. The manual configuration mode is available since expert can select features that meaningful for each person individually, it may outperform the auto method which is based on data. Besides, for both mode we can also select classifiers, thresholds and relevant parameters. 
    
    After the configuration part is done, relevant data will be feed into python code as parameters and training process starts. After the training process is finished, it returns and informs the user and save results into a file at the same time. 
    
    Then user can further use GUI to send results of training and raw data measurement in window form to hardware with UART, the hardware returns the detection result back to user interface before it receives new window.
    
-	Code and more detail in found in git repository.
-   
+	Code and more detail in found in git repository (https://github.com/wei2374/FoG\_detect).
    
   
 % Conclusion and futhure work
 \section{Conclusion and future work}
 The focus of this research is to detect and predict FoG events in Parkinson Disease patients through feature extraction, feature selection and decision tree.
-We invented a feature based on observation of raw data in time domain to exploit the periodicity characteristic of gait, it is computational less expensive in compare with other methods. A new quality metrics is proposed, it focuses more on detecting the beginning part of FoG episode and has less tolerance to false alarms in compare with traditional metrics. In general, the result using new metrics shows great improvement in compare with original method proposed by the paper about DAPHNET dataset.
+We invented a feature based on observation of raw data in time domain to exploit the periodicity characteristic of gait, it is computational less expensive in compare with other methods. A data cleaning idea is proposed and it helps the classifier make less false alarm. A new quality metrics is proposed, it focuses more on detecting the beginning part of FoG episode and has less tolerance to false alarms in compare with traditional metrics. In general, the result using new metrics shows great improvement in compare with original method proposed by the paper about DAPHNET dataset. In the future, more complicated classifiers can be employed to improve the performance.
 
 As a direction for future investigation, other sensors can be applied to provide physiological information. It is also suggested to make modifications to feature selection algorithm, classification methods and classification quality metrics.  
 
