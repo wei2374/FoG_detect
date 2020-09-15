@@ -41,6 +41,7 @@
 #include <QDir>
 #include <QTime>
 #include "ui_mainwindow.h"
+#include "QScrollBar"
 
 namespace Ui {
 class MainWindow;
@@ -56,6 +57,7 @@ public:
      QString homePath = QDir::homePath();
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+     QScrollBar *sb;
     int sensorN=6;
 /* In GUI programming, when a widget is changed, we often want another widget
  * to be notified.
@@ -160,6 +162,7 @@ private slots:
 
         void on_T8s_valueChanged(int value);
         void setupQuadraticDemo(QCustomPlot *customPlot);
+
 private:
     Ui::MainWindow *ui;
     QextSerialPort port;            // Creates a serial port instance.

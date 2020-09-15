@@ -46,7 +46,7 @@ def self_adaptive(data,pos,metadata,Features,TH_Features,TH_params,LDA_Features,
                 means["entropy"] = np.mean((features["entropy"])[pos_walk[0]:pos_walk[1]])*TH_params[ths]
                 thresholds[3,sensor]=means["entropy"]
             elif(TH_Features[ths]==4):
-                means["sumLoco"] = np.mean((features["sumLoco"])[pos_walk[0]:pos_walk[1]])*TH_params[ths]
+                means["sumLoco"] = np.mean((features["sumLoco"])[pos_stop[0]:pos_stop[1]])*TH_params[ths]
                 thresholds[4,sensor]=means["sumLoco"]
             elif(TH_Features[ths]==5):
                 means["I"] = np.mean((features["I"])[pos_walk[0]:pos_walk[1]])*TH_params[ths]
@@ -70,28 +70,33 @@ def self_adaptive(data,pos,metadata,Features,TH_Features,TH_params,LDA_Features,
     sys.stdout.flush()
 
     # Filter out data which is not part of experiment
-    filter_ori = np.asarray(features["labels"]!=0).flatten()
+    filter_0 = np.asarray(features["labels"]!=0).flatten()
+    '''
     #plt.plot(filter_ori)
     #plt.show()
-    # Filter out data which is not within the thresholds
-    for sensor in range(metadata["sensors"]):
-        filter_ori = filter_result[float(sensor)]&filter_ori
+    '''
+
+    # Filter out data which is not within the thresholds, here we
+    # only use the second channel of sensors
+    #for sensor in range(metadata["sensors"]):
+    filter_ori = filter_result[2]
+    filter_ori2 = filter_0&filter_ori
+    '''
     #plt.plot(filter_ori)
     #plt.show()
     
     #plt.plot(features["labels"])
     #plt.show()
+    '''
     
-    
-    mask = np.zeros([9,9])
 
     print "\r\n"
     print "Feature selection starts"
     sys.stdout.flush()
-
+    mask = np.zeros([9,9])
     # Auto configuration will select features that to be processed in LDA
     if(int(Auto)==2):
-        auto_configuration(features_all,Features,filter_ori,metadata["sensors"],mask)
+        auto_configuration(features_all,Features,filter_ori2,metadata["sensors"],mask)
     else:
         for fea in (LDA_Features):
             for sensor in range(metadata["sensors"]):

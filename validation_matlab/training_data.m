@@ -1,0 +1,1 @@
+function training_data,test_data = cross_divide(counter,datas)

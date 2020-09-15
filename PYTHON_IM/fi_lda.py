@@ -130,7 +130,7 @@ def lda_analysis(features,Features,filter_ori,metadata,mask):
     #print X_train.shape()
     with open(name, 'w') as f:
         for item in range(len(X_train)):
-            f.write("%s\n" % X_train[item])
+            np.savetxt(f, X_train[item])
     f.close()
     
     name = os.path.join(dirname,"DATA/L1.txt")

@@ -20,11 +20,20 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>160</x>
-      <y>40</y>
+      <x>150</x>
+      <y>10</y>
       <width>381</width>
-      <height>311</height>
+      <height>391</height>
      </rect>
+    </property>
+    <property name="contextMenuPolicy">
+     <enum>Qt::PreventContextMenu</enum>
+    </property>
+    <property name="verticalScrollBarPolicy">
+     <enum>Qt::ScrollBarAlwaysOn</enum>
+    </property>
+    <property name="sizeAdjustPolicy">
+     <enum>QAbstractScrollArea::AdjustToContents</enum>
     </property>
    </widget>
    <widget class="QWidget" name="layoutWidget">
@@ -738,9 +747,9 @@
     <property name="geometry">
      <rect>
       <x>150</x>
-      <y>370</y>
+      <y>430</y>
       <width>391</width>
-      <height>211</height>
+      <height>161</height>
      </rect>
     </property>
    </widget>

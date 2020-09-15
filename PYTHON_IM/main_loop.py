@@ -18,23 +18,19 @@ def main_loop(argv):
     Auto,patient,sensors,classifer,TH_Features,TH_params,LDA_Features,Features = get_params(sys.argv)
 
     # DEBUG::
-    Auto=2
     '''
+    Auto=2
     patient="1"
     sensors=6
     classifer=2
-
     LDA_Features=[0,5,6]
     Features=[0,5,6,7]
-
-
     Auto=2
-    
     print Auto
    '''
+
     if(int(Auto)==2):
-        sensors = 3
-        classifer = 2
+        sensors = 9
         LDA_Features=[]
         Features = np.asarray([0,1,2,4,5,6,7,8])
         print "Auto configuration is enabled"
@@ -46,13 +42,16 @@ def main_loop(argv):
         print "The following features will be use for lda"
         print LDA_Features
         sys.stdout.flush()
-    #print Features
-    #print LDA_Features
-    #print TH_Features
-    #print TH_params
-    #print sensors
-    #print Auto
     
+    '''
+    print Features
+    print LDA_Features
+    print TH_Features
+    print TH_params
+    print sensors
+    print Auto
+    '''
+
     TH_Features = [7]
     TH_params = [5]
 
@@ -81,19 +80,20 @@ def main_loop(argv):
     data = np.loadtxt(name, usecols=range(0,11))
 
     #%%
+    '''
     # Relabel the data according to its window
     print "Labeling data..."
     sys.stdout.flush()
     labels = labeling.relabel(data[:,10],metadata)
     data[:,10] = labels
+    '''
 
     # training data
     # 1. lda training data 
     # 2. normal walking gait
     # 3. stop status
     Pos =np.array([[[780,3140],[1500,2200],[31000,32000]],
-                    [[200,1200],[100,3000],[16000,17000]],
-                    
+                    [[200,1200],[100,3000],[16000,17000]],                  
                     [[270,4000],[31800,32200],[30000,31000]],
                     [[600,980],[1000,1700],[600,800]],
                     [[500,2500],[5000,12000],[500,4500]],
@@ -103,11 +103,12 @@ def main_loop(argv):
 
     pos = Pos[int(patient)-1,:,:]
 
-    #%%
+    #%% start training process
     print "Start training..."
     sys.stdout.flush()
     W,dtth,TG,mask,step_depth,thresholds = sa.self_adaptive(data,pos,metadata,Features,TH_Features,TH_params,LDA_Features,Auto)
 
+    #%% finished training, save parameters into file
     # fill data
     print "writing parameters into file..."
     sys.stdout.flush()

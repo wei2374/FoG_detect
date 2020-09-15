@@ -33,6 +33,9 @@ MainWindow::MainWindow(QWidget *parent) :
     myfile.lda_features[0][3] = 6;
     ui->ankle_button->setStyleSheet("background-color:green;");
     ui->knee_button->setStyleSheet("background-color:green;");
+    //ui->textEdit_Status->verticalScrollBar()->setValue(ui->textEdit_Status->verticalScrollBar()->maximum());
+   sb = ui->textEdit_Status->verticalScrollBar();
+
 }
 
 // Destructor of the MainWindow object.
@@ -200,7 +203,7 @@ void MainWindow::on_parameterButton_send_2_clicked()
     qDebug()<<"return with SUC";
    // ui->textEdit_Status->insertPlainText(info);
     ui->parameterButton_send->setEnabled(true);
-
+     setupQuadraticDemo(ui->widget);
 }
 
 void MainWindow::on_training_data_clicked()
@@ -288,15 +291,19 @@ void MainWindow::on_training_data_clicked()
      p.start("python2.7", params);
     if(p.waitForStarted(-1)){
         while(p.waitForReadyRead(-1)){
+
+            sb->setValue(sb->maximum());
             QByteArray a = p.readAllStandardOutput();
             QByteArray b = p.readAllStandardError();
             qDebug()<<b;
             p_stdout = QString(a);
+
             ui->textEdit_Status->insertPlainText(p_stdout);
+
             delay();
         }
     }
-
+    sb->setValue(sb->maximum());
     qDebug()<<"Finish";
     p.waitForFinished(-1);
     qDebug() << "\r\n finished train data";
@@ -304,48 +311,61 @@ void MainWindow::on_training_data_clicked()
 
     p_stdout = p.readAll();
     ui->textEdit_Status->insertPlainText(p_stdout);
-    setupQuadraticDemo(ui->widget);
+
 
 }
 void MainWindow::setupQuadraticDemo(QCustomPlot *customPlot)
 {
-  //demoName = "Quadratic Demo";
+
   // generate some data:
-  QVector<float> x,y;
+  QVector<double> x,y;
   QString name1 = homePath+"/FoG_detect/PYTHON_IM/DATA/P1.txt";
   QFile file(name1);
-  foreach (QString i,QString(file.readAll()).split(QRegExp("[\r\n]"),QString::SkipEmptyParts)){
-    x.push_back(i.toFloat());
-  }
+  file.open(QIODevice::ReadOnly);
 
+
+  foreach (QString i,QString(file.readAll()).split(QRegExp("[\r\n]"),QString::SkipEmptyParts)){
+
+     x.push_back(i.toFloat());
+
+  }
   QString name2 = homePath+"/FoG_detect/PYTHON_IM/DATA/L1.txt";
   QFile file2(name2);
+  file2.open(QIODevice::ReadOnly);
   foreach (QString i,QString(file2.readAll()).split(QRegExp("[\r\n]"),QString::SkipEmptyParts)){
     y.push_back(i.toFloat());
   }
   qDebug()<<x.size();
   qDebug()<<y.size();
-/*
-  QVector<double> x(101), y(101); // initialize with entries 0..100
-  for (int i=0; i<101; ++i)
-  {
-    x[i] = i/50.0 - 1; // x goes from -1 to 1
-    y[i] = x[i]*x[i];  // let's plot a quadratic function
+
+  QVector<double> z;
+  for(int i=0;i<x.size();i++){
+      z.push_back(i);
   }
-
-
   // create graph and assign data to it:
   customPlot->addGraph();
 
-  customPlot->graph(0)->setData(x, y);
+  customPlot->graph(0)->setData(z,x);
 
 
   // give the axes some labels:
   customPlot->xAxis->setLabel("x");
   customPlot->yAxis->setLabel("y");
   // set axes ranges, so we see all data:
-  customPlot->xAxis->setRange(-1, 1);
-  customPlot->yAxis->setRange(0, 1);*/
+  customPlot->xAxis->setRange(0, x.size());
+  customPlot->yAxis->setRange(-5, 10);
+
+
+  //Plot points at these locations:
+  QCPGraph* dwPoints = new QCPGraph(customPlot->xAxis, customPlot->yAxis);
+  dwPoints->setAdaptiveSampling(false);
+  dwPoints->setLineStyle(QCPGraph::lsNone);
+  dwPoints->setScatterStyle(QCPScatterStyle::ssCircle);
+  dwPoints->setPen(QPen(QBrush(Qt::red), 2));
+
+  dwPoints->addData(z, y);
+  customPlot->replot();
+
 }
 void MainWindow::on_T0_stateChanged(int arg1)
 {

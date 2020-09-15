@@ -1,0 +1,150 @@
+function x_plot(file)
+  
+clear;
+     %% load data of patient
+    for patient=1:9
+        if(patient~=4)
+     if(patient==2)
+     data = load(['../dataset/S0' num2str(patient,'%d') 'R02.txt']);
+     data2 = load(['../dataset/S0' num2str(patient,'%d') 'R01.txt']);
+     %data(:,11) = relabel(data(:,11));  
+     %data2 = data(1,:);
+     %data2(:,11) = relabel(data2(:,11));   
+     elseif(patient==3)
+     data = load(['../dataset/S0' num2str(patient,'%d') 'R01.txt']);
+     data2 = load(['../dataset/S0' num2str(patient,'%d') 'R02.txt']);
+     data3 = load(['../dataset/S0' num2str(patient,'%d') 'R03.txt']);
+     data2 = [data2;data3];
+     %data(:,11) = relabel(data(:,11));  
+     %data2 = data(1,:);
+     %data2(:,11) = relabel(data2(:,11)); 
+     
+     % Only one dataset is available
+     elseif(patient==8||patient==9||patient==16)
+     data = load(['../dataset/S0' num2str(patient,'%d') 'R01.txt']);
+     %data(:,11) = relabel(data(:,11));  
+     data2 = data(1,:);
+     %data2(:,11) = relabel(data2(:,11));  
+     
+     
+     else
+     data = load(['../dataset/S0' num2str(patient,'%d') 'R01.txt']);
+     %data_ind = data(:,1)<2000*1000;
+     %data = data(data_ind,:);
+     data2 = load(['../dataset/S0' num2str(patient,'%d') 'R02.txt']);
+     %data(:,11) = relabel(data(:,11));   
+     %data2(:,11) = relabel(data2(:,11));   
+         
+     end
+   
+  
+    % data3= [data;data2];
+    plot_original([data])
+
+    
+    
+    %% trining data
+    pos{1} = [780,3140;1500,2200;31000,32000];
+    pos{2} = [200,1200;100,3000;16000,17000];
+    pos{3} = [270,4000;31800,32200;30000,31000];
+    pos{5} = [600,1650;1100,1600;600,800;];
+    pos{6} = [500,2500;5400,6000;500,4500;];    
+    pos{7} = [600,1800;1200,2000;31000,34000;];
+    pos{8} = [650,1200;4000,4500;6200,6400;];
+    pos{9} = [400,1300;1500,2500;49000,50000];
+   
+
+    %% Features selection
+    % 0 : fast interval
+    % 1 : step depth
+    % 2 : step counts
+    % 3 : sample entropy
+    % 4 : max correlation
+    % 5 : interval correlation 
+    % 6 : loco energy
+    % 7 : dominant frequency
+    % 8 : freeze Index
+    % 9 : loco+freeze 
+    % 10 : smoothness
+    % 11 : cwt mean
+    % 12 : portion
+
+    Features = [0 1 2 6 7 8 9 10 12];
+    
+    %1
+    %Thresholds = [0,9];
+    %Thresholds_parameters = [0.5,4];
+    
+    %Thresholds = [9];
+    %Thresholds_parameters = [4];
+  
+    %Thresholds = [9];
+    %Thresholds_parameters = [0];
+    
+    %Thresholds = [9];
+    %Thresholds_parameters = [4];
+
+    % 6 
+    %Thresholds = [0,9];
+    %Thresholds_parameters = [0.5,4];
+    %7
+    
+    Thresholds = [9];
+    Thresholds_parameters = [4];
+    
+    %Thresholds = [9];
+    %Thresholds_parameters = [4];
+    
+    %Thresholds = [7,9];
+    %Thresholds_parameters = [1,4];
+    
+    lda_features = [0 1  6 7 8 ];
+     
+    classifier = 3;     
+    SR = 64;
+    stepSize = 32;
+    windowsize = 128;    
+    sensors = 9;
+    
+    %% Apply self-adaptive method 
+   [dthreshold,thresholds,mask,parameters,dtth,TG]= self_adaptive(data,data2,pos{patient},stepSize,windowsize,sensors,Features,Thresholds,Thresholds_parameters,lda_features,classifier,patient);
+   
+    %% Save paramaters get from self-adaptive
+    save('self_adaptive.mat','thresholds','mask','parameters','dtth','TG','dthreshold'); 
+    thres_para = load('self_adaptive.mat');
+    save_into_files(patient,sensors,thres_para,Features,Thresholds,classifier);
+   
+    
+    %% call the function to extract features from data
+    [result,labels] = x_fi(data,SR,windowsize,stepSize,sensors,Features,Thresholds,lda_features,thres_para);    
+    
+    if(patient<8)
+    [result2,labels2] = x_fi(data2,SR,windowsize,stepSize,sensors,Features,Thresholds,lda_features,thres_para);    
+    result = [result,result2];
+    labels = [labels, labels2];
+    end
+    
+    figure(6)
+    subplot(2,1,1)
+    plot(result);
+    title('final filter')
+    
+    subplot(2,1,2)
+    plot(labels);
+    title('final labels')
+    
+    
+    [recall(patient),correctness(patient)] = calculate_TF(result2,labels2,1)
+  %   [recallOld(patient),correctnessOld(patient)] = calculate_Old(result,labels)
+    F1(patient) = 2*(recall(patient)*correctness(patient))/(recall(patient)+correctness(patient))
+   % F1Old(patient) = 2*(recallOld(patient)*correctnessOld(patient))/(recallOld(patient)+correctnessOld(patient))
+    
+    linkaxes
+    
+        end
+    end
+    
+
+end
+
+
