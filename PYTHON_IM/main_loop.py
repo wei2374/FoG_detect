@@ -43,7 +43,6 @@ def main_loop(argv):
         print LDA_Features
         sys.stdout.flush()
     
-    '''
     print Features
     print LDA_Features
     print TH_Features
@@ -51,9 +50,10 @@ def main_loop(argv):
     print sensors
     print Auto
     '''
-
     TH_Features = [7]
     TH_params = [5]
+    '''
+    
 
 
     #creat metadata for the training

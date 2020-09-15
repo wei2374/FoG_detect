@@ -45,11 +45,10 @@ void read_parameters(uint8_t* data_array,uint8_t* counter1){
      }
         if(row==0){
           step_depth[column] = *((float*)(&data_buffer)); 
+          //printf("\n%d:%f",column,step_depth[column]);
         }
         else if(row>=1 && row<=9){   
-        
-             thresholds[row-1][column] = *((float*)(&data_buffer));
-        
+             thresholds[row-1][column] = *((float*)(&data_buffer)); 
              //if(row-1==7){printf("\n%d:%f",row-1,thresholds[row-1][column]);}       
         }
         else if(row>=10 && row<=18){   
@@ -59,17 +58,17 @@ void read_parameters(uint8_t* data_array,uint8_t* counter1){
         else if(row>=19 && row<=27){   
              lda_info[row-19][column] = *((float*)(&data_buffer));
              // printf("\n%d,%d:%f",row-19,column,lda_info[row-19][column]);
-
              //if(row-12==2 ||row-12==5 ||row-12==6){printf("\n%d:%f",row-12,ldas[row-12][column]);}       
         }
         else if (row==28 && column==0){
           dtth =  *((float*)(&data_buffer));
-           column=9;
+            printf("dtth %f\r\n",dtth);
+           //column=9;
           
         }
         else if (row==28 && column==1){
           TG = *((float*)(&data_buffer));
-         
+          printf("TG %f\r\n",TG);
           column=9;
           }
 
@@ -82,28 +81,31 @@ void read_parameters(uint8_t* data_array,uint8_t* counter1){
           row++;
           //printf("\r\nGET 9\r\n");       
           if(row==1){
-           printf("\r\nGET DEPTH\r\n");   
+           //printf("\r\nGET DEPTH\r\n");   
           }    
           else if(row==10){
-           printf("GET THS \r\n");
+                for(int i=0;i<9;i++){
+          printf("T: %f\r\n",thresholds[7][i]);
+          }
+           //printf("GET THS \r\n");
           
           }    
           else if(row==19){
-           printf("GET MASK\r\n");
+           //printf("GET MASK\r\n");
            
           }
           else if(row==28){
-          printf("GET T %f\r\n",thresholds[7][0]);
-          printf("GET T %f\r\n",thresholds[7][1]);
+
+          for(int i=0;i<9;i++){
+          //printf("W: %f\r\n",lda_info[0][i]);
+          }
           
-          printf("GET W %f\r\n",lda_info[0][0]);
-          printf("GET W %f\r\n",lda_info[0][1]);
+
           }
           else if(row==29){
-          printf("DEPTH 1 %f\r\n",step_depth[0]);
-          printf("DEPTH 2 %f\r\n",step_depth[1]);
-           printf("dtth %f\r\n",dtth);
-           printf("TG %f\r\n",TG);
+
+         
+          
             parameter_flag=0;
             data_flag=1;
             (*counter1) = 0;
@@ -128,46 +130,84 @@ void feature_extract()
   float32_t shift[sensors] = {0};
   float32_t counts[sensors] = {0};
   float32_t depth[sensors] = {0};
-  float32_t portion[sensors] = {0};
   float32_t entropy[sensors] = {0};
   uint32_t counter=0;
   float32_t result=0;
   uint8_t FoG = 0;
 
-  uint32_t now = app_timer_cnt_get();
+ 
   printf("\r\nThis is %d window \r\n",batch_counter);
+  get_mean(means);
+  // get interval, counts and depth
+  uint32_t now = app_timer_cnt_get();
   get_interval(shift,counts,depth);
   counter = app_timer_cnt_get();
   counter = counter-now;
-  printf("C1 is %d\r\n",counter);
+  //printf("C1 is %d\r\n",counter);
  
-
+  // get features in frequency domain
   nrf_gpio_pin_toggle(LED_2);
+  now = app_timer_cnt_get();
   get_freq(my_freq,means);
   counter = app_timer_cnt_get();
   counter = counter-now;
-  printf("C2 is %d\r\n",counter);
+  //printf("C2 is %d\r\n",counter);
 
   printf("dominant frequency is %d\r\n",my_freq[1].dominant_freq);
   printf("sumLoco is %f\r\n",my_freq[1].sumLoco);
   printf("sumFreeze is %f\r\n",my_freq[1].sumFreeze);
   printf("FI is %f\r\n",my_freq[1].freezingIndex);
+
+ 
   nrf_gpio_pin_toggle(LED_3);
   
+  now = app_timer_cnt_get();
   get_smoothness(smoothness);
   counter = app_timer_cnt_get();
   counter = counter-now;
-  printf("C3 is %d\r\n",counter);
+ //printf("C3 is %d\r\n",counter);
   batch_counter++;
 
+  // Thresholding check
   for(int sensor=0;sensor<sensors;sensor++){
-    if(my_freq[sensor].sumFreeze>thresholds[7][sensor]){
-      thresholds_Flag=1;
+    //only use sensor in channel 2
+    if(sensor==1){
+      //stop detector
+      if(thresholds[7][sensor]!=0){
+         printf("sumAll threshold is %f\r\n",thresholds[7][sensor]);
+         if(my_freq[sensor].sumFreeze<=thresholds[7][sensor]){ 
+          thresholds_Flag=1;
+        }
+      }
+      //FI detector      
+      if(thresholds[6][sensor]!=0){
+         printf("FI threshold is %f\r\n",thresholds[6][sensor]);
+         if( my_freq[sensor].freezingIndex<=thresholds[6][sensor]){
+          thresholds_Flag=1;
+        }
+      }
+      //high frequency detector      
+      if(thresholds[5][sensor]!=0){
+         printf("DF threshold is %f\r\n",thresholds[5][sensor]);
+         if( my_freq[sensor].dominant_freq<=thresholds[5][sensor]){
+          thresholds_Flag=1;
+        }
+      }
+
+      //step detector      
+      if(thresholds[0][sensor]!=0){
+        printf("shift threshold is %f\r\n",thresholds[0][sensor]);
+       if(my_freq[sensor].sumLoco>=thresholds[0][sensor]){
+         thresholds_Flag=1;
+        }
+      }
     }
+    
+
   }
 
   if(thresholds_Flag==1){
-    FoG=1;
+    FoG=0;
   }
   else{
     for(int sensor=0;sensor<sensors;sensor++){
@@ -249,7 +289,7 @@ void get_portion(float32_t* means,float32_t* portion)
 }
 
 /**
-This function is used to get the sample entropy of test data
+TODO:: This function is used to get the sample entropy of test data
 */
 void get_entropy(float32_t* entropy)
 {
@@ -257,7 +297,7 @@ void get_entropy(float32_t* entropy)
 
 }
 /**
-TODO:: This function will be used to extract interval from data
+This function will be used to extract interval from data
 */
 void get_interval(float32_t* shift,float32_t* counts,float32_t* depth){
   low_pass();

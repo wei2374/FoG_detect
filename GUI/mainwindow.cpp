@@ -1,4 +1,4 @@
-#include <QProcess>
+
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
@@ -117,12 +117,7 @@ void MainWindow::on_parameterButton_send_clicked()
     myfile.send_parameters(&port);
 }
 
-void delay()
-{
-    QTime dieTime= QTime::currentTime().addSecs(1);
-    while (QTime::currentTime() < dieTime)
-        QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
-}
+
 
 void MainWindow::on_dataButton_clicked()
 {
@@ -165,7 +160,7 @@ void MainWindow::on_dataButton_clicked()
             ui->textEdit_Status->insertPlainText(rec_data);
             rec_code =  rec_data.contains(myfile.signal_b);
         }
-        delay();
+        myfile.delay();
         rec_code=false;
 
         counter++;
@@ -201,7 +196,7 @@ void MainWindow::on_parameterButton_send_2_clicked()
 
 
     qDebug()<<"return with SUC";
-   // ui->textEdit_Status->insertPlainText(info);
+   ui->textEdit_Status->insertPlainText(info);
     ui->parameterButton_send->setEnabled(true);
      setupQuadraticDemo(ui->widget);
 }
@@ -300,7 +295,7 @@ void MainWindow::on_training_data_clicked()
 
             ui->textEdit_Status->insertPlainText(p_stdout);
 
-            delay();
+            myfile.delay();
         }
     }
     sb->setValue(sb->maximum());

@@ -7,7 +7,8 @@
 #include <QDebug>
 #include "qextserialport.h"         // Enables use of the qextserialport library.
 #include <QMessageBox>
-
+#include <QTime>
+#include <QCoreApplication>
 
 class file_op
 {
@@ -41,6 +42,7 @@ public:
      float thresholds_data[9][9];
      float lda_data[9][9];
     file_op();
+    void delay();
     void read_next_window(FILE* archivo);
     void send_next_window(QextSerialPort* port);
     void send_parameters(QextSerialPort* port);

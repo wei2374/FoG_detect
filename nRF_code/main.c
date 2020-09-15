@@ -556,10 +556,10 @@ void uart_event_handle(app_uart_evt_t * p_event)
             UNUSED_VARIABLE(app_uart_get(&data_array[index]));
             index++;
 
-            if ((data_array[index - 1] == '\n') ||
-                (data_array[index - 1] == '\r') ||
-                (index >= m_ble_nus_max_data_len))
+            if (index>3 
+                ||(index >= m_ble_nus_max_data_len))
             {
+             
                 if (index > 3)
                 {
                     if(data_flag!=0){

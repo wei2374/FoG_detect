@@ -60,9 +60,9 @@
   <Watches active="0" update="Never"/>
  </Watch4>
  <Files>
-  <SessionOpenFile windowGroup="DockEditLeft" x="6" y="628" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../../main.c" selected="1" top="618" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="12" y="95" useTextEdit="1" openedFrom="/home/wei/Nordic/examples/ble_peripheral/ble_app_uart (copy)/main.c" useBinaryEdit="0" left="0" path="feature_extraction.c" selected="0" top="66" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="22" y="20" useTextEdit="1" openedFrom="/home/wei/Nordic/examples/ble_peripheral/ble_app_uart (copy)/pca10040/s132/ses/feature_extraction.c" useBinaryEdit="0" left="0" path="feature_extraction.h" selected="0" top="12" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="628" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../../main.c" selected="0" top="630" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="135" useTextEdit="1" openedFrom="/home/wei/Nordic/examples/ble_peripheral/ble_app_uart (copy)/main.c" useBinaryEdit="0" left="0" path="feature_extraction.c" selected="1" top="27" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="20" useTextEdit="1" openedFrom="/home/wei/Nordic/examples/ble_peripheral/ble_app_uart (copy)/pca10040/s132/ses/feature_extraction.c" useBinaryEdit="0" left="0" path="feature_extraction.h" selected="0" top="12" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="152" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../../../../../components/toolchain/cmsis/include/core_cm4.h" selected="0" top="139" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../config/sdk_config.h" selected="0" top="21" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="144" useTextEdit="1" openedFrom="/home/wei/Nordic/examples/ble_peripheral/ble_app_uart (copy)/pca10040/s132/ses/feature_extraction.h" useBinaryEdit="0" left="0" path="../../../../../../modules/nrfx/mdk/nrf52.h" selected="0" top="123" codecName="Default"/>
@@ -74,5 +74,5 @@
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="76" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../../../../../integration/nrfx/legacy/nrf_drv_uart.c" selected="0" top="56" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="572" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../../../../../modules/nrfx/drivers/src/nrfx_uarte.c" selected="0" top="572" codecName="Default"/>
  </Files>
- <ARMCrossStudioWindow activeProject="ble_app_uart_pca10040_s132" fileDialogDefaultFilter="*.a" autoConnectTarget="J-Link" buildConfiguration="Release" sessionSettings="" debugSearchFileMap="../../../Include/arm_math.h&#xa;&#xa;../ComplexMathFunctions/arm_cmplx_mag_f32.c&#xa;&#xa;../TransformFunctions/arm_bitreversal2.S&#xa;&#xa;../TransformFunctions/arm_cfft_f32.c&#xa;&#xa;../TransformFunctions/arm_cfft_radix8_f32.c&#xa;" fileDialogInitialDirectory="/home/wei/Nordic/components/toolchain/cmsis/dsp/GCC" debugSearchPath="" autoConnectCapabilities="3711"/>
+ <ARMCrossStudioWindow activeProject="ble_app_uart_pca10040_s132" fileDialogDefaultFilter="*.a" autoConnectTarget="J-Link" buildConfiguration="Release" sessionSettings="" debugSearchFileMap="../../../Include/arm_math.h&#xa;&#xa;../ComplexMathFunctions/arm_cmplx_mag_f32.c&#xa;&#xa;../TransformFunctions/arm_bitreversal2.S&#xa;&#xa;../TransformFunctions/arm_cfft_f32.c&#xa;&#xa;../TransformFunctions/arm_cfft_radix8_f32.c&#xa;" fileDialogInitialDirectory="/home/wei/Nordic/components/toolchain/cmsis/dsp/GCC" debugSearchPath="" autoConnectCapabilities="3199"/>
 </session>

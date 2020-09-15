@@ -85,7 +85,22 @@ def get_label(Train_data,metadata,Labels,labels):
     j_start=0
     index=0
     while (j_start < (len(Train_data) - metadata["windowsize"])):
-        labels[index] = Labels[j_start] 
+        train_window = Labels[j_start:j_start+metadata["windowsize"]]
+        counter1=0
+        counter2=0
+        for la in train_window:
+            if(la==2):
+                counter2 = counter2+1
+            if(la==1):
+                counter1 = counter1+1
+        
+        
+        labels[index] = 0
+        if(counter1>0.7*metadata["windowsize"]):
+            labels[index] = 1
+        if(counter2>=0.3*metadata["windowsize"]):
+            labels[index] = 2
+        
         index = index+1
         j_start = j_start+metadata["stepsize"]
 

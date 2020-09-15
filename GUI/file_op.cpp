@@ -46,10 +46,12 @@ void::file_op::read_next_window(FILE* archivo)
 void::file_op::send_parameters(QextSerialPort* port)
 {
     QByteArray mysignal;
-    mysignal.append(signal_para);
-    mysignal.append('\r');
+    //mysignal.append(signal_para);
+    //mysignal.append('\r');
+    //mysignal.append('\r');
+    //mysignal.append('\r');
     qDebug()<<"\r\nsending\r\n"<<mysignal;
-    port->write(mysignal);
+    //port->write(mysignal);
     mysignal.clear();
     //int data_buffer = 0;
 
@@ -58,6 +60,7 @@ void::file_op::send_parameters(QextSerialPort* port)
     {
         sending_info(&step_depth[j],port);
     }
+    //delay();
 
     qDebug()<<"\r\nsending threshold data ";
     //send threholds data
@@ -92,13 +95,6 @@ void::file_op::send_next_window(QextSerialPort* port)
 
     QByteArray mysignal;
 
-    /*mysignal.append(signal_p);
-    mysignal.append('\r');
-    qDebug()<<"\r\nsending\r\n"<<mysignal;
-
-    port->write(mysignal);
-    mysignal.clear();*/
-
     qDebug()<<"\r\nsending signal\r\n";
     for(int i=0;i<1;i++)
     {
@@ -119,13 +115,13 @@ void::file_op::send_next_window(QextSerialPort* port)
                 mysignal.append(data[k]);
             }
 
-            mysignal.append('\r');
+            //mysignal.append('\r');
             qDebug()<<j/9<<"\r\nreading\r\n"<<matrix_wt[i][j];
             //qDebug()<<"\r\ntranslating\r\n"<<data[0]<<data[1]<<data[2]<<data[3];
 
             port->write(mysignal);
 
-  //          qDebug()<<"\r\nsending\r\n"<<mysignal.toInt();
+            //qDebug()<<"\r\nsending\r\n"<<mysignal.toInt();
             mysignal.clear();
 
         }
@@ -208,11 +204,21 @@ void::file_op::sending_info(float* Data,QextSerialPort* port){
         mysignal.push_back(data[k]);
     }
 
-    mysignal.append('\r');
+    //mysignal.append('\r');
+   // mysignal.append('\r');
+    //mysignal.append('\r');
+
     qDebug()<<" reading data "<<*Data;
-    //qDebug()<<"\r\n"<<j<<" reading "<<data[0]<<data[1]<<data[2]<<data[3];
+    qDebug()<<"\r\n"<<" reading "<<data[0]<<data[1]<<data[2]<<data[3];
     port->write(mysignal);
     mysignal.clear();
 
 
+}
+
+void::file_op::delay()
+{
+    QTime dieTime= QTime::currentTime().addSecs(1);
+    while (QTime::currentTime() < dieTime)
+        QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
 }
