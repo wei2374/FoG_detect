@@ -48,17 +48,11 @@ The procedure of using it is
 # Python code
 
 > Read parameters from UI
-> Feature extraction
-
-> Feature selection using spearman's rank correlation
-
-> LDA 
-
-> Decision tree using classifier 1 and 2
-
-> Write into file
+<img src="python.png" style="width:800px;height:300px;"/>
+> Write calculated parameters into file
 
 # C code
 
 * The board is able to receive command using nRF connect app in smartphone and start to receive parameters and data.
 * Receive parameters and data from UART, performs feature extraction and FoG detection. Returns result back to PC.
+<img src="C.png" style="width:800px;height:300px;"/>

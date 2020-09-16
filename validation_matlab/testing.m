@@ -2,7 +2,7 @@ function testing(file)
   
 clear;
      %% load data of patient
-    for patient=6:9
+    for patient=8:9
         if(patient~=4)
      if(patient==2)
      data = load(['../dataset/S0' num2str(patient,'%d') 'R02.txt']);
@@ -62,7 +62,7 @@ clear;
         
     %% Features that used for thresholding
     Thresholds = [7,9];
-    Thresholds_parameters = [1,4];
+    Thresholds_parameters = [0,0];
     %1. mutual information
     %2. spearman's rank correlation
     Feature_selector = 2;

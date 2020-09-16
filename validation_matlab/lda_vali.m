@@ -182,7 +182,7 @@ for lenf=1:1
     title('label after threshold filter');
 
     %% k fold cross-validation
-    k=10;
+    k=5;
     final_all = [];
     label_all = [];
     
@@ -336,7 +336,7 @@ for lenf=1:1
         end
 
         %% plot test lda result
-                %{
+                
         index1 = find(test_label==1);
 
         index2 = find(test_label==0);
@@ -355,7 +355,7 @@ for lenf=1:1
         xlabel('time [ms]');
         ylabel('feature');
         title('lda result')
-        %}
+        
         %%
 
         %% Second filter
