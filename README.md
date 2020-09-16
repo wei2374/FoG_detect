@@ -7,7 +7,8 @@
 >   - **GUI** : Code for graphical user interface, written with qt.
 >   - **PYTHON_IM** : Code that is used for data training purpose, it's get called by GUI and save calculated parameters into folder **Parameters**
 >   - **validation_matlab (matlab R2020)** : In this folder you will find matlab code for the validation of algorithm, it is a 10-fold cross-validation. Just run tesing.m file. 
->  - **nRF52_code** : code to be flashed into nRF52 development board.
+>  - **nRF52_code** : code to be flashed into nRF52 development board. I used SES to write the code, you should put the code into the development software package of nrf52, into folder /examples/ble_peripheral;
+open pca10040/s132/ses, you will find code for this project.
 >  - **dataset** : DAPHNET dataset 
 >  - **diary** : Report of research internship.
 

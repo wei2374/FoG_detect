@@ -147,7 +147,7 @@ void MainWindow::on_dataButton_clicked()
     }
 
     int counter=0;
-    while(counter<2)
+    while(counter<20)
     {
         myfile.read_next_window(archivo);
         myfile.send_next_window(&port);
