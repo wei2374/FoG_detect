@@ -2,7 +2,7 @@ function testing(file)
   
 clear;
      %% load data of patient
-    for patient=8:9
+    for patient=9:9
         if(patient~=4)
      if(patient==2)
      data = load(['../dataset/S0' num2str(patient,'%d') 'R02.txt']);
@@ -16,7 +16,7 @@ clear;
      data2 = [data2;data3];
 
      % Only one dataset is available
-     elseif(patient==8||patient==9||patient==16)
+     elseif(patient==8||patient==9)
      data = load(['../dataset/S0' num2str(patient,'%d') 'R01.txt']);
      data2 = data(1,:);
           
@@ -27,7 +27,7 @@ clear;
      end
    
     %% Plot original data
-    plot_original(data)
+    %plot_original(data)
 
     
     
@@ -36,7 +36,7 @@ clear;
     pos{2} = [200,1200;100,3000;16000,17000];
     pos{3} = [270,4000;31800,32200;30000,31000];
     pos{5} = [600,1650;1100,1600;600,800;];
-    pos{6} = [500,2500;5400,6000;500,4500;];    
+    pos{6} = [500,2500;5400,5900;500,4500;];    
     pos{7} = [600,1800;1200,2000;31000,34000;];
     pos{8} = [650,1200;4000,4500;6200,6400;];
     pos{9} = [400,1300;1500,2500;49000,50000];
@@ -62,7 +62,7 @@ clear;
         
     %% Features that used for thresholding
     Thresholds = [7,9];
-    Thresholds_parameters = [0,0];
+    Thresholds_parameters = [0.7,4];
     %1. mutual information
     %2. spearman's rank correlation
     Feature_selector = 2;

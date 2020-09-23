@@ -182,7 +182,7 @@ for lenf=1:1
     title('label after threshold filter');
 
     %% k fold cross-validation
-    k=5;
+    k=10;
     final_all = [];
     label_all = [];
     

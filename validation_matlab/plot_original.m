@@ -38,7 +38,7 @@ function plot_original(data)
             end
 
             hold on;
-            low_pass = lowpass(data(:,2+sensorpos*3+sensoraxis),10,SR);
+            %low_pass = lowpass(data(:,2+sensorpos*3+sensoraxis),10,SR);
             plot(data(:,1)/1000,data(:,2+sensorpos*3+sensoraxis));
             hold off
             %plot(data(:,1)/1000,low_pass);

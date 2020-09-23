@@ -33,7 +33,7 @@ function [recall,correctness,specifity] = calculate_TF(filter_result,labels,visu
        
         %% successfully detect before edge is coming
   
-        if(edge_up(i)==1 && filter_result(i)==1)
+        if(edge_up(i)==1 && i>3 && (filter_result(i)==1||filter_result(i-1)==1||filter_result(i-2)==1||filter_result(i-3)==1))
             solve_flag=1;
             
             % detect true fog 

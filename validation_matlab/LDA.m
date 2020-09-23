@@ -32,10 +32,10 @@ Z=0;
     [d,n]=size(X);
     [nY,dum]=size(Y);
   
-    fprintf('\nNumber of instances: n = %d\n',n);
-    fprintf('Dimensionality of original samples: d = %d\n',d);
+   % fprintf('\nNumber of instances: n = %d\n',n);
+   % fprintf('Dimensionality of original samples: d = %d\n',d);
     if(nY ~= n)
-        fprintf('Error: Check Y: Y has to be a vector, nX1 = %d X 1\n\n',n);
+       fprintf('Error: Check Y: Y has to be a vector, nX1 = %d X 1\n\n',n);
         return
     end 
     i=1;
@@ -45,10 +45,10 @@ Z=0;
     if(nargin==2)
         r=NumberOfClasses-1;
     end
-    fprintf('Number of classes = \n',NumberOfClasses);
-    fprintf('Class label list: %d\n',char(ClsLbls));
-    fprintf('Dimensionality of reduced space: r = %d\n',r)
-    disp('Please wait!');
+    %fprintf('Number of classes = \n',NumberOfClasses);
+   % fprintf('Class label list: %d\n',char(ClsLbls));
+   % fprintf('Dimensionality of reduced space: r = %d\n',r)
+   % disp('Please wait!');
    
     LocalMu = cell(1,NumberOfClasses);
     CovVal = cell(1,NumberOfClasses);
@@ -67,7 +67,7 @@ Z=0;
     
     
     %Computing  the Global Mu which is the overall mean of all data,X
-    Global_Mu = mean(X,2)
+    Global_Mu = mean(X,2);
     SB = zeros(d,d);
     SW = zeros(d,d);
     

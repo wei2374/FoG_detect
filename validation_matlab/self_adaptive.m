@@ -85,9 +85,15 @@ pre_filter = result(2,:);
 filter_0 = (labels~=0);
 
 pre_filter2 = pre_filter&filter_0;
+
 subplot(4,1,2)
 plot(pre_filter2);
 title('results after applied pre thresholds')
+%% Calculate how many FoG labels are filtered
+
+plot_filtered(data,labels,pre_filter2);
+    
+
 
 %% Feature selection
 mask = feature_selection(Feature_selector,result_features,Features,pre_filter2,sensors,patient);
