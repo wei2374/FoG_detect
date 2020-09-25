@@ -6,8 +6,22 @@ from auto_configuration import auto_configuration
 from fi_lda import lda_analysis
 import matplotlib.pyplot as plt
 #%%
-def self_adaptive(data,pos,metadata,Features,TH_Features,TH_params,LDA_Features,Auto):   
-    # get the training window
+def self_adaptive(data,pos,metadata,Features,TH_Features,TH_params,LDA_Features,Auto):
+    '''
+    @ data : training data from DAPHNET dataset
+    @ pos : array consists of training data part, walking and stop periods
+    @ metadata : sensor number, sampling rate ...
+    @ Features : all features that need to get computed
+    @ TH_Features and TH_params : Features for thresholding and necessary patameter for threshold
+    @ LDA_Features : Features that used for LDA training
+    @ Auto : auto configuration or manual configuration (LDA features selection)
+
+    This function consists of 3 parts
+    1. Using calculate features of windows in the training set and filtering out part of training data
+    2. Using Spearman's rank correlation to select features in channels that are highly correlated with FoG
+    3. Dimension reduction + classifier
+    '''   
+    # Get the training period, walking winodw and stop windows
     stepsize = metadata["stepsize"]
     pos_all = [1000*pos[0,0],1000*pos[0,1]]
     pos_walk = [int(pos[1,0]/stepsize),int((pos[1,1])/stepsize)]
@@ -21,14 +35,16 @@ def self_adaptive(data,pos,metadata,Features,TH_Features,TH_params,LDA_Features,
     features_all={}
     means={}
     Train_data = data[index3,:]
+    
+    
+    # Part 1: Feature extraction
     step_depth = np.zeros(metadata["sensors"])
-    # get features
-    print "\r\n"
-    print "Feature extraction starts..."
+
+    print "\r\nFeature extraction starts..."
     sys.stdout.flush()
+
     for sensor in range(metadata["sensors"]):
         # Feature extraction for one feature
-        
         step_depth[sensor], features = get_features(Features,Train_data[:,sensor+1],Train_data[:,10],metadata,pos_walk,sensor)
         
         # Calculates the threhold of features for one sensor
@@ -66,7 +82,7 @@ def self_adaptive(data,pos,metadata,Features,TH_Features,TH_params,LDA_Features,
         filter_result[sensor] = threshold_selection(TH_Features,means,features,sensor)
 
     print "\r\n"
-    print "Feature extraction finishes"
+    print "Feature extraction and feature thresholds calculation finishes"
     sys.stdout.flush()
 
     # Filter out data which is not part of experiment
@@ -78,8 +94,8 @@ def self_adaptive(data,pos,metadata,Features,TH_Features,TH_params,LDA_Features,
 
     # Filter out data which is not within the thresholds, here we
     # only use the second channel of sensors
-    #for sensor in range(metadata["sensors"]):
-    filter_ori = filter_result[2]
+    # for sensor in range(metadata["sensors"]):
+    filter_ori = filter_result[1]
     filter_ori2 = filter_0&filter_ori
     '''
     #plt.plot(filter_ori)
@@ -89,9 +105,8 @@ def self_adaptive(data,pos,metadata,Features,TH_Features,TH_params,LDA_Features,
     #plt.show()
     '''
     
-
-    print "\r\n"
-    print "Feature selection starts"
+    # Part 2 : Feature selection 
+    print "\r\nFeature selection starts"
     sys.stdout.flush()
     mask = np.zeros([9,9])
     # Auto configuration will select features that to be processed in LDA
@@ -103,14 +118,12 @@ def self_adaptive(data,pos,metadata,Features,TH_Features,TH_params,LDA_Features,
                 mask[fea,sensor]=1
     
     print mask
-    print "\r\n"
-    print "Feature selection finishes"
+    print "\r\nFeature selection finishes"
     sys.stdout.flush()
 
-    print "\r\n"
-    print "LDA starts"
+    # Part 3 : Dimension reductor + classifier
+    print "\r\nLDA starts"
     sys.stdout.flush()
-
     if(int(Auto)==2):
         W,dtth,TG = lda_analysis(features_all,Features,filter_ori,metadata,mask)
     else:
@@ -118,5 +131,3 @@ def self_adaptive(data,pos,metadata,Features,TH_Features,TH_params,LDA_Features,
 
     
     return W,dtth,TG,mask,step_depth,thresholds
-
-    

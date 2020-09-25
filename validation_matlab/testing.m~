@@ -2,7 +2,7 @@ function testing(file)
   
 clear;
      %% load data of patient
-    for patient=2:9
+    for patient=1:9
         if(patient~=4)
      if(patient==2)
      data = load(['../dataset/S0' num2str(patient,'%d') 'R02.txt']);
@@ -69,7 +69,7 @@ clear;
     %1.scaled gini index
     %2.new metrics   
     classifier = 3;     
-    SR = 64;
+    SR = 64
     stepSize = 32;
     windowsize = 128;    
     sensors = 9;

@@ -1,17 +1,26 @@
 import numpy as np
 from calculate_TF import calculate_TF
 
+'''
+Both classifiers implemented in this file use one dimensional decision tree
+as classifier, they use different metric to find separate line
+@ classifier 1 : scaled version of gini index
+@ classifier 2 : new evaluation standard
+
+Find line between mean of FoG and non-FoG mean, try 15 lines, select the line gives best metric
+'''
 def classifier1(noFoG_av,FoG_av,X_train,training_y,FoGn,noFoGn):
     TG=0
     n=0
     weights = int(noFoGn/FoGn)
     gini = np.zeros([15,4])
+
     if(FoG_av>noFoG_av):
         TG=1
         diff = FoG_av-noFoG_av
         noFoG_line = noFoG_av-0.2*diff
         thdt = noFoG_line
-        
+       
         while(thdt<FoG_av+0.2*diff):
             true_FoG=0
             true_noFoG=0

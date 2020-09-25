@@ -1,26 +1,30 @@
 import numpy as np
 
 def calculate_TF(filter_result,labels):
+    '''
+    This function implements the new evaluation standard
+    '''
+    # Solved FoG windows number
     t_FoGn=0
-    f_FoG=0
+    # All FoG windows number
     FoGs=0
-    t_noFoG=0
-    f_noFoG=0
+
+    # All noFoG windows number
     noFoGs=0
+    # All detection result that are FoG labeled 
     n_f=0
+    # All correct detection result
     correct_fn = 0
-    #print np.shape(labels)
+
     length, = np.shape(labels)
     correct_f =  np.zeros(length)
     t_FoG =   np.zeros(length)
-    wrong_f = 0
-    
  
     edge_up = np.zeros(length)
     solve_flag=0
     miss_flag=0
     
-    # label rising edge and falling edge
+    # detect rising edge and falling edge
     for i in range(1,length):
         if(labels[i]==2 and labels[(i-1)]==1): 
             edge_up[i]=1
@@ -30,7 +34,7 @@ def calculate_TF(filter_result,labels):
        
     
     for i in range(1,length):
-       
+        # if the FoG edge meets a correct detection
         if(edge_up[(i)]==1 and filter_result[(i)]==1):
             solve_flag=1 
             t_FoG[(i)]=1
@@ -43,34 +47,37 @@ def calculate_TF(filter_result,labels):
        
         
 
-        
-        elif(solve_flag==1 and labels[(i)]==2):
-           
+        # if the rising edge is detected, all continuous FoG windows after the edge is relabeled as detected
+        elif(solve_flag==1 and labels[(i)]==2): 
+            # all possitive filter results during such FoG is consider correct
             if(filter_result[(i)]==1):
                  correct_f[(i)]=1
             
             t_FoG[(i)]=1
             
+        # if the rising edge is missed
         elif(edge_up[(i)]==1 and filter_result[(i)]!=1):
             miss_flag=1
             
-        
+        # if the detection comes later after the edge
         elif( miss_flag==1 and filter_result[(i)]==1):
             solve_flag=1
             t_FoG[(i)]=1
             correct_f[(i)]=1
             miss_flag=0
             
-        
+        # the falling edge of FoG
         elif(edge_up[(i)]==2):
             if(solve_flag==1):
                 i2=i
+                # record all positive and continuous filter results as correct labeled
                 while(filter_result[(i2)]==1 and i2<len(labels)):
                     correct_f[(i2)]=1
                     i2=i2+1
             solve_flag=0
             miss_flag=0
         
+    
     
     for i in range(length):
         if(filter_result[(i)]==1 and (labels[(i)]>=1)):

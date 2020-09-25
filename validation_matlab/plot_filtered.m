@@ -25,6 +25,7 @@ for i=1:length(labels)
 end
 filtered_percentage = filtered_FoG/all_FoG
 correct_percentage = filtered_noFoG/all_noFoG
+FoG_p = all_FoG/(all_FoG+all_noFoG)
 
 filtered_all =[];
 labels_all = [];

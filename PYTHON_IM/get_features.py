@@ -10,6 +10,19 @@ import matplotlib.pyplot as plt
 #%%
 def get_features(Features,Train_data,Labels,metadata,pos_walk,sensor): 
    
+   '''
+   Features ID :
+   0. shift : step interval
+   1. depth : max-min in one window
+   2. counts : number of steps detected in one window
+   3. sample entropy : measure the periodic in window (not used because too expensive)
+   4. sumLoco : energy in locomation band(0-3Hz)
+   5. I : dominant frequency  
+   6. freezeIndex : sumFreeze/sumLoco 
+   7. sumAll : energy in locomation band(0-3Hz) + energy in freeze band(3-8Hz)
+   8. portion : variogram,smoothness of data 
+
+   '''
     features={
         "shift": np.ones(np.size(Train_data)/32),
         "depth": np.zeros(np.size(Train_data)/32),
@@ -22,8 +35,14 @@ def get_features(Features,Train_data,Labels,metadata,pos_walk,sensor):
         "labels" : np.zeros(np.size(Train_data)/32),
         "portion" : np.zeros(np.size(Train_data)/32)
     }
+
+    # This value is used to keep the step_depth of a general normal walking pattern
+    # It is used to detect one step
     step_depth=0
+
+    # Only call func0 once if 0,1,2 features are need to claculate
     flag_step=0
+    # Only call func3 once if 4,5,6,7 features are need to claculate
     flag_freq=0
     
     for i in range(len(Features)):
@@ -51,14 +70,16 @@ def get_features(Features,Train_data,Labels,metadata,pos_walk,sensor):
     
     print "pre-labeling data..."
     sys.stdout.flush()
+
     get_label(Train_data,metadata,Labels,features["labels"])
     # label pre-fog as fog
-    features["labels"] = prelabel(features["labels"])
+    # features["labels"] = prelabel(features["labels"])
     #plt.figure()
     #plt.plot(features["labels"][0:500]) 
     return step_depth,features
     
 def prelabel(label_t):
+    # labeling winodws before FoG as FoG (not used in this case)
     buffer = label_t
     pre = np.asarray(np.where(label_t==2))
     lenth = np.size(pre)
@@ -82,6 +103,7 @@ def prelabel(label_t):
     return labels
 
 def get_label(Train_data,metadata,Labels,labels):
+    # Function that decides wheter to label current window as a FoG or non-FoG
     j_start=0
     index=0
     while (j_start < (len(Train_data) - metadata["windowsize"])):
@@ -106,7 +128,7 @@ def get_label(Train_data,metadata,Labels,labels):
 
 #%%
 def func0(Train_data,metadata,shift,depth,counts,pos_walk):
-    
+    # This function serves to extract step interval, step depth and step counts feature
     jStart=0
     low_pass_data = butter_lowpass_filter(Train_data, 8,metadata["samplingrate"], order=5)
     index=0
@@ -205,6 +227,7 @@ def func0(Train_data,metadata,shift,depth,counts,pos_walk):
 
 #%%
 def func1(Train_data,metadata,entropy):
+    # calculate sample entropy
     m=2
     jStart=0
     index=0
@@ -258,6 +281,7 @@ def func8(Train_data,metadata,portion):
 
 # This function is used to get frequency information 
 def func3(Train_data,metadata,sumLoco,I,freezeIndex,sumAll):
+    # This function calculate frequency related features
     jStart=0
     index=0
     windowsize = metadata["windowsize"]
@@ -294,6 +318,7 @@ def func3(Train_data,metadata,sumLoco,I,freezeIndex,sumAll):
 
 
 
+## Low pass filter that used by step interval calculation
 def butter_lowpass(cutoff, fs, order=5):
     nyq = 0.5 * fs
     normal_cutoff = cutoff / nyq
