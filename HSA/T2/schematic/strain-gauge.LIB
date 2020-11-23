@@ -1,0 +1,10 @@
+* Variable resistance
+.subckt strain-gauge 1 2 3 4
+* 1 = R terminal 1, 2 = R terminal 2, 3 and 4 = volt in for R control
+B1 1 2 I=V(1,2)/(R*(1+V(3,4)*n/L*k)+1f)
+R1 4 0 1f
+.param R=320
+.param L=0.32
+.param k=1.76
+.param n=32
+.ends strain-gauge

@@ -1,0 +1,9 @@
+# Hashes of file build rules.
+5d1f95eb08fa077c930a106d5e9cdc21 CMakeFiles/c_template_hex
+5d1f95eb08fa077c930a106d5e9cdc21 CMakeFiles/c_template_lss
+c4e10457fe5faa118439df5feb0aa1e3 CMakeFiles/install_local
+287128f9457c4f55903a714114b32b98 CMakeFiles/prog_flash_c_template
+5d1f95eb08fa077c930a106d5e9cdc21 CMakeFiles/project_Atmega32Template
+f2eadba75a346458cb4a2fbb7ea7376c CMakeFiles/uninstall
+77242c7b9d6627bbaa2c8dd32d727272 c_template.hex
+6fbe61981422bf4e7437bcc78876f450 c_template.lss

@@ -1,0 +1,33 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x00007f166429a250, pid=6949, tid=3965
+#
+# JRE version: OpenJDK Runtime Environment (Zulu11.39+16-SA) (11.0.7+10) (build 11.0.7+10-LTS)
+# Java VM: OpenJDK 64-Bit Server VM (11.0.7+10-LTS, mixed mode, tiered, compressed oops, g1 gc, linux-amd64)
+# Problematic frame:
+# C  [libjimage.so+0x4250]  ImageStrings::find(Endian*, char const*, int*, unsigned int)+0x70
+#
+# No core dump will be written. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+# If you would like to submit a bug report, please visit:
+#   http://www.azulsystems.com/support/
+#
+
+---------------  S U M M A R Y ------------
+
+Command Line: -Djavaws.sr.gateway.addr.0=http://localhost:8088 -Djavaws.sr.launchts=1603914815370 -Djavaws.sr.main=com.inductiveautomation.ignition.designer.DesignerStartupHook -Djavaws.sr.platform.edition= -Djavaws.sr.platform.plugins= -Xms64M -Xmx1024M -Djavaws.sr.memory.init=64M -Djavaws.sr.memory.max=1024M -Dsun.java2d.d3d=false -Dsun.java2d.noddraw=false -Djavaws.sr.screen=0 -Djavaws.sr.scope=D com.inductiveautomation.ignition.client.launch.BootstrapSwing &
+
+Host: Intel(R) Core(TM) i7-5600U CPU @ 2.60GHz, 4 cores, 7G, Ubuntu 16.04.6 LTS
+Time: Thu Oct 29 06:05:53 2020 CET elapsed time: 33137 seconds (0d 9h 12m 17s)
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x00007f15f402c000):  JavaThread "XToolkt-Shutdown-Thread" [_thread_in_vm, id=3965, stack(0x00007f15b345a000,0x00007f15b355b000)]
+
+Stack: [0x00007f15b345a000,0x00007f15b355b000],  sp=0x00007f15b35580b0,  free space=1016k
+Native frames: (J=compiled Java code, A=aot compiled Java code, j=interpreted, Vv=VM code, C=native code)
+C  [libjimage.so+0x4250]  ImageStrings::find(Endian*, char const*, int*, unsigned int)+0x70
+C  [libjimage.so+0x4f6c]  ImageFileReader::find_location_index(char const*, unsigned long long*) const+0x3c
+C  [libjimage.so+0x5419]  JIMAGE_FindResource+0xc9
+V  [libjvm.so+0x5d8e7e]

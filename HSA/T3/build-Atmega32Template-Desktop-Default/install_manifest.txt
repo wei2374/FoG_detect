@@ -1,0 +1,3 @@
+/home/wei/Desktop/T3/Atmega32Template/install/bin/pwm.elf
+/home/wei/Desktop/T3/Atmega32Template/install/bin/pwm2.elf
+/home/wei/Desktop/T3/Atmega32Template/install/bin/blink2.elf

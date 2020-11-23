@@ -1,0 +1,147 @@
+* INA122
+*****************************************************************************
+* (C) Copyright 2011 Texas Instruments Incorporated. All rights reserved.                                            
+*****************************************************************************
+** This model is designed as an aid for customers of Texas Instruments.
+** TI and its licensors and suppliers make no warranties, either expressed
+** or implied, with respect to this model, including the warranties of 
+** merchantability or fitness for a particular purpose.  The model is
+** provided solely on an "as is" basis.  The entire risk as to its quality
+** and performance is with the customer.
+*****************************************************************************
+*
+* This model is subject to change without notice. Texas Instruments
+* Incorporated is not responsible for updating this model.
+*
+*****************************************************************************
+*
+** Released by: Analog eLab Design Center, Texas Instruments Inc.
+* Part: INA122
+* Date: 08JUL2011
+* Model Type: ALL IN ONE
+* Simulator: PSPICE
+* Simulator Version: 16.0.0.p001
+* EVM Order Number: N/A
+* EVM Users Guide: N/A
+* Datasheet: SBOS069
+*
+* Model Version: 1.0
+*
+*****************************************************************************
+* 
+* Updates:
+*
+* Version 1.0 : 
+* Release to Web
+*
+*****************************************************************************
+* COMMENTS
+* Connections            Non-Inverting input
+*                         |  Inverting input
+*                         |   |  Reference
+*                         |   |   |  Positive supply
+*                         |   |   |   |  Negative supply
+*                         |   |   |   |   |  Gain resistor 1
+*                         |   |   |   |   |   |  Gain resistor 2
+*                         |   |   |   |   |   |   |  Output
+*                         |   |   |   |   |   |   |   |
+* PIN CONFIG FOR INA122  inp inn ref vdd vee rg1 rg2 out
+*****************************************************************************
+.subckt INA122 inp inn ref vdd vee rg1 rg2 out
+  c1o   11o 12o 4.3301E-12
+  c2o    6o  7o 15.000E-12
+  ceeo  10o 99o 15.000E-12
+  dco    5o 53o dx
+  deo   54o  5o dx
+  dlpo  90o 91o dx
+  dlno  92o 90o dx
+  dpo    4o  3o dx
+  egndo 99o  0 poly(2) (3o,0) (4o,0) 0 .5 .5
+  fbo    7o 99o poly(5) vbo vco veo vlpo vlno 0 7.0736E9 -7E9 7E9 7E9 -7E9
+  gao    6o  0 11o 12o 28.274E-6
+  gcmo   0  6o 10o 99o 282.74E-12
+  ieeo   3o 10o dc 1.5100E-6
+  hlimo 90o  0 vlimo 1K
+  q1o   11o  2o 13o qx1
+  q2o   12o  1o 14o qx2
+  r2o    6o  9o 100.00E3
+  rc1o   4o 11o 35.368E3
+  rc2o   4o 12o 35.368E3
+  re1o  13o 10o 876.34
+  re2o  14o 10o 876.34
+  reeo  10o 99o 132.45E6
+  ro1o   8o  5o 50
+  ro2o   7o 99o 25
+  rpo    3o  4o 512.86E3
+  vbo    9o  0 dc 0
+  vco    3o 53o dc .84884
+  veo   54o  4o dc .84884
+  vlimo  7o  8o dc 0
+  vlpo  91o  0 dc 3
+  vlno   0 92o dc 3
+*
+*
+  c1i   11i 12i 5.7735E-12
+  c2i    6i  7i 20.000E-12
+  ceei  10i 99i 20.000E-12
+  dci    5i 53i dx
+  dei   54i  5i dx
+  dlpi  90i 91i dx
+  dlni  92i 90i dx
+  dpi    4i  3i dx
+  egndi 99i  0 poly(2) (3i,0) (4i,0) 0 .5 .5
+  fbi    7i 99i poly(5) vbi vci vei vlpi vlni 0 1.5915E9 -1E9 1E9 1E9 -1E9
+  gai    6i  0 11i 12i 25.133E-6
+  gcmi   0  6i 10i 99i 251.33E-12
+  ieei   3i 10i dc 2.0100E-6
+  hlimi 90i  0 vlimi 1K
+  q1i   11i  2i 13i qx1
+  q2i   12i  1i 14i qx2
+  r2i    6i  9i 100.00E3
+  rc1i   4i 11i 39.789E3
+  rc2i   4i 12i 39.789E3
+  re1i  13i 10i 13.855E3
+  re2i  14i 10i 13.855E3
+  reei  10i 99i 99.502E6
+  ro1i   8i  5i 50
+  ro2i   7i 99i 25
+  rpi    3i  4i 517.29E3
+  vbi    9i  0 dc 0
+  vci    3i 53i dc .84884
+  vei   54i  4i dc .84884
+  vlimi  7i  8i dc 0
+  vlpi  91i  0 dc 3
+  vlni   0 92i dc 3
+.model dx D(Is=800.00E-18)
+.model qx1 PNP(Is=800.00E-18 Bf=200)
+.model qx2 PNP(Is=800.0000E-18 Bf=200)
+
+r1 ref rg1 100k
+r2 rg1 1 25k
+r3 1 rg2 25k
+r4 rg2 out 100k
+q1 vee inn 2 qx
+i1 vdd 2 2u
+d11 inn vdd dx
+d12 vee inn dx
+q2 vee inp 3 qx
+i2 vdd 3 2u
+d21 inp vdd dx
+d22 vee inp dx
+.model qx PNP(Is=800.00E-18 Bf=200)
+
+rx1 1i 2 1e-3
+rx2 2i rg1 1e-3
+rx3 3i vdd 1e-3
+rx4 4i vee 1e-3
+rx5 5i 1 1e-3
+rx6 1o 3 1e-3
+rx7 2o rg2 1e-3
+rx8 3o vdd 1e-3
+rx9 4o vee 1e-3
+rx10 5o out 1e-3
+*
+.ends INA122
+
+*$
+

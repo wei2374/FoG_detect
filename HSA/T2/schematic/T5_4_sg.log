@@ -1,0 +1,23 @@
+Circuit: * C:\users\wei\Desktop\T2\schematic\T5_4_sg.asc
+
+Direct Newton iteration for .op point succeeded.
+Ignoring empty pin current: Ix(u1:3)
+Ignoring empty pin current: Ix(u1:3)
+
+Date: Tue May 19 15:04:35 2020
+Total elapsed time: 2.026 seconds.
+
+tnom = 27
+temp = 27
+method = modified trap
+totiter = 200037
+traniter = 200034
+tranpoints = 100018
+accept = 100018
+rejected = 0
+matrix size = 7
+fillins = 1
+solver = Normal
+Matrix Compiler1: 254 bytes object code size  0.8/0.7/[0.7]
+Matrix Compiler2: 533 bytes object code size  0.7/0.8/[0.7]
+

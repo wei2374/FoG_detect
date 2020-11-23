@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+   <FileVersion major="1" minor="6" />
+   <Project>
+      <Option title="TumIcsAvrSimPotentiometerBlinkTemplate" />
+      <Option makefile_is_custom="1" />
+      <Option compiler="gcc" />
+      <Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\..\;CMake Files\..\..\..\..\;CMake Files\..\..\..\..\..\;CMake Files\..\..\..\..\..\..\;CMake Files\..\..\..\..\..\..\usr\;CMake Files\..\..\..\..\..\..\usr\share\;CMake Files\..\..\..\..\..\..\usr\share\cmake\;CMake Files\..\..\..\..\..\..\usr\share\cmake\CMakeTools\;CMake Files\..\..\..\..\..\..\usr\share\cmake\TumIcsToolsCommon\;CMake Files\..\..\..\..\..\..\usr\share\cmake\TumIcsAvrSimUart\;CMake Files\..\..\..\..\..\..\usr\share\cmake\TumIcsAvrSimTools\;CMake Files\..\..\..\..\..\..\usr\share\cmake\TumIcsAvrSimCore\;CMake Files\..\..\..\..\..\..\usr\share\cmake\TumIcsAvrSimLed\;CMake Files\..\..\..\..\..\..\usr\share\cmake\TumIcsAvrSimInput\;CMake Files\..\..\..\..\..\..\usr\share\cmake\TumIcsAvrSimPotentiometer\;CMake Files\..\..\..\..\..\..\usr\lib\;CMake Files\..\..\..\..\..\..\usr\lib\cmake\;CMake Files\..\..\..\..\..\..\usr\lib\cmake\eigen3\;" />
+      <Build>
+      <Target title="all">
+         <Option working_dir="/home/wei/Desktop/T3/part2/build-TumIcsAvrSimPotentiometerBlinkTemplate-Desktop-Default" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/wei/Desktop/T3/part2/build-TumIcsAvrSimPotentiometerBlinkTemplate-Desktop-Default/Makefile&quot;  VERBOSE=1 all" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/wei/Desktop/T3/part2/build-TumIcsAvrSimPotentiometerBlinkTemplate-Desktop-Default/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/wei/Desktop/T3/part2/build-TumIcsAvrSimPotentiometerBlinkTemplate-Desktop-Default/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/wei/Desktop/T3/part2/build-TumIcsAvrSimPotentiometerBlinkTemplate-Desktop-Default/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="edit_cache">
+         <Option working_dir="/home/wei/Desktop/T3/part2/build-TumIcsAvrSimPotentiometerBlinkTemplate-Desktop-Default" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/wei/Desktop/T3/part2/build-TumIcsAvrSimPotentiometerBlinkTemplate-Desktop-Default/Makefile&quot;  VERBOSE=1 edit_cache" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/wei/Desktop/T3/part2/build-TumIcsAvrSimPotentiometerBlinkTemplate-Desktop-Default/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/wei/Desktop/T3/part2/build-TumIcsAvrSimPotentiometerBlinkTemplate-Desktop-Default/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/wei/Desktop/T3/part2/build-TumIcsAvrSimPotentiometerBlinkTemplate-Desktop-Default/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="rebuild_cache">
+         <Option working_dir="/home/wei/Desktop/T3/part2/build-TumIcsAvrSimPotentiometerBlinkTemplate-Desktop-Default" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/wei/Desktop/T3/part2/build-TumIcsAvrSimPotentiometerBlinkTemplate-Desktop-Default/Makefile&quot;  VERBOSE=1 rebuild_cache" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/wei/Desktop/T3/part2/build-TumIcsAvrSimPotentiometerBlinkTemplate-Desktop-Default/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/wei/Desktop/T3/part2/build-TumIcsAvrSimPotentiometerBlinkTemplate-Desktop-Default/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/wei/Desktop/T3/part2/build-TumIcsAvrSimPotentiometerBlinkTemplate-Desktop-Default/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="avr_sim_poti_led_template">
+         <Option output="/home/wei/Desktop/T3/part2/build-TumIcsAvrSimPotentiometerBlinkTemplate-Desktop-Default/avr_sim_poti_led_template" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/home/wei/Desktop/T3/part2/build-TumIcsAvrSimPotentiometerBlinkTemplate-Desktop-Default" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add option="-DQT_NO_DEBUG" />
+            <Add option="-DQT_GUI_LIB" />
+            <Add option="-DQT_CORE_LIB" />
+            <Add option="-DQT_NO_KEYWORDS" />
+            <Add directory="/home/wei/Desktop/T3/part2/TumIcsAvrSimPotentiometerBlinkTemplate" />
+            <Add directory="/home/wei/Desktop/T3/part2/TumIcsAvrSimPotentiometerBlinkTemplate/include" />
+            <Add directory="/home/wei/Desktop/T3/part2/build-TumIcsAvrSimPotentiometerBlinkTemplate-Desktop-Default" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/5" />
+            <Add directory="/usr/include/c++/5/backward" />
+            <Add directory="/usr/include/eigen3" />
+            <Add directory="/usr/include/qt4" />
+            <Add directory="/usr/include/qt4/QtCore" />
+            <Add directory="/usr/include/qt4/QtGui" />
+            <Add directory="/usr/include/tum_ics_avr_sim" />
+            <Add directory="/usr/include/tum_ics_tools/TumIcsToolsCommon" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/include/x86_64-linux-gnu/c++/5" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed" />
+            <Add directory="/usr/local/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/wei/Desktop/T3/part2/build-TumIcsAvrSimPotentiometerBlinkTemplate-Desktop-Default/Makefile&quot;  VERBOSE=1 avr_sim_poti_led_template" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/wei/Desktop/T3/part2/build-TumIcsAvrSimPotentiometerBlinkTemplate-Desktop-Default/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/wei/Desktop/T3/part2/build-TumIcsAvrSimPotentiometerBlinkTemplate-Desktop-Default/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/wei/Desktop/T3/part2/build-TumIcsAvrSimPotentiometerBlinkTemplate-Desktop-Default/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="avr_sim_poti_led_template/fast">
+         <Option output="/home/wei/Desktop/T3/part2/build-TumIcsAvrSimPotentiometerBlinkTemplate-Desktop-Default/avr_sim_poti_led_template" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/home/wei/Desktop/T3/part2/build-TumIcsAvrSimPotentiometerBlinkTemplate-Desktop-Default" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add option="-DQT_NO_DEBUG" />
+            <Add option="-DQT_GUI_LIB" />
+            <Add option="-DQT_CORE_LIB" />
+            <Add option="-DQT_NO_KEYWORDS" />
+            <Add directory="/home/wei/Desktop/T3/part2/TumIcsAvrSimPotentiometerBlinkTemplate" />
+            <Add directory="/home/wei/Desktop/T3/part2/TumIcsAvrSimPotentiometerBlinkTemplate/include" />
+            <Add directory="/home/wei/Desktop/T3/part2/build-TumIcsAvrSimPotentiometerBlinkTemplate-Desktop-Default" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/5" />
+            <Add directory="/usr/include/c++/5/backward" />
+            <Add directory="/usr/include/eigen3" />
+            <Add directory="/usr/include/qt4" />
+            <Add directory="/usr/include/qt4/QtCore" />
+            <Add directory="/usr/include/qt4/QtGui" />
+            <Add directory="/usr/include/tum_ics_avr_sim" />
+            <Add directory="/usr/include/tum_ics_tools/TumIcsToolsCommon" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/include/x86_64-linux-gnu/c++/5" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed" />
+            <Add directory="/usr/local/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/wei/Desktop/T3/part2/build-TumIcsAvrSimPotentiometerBlinkTemplate-Desktop-Default/Makefile&quot;  VERBOSE=1 avr_sim_poti_led_template/fast" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/wei/Desktop/T3/part2/build-TumIcsAvrSimPotentiometerBlinkTemplate-Desktop-Default/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/wei/Desktop/T3/part2/build-TumIcsAvrSimPotentiometerBlinkTemplate-Desktop-Default/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/wei/Desktop/T3/part2/build-TumIcsAvrSimPotentiometerBlinkTemplate-Desktop-Default/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="project_TumIcsAvrSimPotentiometerBlinkTemplate">
+         <Option working_dir="/home/wei/Desktop/T3/part2/build-TumIcsAvrSimPotentiometerBlinkTemplate-Desktop-Default" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/wei/Desktop/T3/part2/build-TumIcsAvrSimPotentiometerBlinkTemplate-Desktop-Default/Makefile&quot;  VERBOSE=1 project_TumIcsAvrSimPotentiometerBlinkTemplate" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/wei/Desktop/T3/part2/build-TumIcsAvrSimPotentiometerBlinkTemplate-Desktop-Default/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/wei/Desktop/T3/part2/build-TumIcsAvrSimPotentiometerBlinkTemplate-Desktop-Default/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/wei/Desktop/T3/part2/build-TumIcsAvrSimPotentiometerBlinkTemplate-Desktop-Default/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="install_local">
+         <Option working_dir="/home/wei/Desktop/T3/part2/build-TumIcsAvrSimPotentiometerBlinkTemplate-Desktop-Default" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/wei/Desktop/T3/part2/build-TumIcsAvrSimPotentiometerBlinkTemplate-Desktop-Default/Makefile&quot;  VERBOSE=1 install_local" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/wei/Desktop/T3/part2/build-TumIcsAvrSimPotentiometerBlinkTemplate-Desktop-Default/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/wei/Desktop/T3/part2/build-TumIcsAvrSimPotentiometerBlinkTemplate-Desktop-Default/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/wei/Desktop/T3/part2/build-TumIcsAvrSimPotentiometerBlinkTemplate-Desktop-Default/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="uninstall">
+         <Option working_dir="/home/wei/Desktop/T3/part2/build-TumIcsAvrSimPotentiometerBlinkTemplate-Desktop-Default" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/wei/Desktop/T3/part2/build-TumIcsAvrSimPotentiometerBlinkTemplate-Desktop-Default/Makefile&quot;  VERBOSE=1 uninstall" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/wei/Desktop/T3/part2/build-TumIcsAvrSimPotentiometerBlinkTemplate-Desktop-Default/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/wei/Desktop/T3/part2/build-TumIcsAvrSimPotentiometerBlinkTemplate-Desktop-Default/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/wei/Desktop/T3/part2/build-TumIcsAvrSimPotentiometerBlinkTemplate-Desktop-Default/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      </Build>
+      <Unit filename="/home/wei/Desktop/T3/part2/TumIcsAvrSimPotentiometerBlinkTemplate/src/Applications/main_avr_sim_poti_led_template.cpp">
+         <Option target="avr_sim_poti_led_template"/>
+      </Unit>
+      <Unit filename="/home/wei/Desktop/T3/part2/TumIcsAvrSimPotentiometerBlinkTemplate/CMakeLists.txt">
+          <Option virtualFolder="CMake Files\" />
+      </Unit>
+      <Unit filename="/home/wei/Desktop/T3/part2/TumIcsAvrSimPotentiometerBlinkTemplate/../../../../../../usr/share/cmake/CMakeTools/ics_tools.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\share\cmake\CMakeTools\" />
+      </Unit>
+      <Unit filename="/home/wei/Desktop/T3/part2/TumIcsAvrSimPotentiometerBlinkTemplate/../../../../../../usr/share/cmake/CMakeTools/print_target_properties.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\share\cmake\CMakeTools\" />
+      </Unit>
+      <Unit filename="/home/wei/Desktop/T3/part2/TumIcsAvrSimPotentiometerBlinkTemplate/../../../../../../usr/share/cmake/CMakeTools/ics_colors.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\share\cmake\CMakeTools\" />
+      </Unit>
+      <Unit filename="/home/wei/Desktop/T3/part2/TumIcsAvrSimPotentiometerBlinkTemplate/../../../../../../usr/share/cmake/CMakeTools/ics_ros_debgen.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\share\cmake\CMakeTools\" />
+      </Unit>
+      <Unit filename="/home/wei/Desktop/T3/part2/TumIcsAvrSimPotentiometerBlinkTemplate/../../../../../../usr/share/cmake/CMakeTools/ics_add_install_local.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\share\cmake\CMakeTools\" />
+      </Unit>
+      <Unit filename="/home/wei/Desktop/T3/part2/TumIcsAvrSimPotentiometerBlinkTemplate/../../../../../../usr/share/cmake/CMakeTools/ics_add_project_target.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\share\cmake\CMakeTools\" />
+      </Unit>
+      <Unit filename="/home/wei/Desktop/T3/part2/TumIcsAvrSimPotentiometerBlinkTemplate/../../../../../../usr/share/cmake/CMakeTools/ics_add_subproject.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\share\cmake\CMakeTools\" />
+      </Unit>
+      <Unit filename="/home/wei/Desktop/T3/part2/TumIcsAvrSimPotentiometerBlinkTemplate/../../../../../../usr/share/cmake/CMakeTools/ics_add_uninstall.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\share\cmake\CMakeTools\" />
+      </Unit>
+      <Unit filename="/home/wei/Desktop/T3/part2/TumIcsAvrSimPotentiometerBlinkTemplate/../../../../../../usr/share/cmake/CMakeTools/ics_parse_arguments.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\share\cmake\CMakeTools\" />
+      </Unit>
+      <Unit filename="/home/wei/Desktop/T3/part2/TumIcsAvrSimPotentiometerBlinkTemplate/../../../../../../usr/share/cmake/CMakeTools/ics_create_find_module.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\share\cmake\CMakeTools\" />
+      </Unit>
+      <Unit filename="/home/wei/Desktop/T3/part2/TumIcsAvrSimPotentiometerBlinkTemplate/../../../../../../usr/share/cmake/CMakeTools/ics_create_local_shell_script.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\share\cmake\CMakeTools\" />
+      </Unit>
+      <Unit filename="/home/wei/Desktop/T3/part2/TumIcsAvrSimPotentiometerBlinkTemplate/../../../../../../usr/share/cmake/CMakeTools/ics_use_strict_warnings.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\share\cmake\CMakeTools\" />
+      </Unit>
+      <Unit filename="/home/wei/Desktop/T3/part2/TumIcsAvrSimPotentiometerBlinkTemplate/../../../../../../usr/share/cmake/CMakeTools/ics_create_local_shell_script.sh.in">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\share\cmake\CMakeTools\" />
+      </Unit>
+      <Unit filename="/home/wei/Desktop/T3/part2/TumIcsAvrSimPotentiometerBlinkTemplate/../../../../../../usr/share/cmake/CMakeTools/cmake_uninstall.cmake.in">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\share\cmake\CMakeTools\" />
+      </Unit>
+      <Unit filename="/home/wei/Desktop/T3/part2/TumIcsAvrSimPotentiometerBlinkTemplate/../../../../../../usr/share/cmake/TumIcsToolsCommon/TumIcsToolsCommonConfig.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\share\cmake\TumIcsToolsCommon\" />
+      </Unit>
+      <Unit filename="/home/wei/Desktop/T3/part2/TumIcsAvrSimPotentiometerBlinkTemplate/../../../../../../usr/share/cmake/TumIcsAvrSimUart/TumIcsAvrSimUartConfig.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\share\cmake\TumIcsAvrSimUart\" />
+      </Unit>
+      <Unit filename="/home/wei/Desktop/T3/part2/TumIcsAvrSimPotentiometerBlinkTemplate/../../../../../../usr/share/cmake/TumIcsAvrSimTools/TumIcsAvrSimToolsConfig.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\share\cmake\TumIcsAvrSimTools\" />
+      </Unit>
+      <Unit filename="/home/wei/Desktop/T3/part2/TumIcsAvrSimPotentiometerBlinkTemplate/../../../../../../usr/share/cmake/TumIcsAvrSimTools/TumIcsAvrSimToolsConfig.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\share\cmake\TumIcsAvrSimTools\" />
+      </Unit>
+      <Unit filename="/home/wei/Desktop/T3/part2/TumIcsAvrSimPotentiometerBlinkTemplate/../../../../../../usr/share/cmake/TumIcsAvrSimTools/TumIcsAvrSimToolsConfig.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\share\cmake\TumIcsAvrSimTools\" />
+      </Unit>
+      <Unit filename="/home/wei/Desktop/T3/part2/TumIcsAvrSimPotentiometerBlinkTemplate/../../../../../../usr/share/cmake/TumIcsAvrSimTools/TumIcsAvrSimToolsConfig.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\share\cmake\TumIcsAvrSimTools\" />
+      </Unit>
+      <Unit filename="/home/wei/Desktop/T3/part2/TumIcsAvrSimPotentiometerBlinkTemplate/../../../../../../usr/share/cmake/TumIcsAvrSimCore/TumIcsAvrSimCoreConfig.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\share\cmake\TumIcsAvrSimCore\" />
+      </Unit>
+      <Unit filename="/home/wei/Desktop/T3/part2/TumIcsAvrSimPotentiometerBlinkTemplate/../../../../../../usr/share/cmake/TumIcsAvrSimCore/TumIcsAvrSimCoreConfig.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\share\cmake\TumIcsAvrSimCore\" />
+      </Unit>
+      <Unit filename="/home/wei/Desktop/T3/part2/TumIcsAvrSimPotentiometerBlinkTemplate/../../../../../../usr/share/cmake/TumIcsAvrSimCore/TumIcsAvrSimCoreConfig.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\share\cmake\TumIcsAvrSimCore\" />
+      </Unit>
+      <Unit filename="/home/wei/Desktop/T3/part2/TumIcsAvrSimPotentiometerBlinkTemplate/../../../../../../usr/share/cmake/TumIcsAvrSimCore/TumIcsAvrSimCoreConfig.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\share\cmake\TumIcsAvrSimCore\" />
+      </Unit>
+      <Unit filename="/home/wei/Desktop/T3/part2/TumIcsAvrSimPotentiometerBlinkTemplate/../../../../../../usr/share/cmake/TumIcsAvrSimLed/TumIcsAvrSimLedConfig.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\share\cmake\TumIcsAvrSimLed\" />
+      </Unit>
+      <Unit filename="/home/wei/Desktop/T3/part2/TumIcsAvrSimPotentiometerBlinkTemplate/../../../../../../usr/share/cmake/TumIcsAvrSimInput/TumIcsAvrSimInputConfig.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\share\cmake\TumIcsAvrSimInput\" />
+      </Unit>
+      <Unit filename="/home/wei/Desktop/T3/part2/TumIcsAvrSimPotentiometerBlinkTemplate/../../../../../../usr/share/cmake/TumIcsAvrSimPotentiometer/TumIcsAvrSimPotentiometerConfig.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\share\cmake\TumIcsAvrSimPotentiometer\" />
+      </Unit>
+      <Unit filename="/home/wei/Desktop/T3/part2/TumIcsAvrSimPotentiometerBlinkTemplate/../../../../../../usr/lib/cmake/eigen3/Eigen3Config.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\lib\cmake\eigen3\" />
+      </Unit>
+   </Project>
+</CodeBlocks_project_file>

@@ -1,0 +1,2 @@
+/home/wei/Desktop/T3/part2/atmega32template_dac/install/bin/c_template.elf
+/home/wei/Desktop/T3/part2/atmega32template_dac/install/bin/100Hz.elf

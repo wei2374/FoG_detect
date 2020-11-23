@@ -1,0 +1,6 @@
+/home/wei/Desktop/T3/part2/build-TumIcsAvrSimPotentiometerBlinkTemplate-Desktop-Default/CMakeFiles/edit_cache.dir
+/home/wei/Desktop/T3/part2/build-TumIcsAvrSimPotentiometerBlinkTemplate-Desktop-Default/CMakeFiles/rebuild_cache.dir
+/home/wei/Desktop/T3/part2/build-TumIcsAvrSimPotentiometerBlinkTemplate-Desktop-Default/CMakeFiles/avr_sim_poti_led_template.dir
+/home/wei/Desktop/T3/part2/build-TumIcsAvrSimPotentiometerBlinkTemplate-Desktop-Default/CMakeFiles/project_TumIcsAvrSimPotentiometerBlinkTemplate.dir
+/home/wei/Desktop/T3/part2/build-TumIcsAvrSimPotentiometerBlinkTemplate-Desktop-Default/CMakeFiles/install_local.dir
+/home/wei/Desktop/T3/part2/build-TumIcsAvrSimPotentiometerBlinkTemplate-Desktop-Default/CMakeFiles/uninstall.dir

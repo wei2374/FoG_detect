@@ -1,0 +1,1 @@
+/home/wei/Desktop/T3/part2/Atmega32Template/install/bin/c_template.elf

@@ -1,0 +1,25 @@
+Circuit: * C:\users\wei\Desktop\T2\schematic\T4_2_opamp.asc
+
+Direct Newton iteration for .op point succeeded.
+Ignoring empty pin current: Ix(u1:1)
+Ignoring empty pin current: Ix(u1:2)
+Ignoring empty pin current: Ix(u1:1)
+Ignoring empty pin current: Ix(u1:2)
+
+Date: Sat May 16 12:33:29 2020
+Total elapsed time: 0.048 seconds.
+
+tnom = 27
+temp = 27
+method = modified trap
+totiter = 2091
+traniter = 2088
+tranpoints = 1045
+accept = 1045
+rejected = 0
+matrix size = 4
+fillins = 0
+solver = Normal
+Matrix Compiler1:       5 opcodes  0.8/[0.6]/0.7
+Matrix Compiler2:      20 opcodes  0.6/[0.6]/0.7
+

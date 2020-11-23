@@ -1,0 +1,13 @@
+/home/wei/Desktop/T3/part2/build-Atmega32Template-Desktop-Default/CMakeFiles/rebuild_cache.dir
+/home/wei/Desktop/T3/part2/build-Atmega32Template-Desktop-Default/CMakeFiles/c_template_lss.dir
+/home/wei/Desktop/T3/part2/build-Atmega32Template-Desktop-Default/CMakeFiles/install.dir
+/home/wei/Desktop/T3/part2/build-Atmega32Template-Desktop-Default/CMakeFiles/c_template_hex.dir
+/home/wei/Desktop/T3/part2/build-Atmega32Template-Desktop-Default/CMakeFiles/c_template.dir
+/home/wei/Desktop/T3/part2/build-Atmega32Template-Desktop-Default/CMakeFiles/install_local.dir
+/home/wei/Desktop/T3/part2/build-Atmega32Template-Desktop-Default/CMakeFiles/uninstall.dir
+/home/wei/Desktop/T3/part2/build-Atmega32Template-Desktop-Default/CMakeFiles/project_Atmega32Template.dir
+/home/wei/Desktop/T3/part2/build-Atmega32Template-Desktop-Default/CMakeFiles/list_install_components.dir
+/home/wei/Desktop/T3/part2/build-Atmega32Template-Desktop-Default/CMakeFiles/install/strip.dir
+/home/wei/Desktop/T3/part2/build-Atmega32Template-Desktop-Default/CMakeFiles/prog_flash_c_template.dir
+/home/wei/Desktop/T3/part2/build-Atmega32Template-Desktop-Default/CMakeFiles/install/local.dir
+/home/wei/Desktop/T3/part2/build-Atmega32Template-Desktop-Default/CMakeFiles/edit_cache.dir

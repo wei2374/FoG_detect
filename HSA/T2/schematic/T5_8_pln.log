@@ -1,0 +1,49 @@
+Circuit: * C:\users\wei\Desktop\T2\schematic\T5_8_pln.asc
+
+R3: both pins shorted together -- ignoring.
+Early termination of direct N-R iteration.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Gmin = 10
+Gmin = 1.07374
+Gmin = 0.115292
+Gmin = 0.0123794
+Gmin = 0.00132923
+Gmin = 0.000142725
+Gmin = 1.5325e-005
+Gmin = 1.6455e-006
+Gmin = 1.76685e-007
+vernier = 0.5
+vernier = 0.666667
+Gmin = 6.17442e-008
+vernier = 0.888888
+vernier = 1
+Gmin = 9.33136e-009
+Gmin = 1.00195e-009
+Gmin = 1.07583e-010
+Gmin = 1.15517e-011
+Gmin = 1.24035e-012
+Gmin = 1.33182e-013
+Gmin = 0
+Gmin stepping succeeded in finding the operating point.
+
+Ignoring empty pin current: Ix(u1:3)
+Ignoring empty pin current: Ix(u1:3)
+
+Date: Sat May 23 11:46:42 2020
+Total elapsed time: 3.886 seconds.
+
+tnom = 27
+temp = 27
+method = modified trap
+totiter = 200999
+traniter = 200232
+tranpoints = 100025
+accept = 100024
+rejected = 1
+matrix size = 79
+fillins = 559
+solver = Normal
+Matrix Compiler1: 66.14 KB object code size  11.1/6.4/[4.4]
+Matrix Compiler2: 15.46 KB object code size  3.7/5.0/[2.0]
+
